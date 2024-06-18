@@ -51,7 +51,7 @@ public class LoginFrame extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				
+				// 충돌 시험
 			}
 		});
 
