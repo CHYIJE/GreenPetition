@@ -20,8 +20,8 @@ public class LoginFrame extends JFrame{
 		JLabel label_password = new JLabel("Password : ");
 		JTextField text_id = new JTextField(10);
 		JPasswordField text_password = new JPasswordField(10);
-		JButton login_button = new JButton("로그인");
-		JButton join_button = new JButton("회원가입");
+		JButton login_button = new JButton();
+		JButton join_button = new JButton();
 
 		panel.add(label_id);
 		panel.add(text_id);
@@ -39,6 +39,7 @@ public class LoginFrame extends JFrame{
 
 				if (id.equals(text_id.getText()) && password.equals(text_password.getText())) {
 					JOptionPane.showMessageDialog(null, "로그인 성공");
+					
 				} else {
 					JOptionPane.showMessageDialog(null, "로그인 실패");
 				}
@@ -50,8 +51,7 @@ public class LoginFrame extends JFrame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-				// 충돌 시험
+				new SigninFrame();
 			}
 		});
 
