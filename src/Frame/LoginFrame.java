@@ -11,7 +11,10 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-public class LoginFrame extends JFrame{
+import lombok.Data;
+
+@Data
+public class LoginFrame extends JFrame {
 
 	public LoginFrame() {
 
@@ -45,13 +48,12 @@ public class LoginFrame extends JFrame{
 
 			}
 		});
-		
+
 		join_button.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-				
+
 			}
 		});
 
@@ -67,5 +69,5 @@ public class LoginFrame extends JFrame{
 
 	public static void main(String[] args) {
 		new LoginFrame();
-}
+	}
 }
