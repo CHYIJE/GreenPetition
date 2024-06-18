@@ -87,3 +87,4 @@ ALTER TABLE 청원글자세히
 -- DROP FOREIGN KEY FK_청원글자세히_댓글작성자_회원_회원이름;
 
 select * from 회원;
+-- select * from 
