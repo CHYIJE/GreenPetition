@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import Frame.SigninFrame;
 import ver1.DBConnectionManager;
@@ -13,53 +15,57 @@ public class JoinDAO {
 	SigninFrame mContext;
 	UserDTO dto;
 	// 회원가입
-	
+
 	String resultRow = null;
-	
+
 	public JoinDAO(UserDTO dto, SigninFrame mContext) {
-		
+
 		try {
 			joinUser(dto, mContext);
 			this.mContext = mContext;
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
-	public void joinUser(UserDTO dto, SigninFrame mContext) throws SQLException{
+
+	public void joinUser(UserDTO dto, SigninFrame mContext) {
 		this.mContext = mContext;
-		
-		String checkIdQuery = "SELECT acc_id FROM user ";
+
 		String insertQuery = "INSERT INTO user(name, acc_id, acc_pw) values (? ,?, ?) ";
-		
-		try (Connection conn = DBConnectionManager.getInstance().getConnection()){
+
+		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
+
 			conn.setAutoCommit(false);
-			
+
+			List<UserDTO> idlist = new ArrayList<>();
+			String checkIdQuery = "SELECT acc_id FROM user ";
 			PreparedStatement selectptmt = conn.prepareStatement(checkIdQuery);
 			ResultSet rs = selectptmt.executeQuery();
-			System.out.println("while 들어가기 전");
-				while(rs.next()) {
-					System.out.println("while 들어오긴 함");
-					if(mContext.getIdField().getText().equals(rs.getString("acc_id"))) {
-						System.out.println("rollback");
-						conn.rollback();
-					} else {
-						PreparedStatement insertptmt = conn.prepareStatement(insertQuery);
-						insertptmt.setString(1, mContext.getIdField().getText());
-						insertptmt.setString(2, mContext.getPwField().getText());
-						insertptmt.setString(3, mContext.getNameField().getText());
-						
-						insertptmt.addBatch();
-						
-						conn.commit();
-						int testRow = insertptmt.executeUpdate();
-						System.out.println(testRow);
-						
-					}
-					System.out.println("break 처리 완료");
-					break;
+
+			while (rs.next()) {
+				UserDTO dto1 = new UserDTO().builder().acc_id(rs.getString("acc_id")).build();
+				idlist.add(dto1);
+				System.out.println("while 들어오긴 함");
+				if (idlist.equals(mContext.getIdField().getText())) {
+					PreparedStatement insertptmt = conn.prepareStatement(insertQuery);
+					insertptmt.setString(1, mContext.getIdField().getText());
+					insertptmt.setString(2, mContext.getPwField().getText());
+					insertptmt.setString(3, mContext.getNameField().getText());
+
+					System.out.println(rs.getString("acc_id"));
+					int testRow = insertptmt.executeUpdate();
+
+					conn.commit();
+					System.out.println(testRow);
+				} else {
+					conn.rollback();
 				}
-			
+				System.out.println("break 처리 완료");
+				break;
+			}
+
+		} catch (SQLException e) {
+
 		}
 	}
 }
