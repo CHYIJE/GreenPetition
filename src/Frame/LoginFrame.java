@@ -118,10 +118,11 @@ public class LoginFrame extends JFrame {
 					return;
 				} else {
 					System.out.println(text_id.getText());
-					new MainFrame();
-					
+					new MainFrame();	
+					dispose();
 				}
 			}
+<<<<<<< HEAD
 		});
 
 		login_button.addActionListener(new ActionListener() {
@@ -139,6 +140,9 @@ public class LoginFrame extends JFrame {
 
 			}
 		});
+=======
+		});	
+>>>>>>> 6a3b4a8ab6af5a6a47ff1d033f3ba4ceccfaeb25
 	}
 
 	public static void main(String[] args) {
