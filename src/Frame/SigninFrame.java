@@ -3,6 +3,11 @@ package Frame;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -12,7 +17,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 
+import ver1.DBConnectionManager;
+import ver1.query.CRUDquery;
+
 public class SigninFrame extends JFrame{
+	
+	static CRUDquery query;
 	
 	private JLabel frame;
 	private JTextField idField;
@@ -27,6 +37,7 @@ public class SigninFrame extends JFrame{
 	}
 		
 	public void initData() {
+		
 		setTitle("Sign-In");
 		frame = new JLabel(new ImageIcon("img/signinFrame.png"));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -56,10 +67,10 @@ public class SigninFrame extends JFrame{
 		setResizable(false);
 		setLocationRelativeTo(null);
 		
-		add(signIn);
 		add(idField);
 		add(pwField);
 		add(nameField);
+		add(signIn);
 		
 		setVisible(true);
 	}
@@ -69,13 +80,34 @@ public class SigninFrame extends JFrame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null, "회원가입이 완료되었습니다.");
-				dispose();
+				
+				if(!idField.getText().equals("") && !pwField.getText().equals("") && !nameField.getText().equals("")) {
+					try (Connection conn = DBConnectionManager.getInstance().getConnection()){
+						PreparedStatement ptmt = conn.prepareStatement(query.INSERT_USER);
+						ptmt.setString(1, idField.getText());
+						ptmt.setString(2, pwField.getText());
+						ptmt.setString(3, nameField.getText());
+						
+						int testRow = ptmt.executeUpdate();
+						System.out.println(testRow);
+						
+						JOptionPane.showMessageDialog(null, "회원가입이 완료되었습니다.");
+						dispose();
+						
+					} catch (Exception e2) {
+						// TODO: handle exception
+					}
+				} else {
+					JOptionPane.showMessageDialog(null, "ID/PW/NAME 입력해주세요.");
+				}
 			}
+			
 		});
+		
 	}
 	
 	public static void main(String[] args) {
 		new SigninFrame();
+		
 	}
 }
