@@ -7,24 +7,18 @@ import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.JTextArea;
 
 import ver1.DBConnectionManager;
-import ver1.ObjectDAO.BoardDAO;
 
 public class MainFrame extends JFrame{
 	
-	private static final String VIEW_ALL = " select * from petition ";
+	private static final String VIEW_ALL = " select petition.id, petition.title, user.acc_id from petition join user on petition.user_id = user.id ";
 	private static final String VIEW_FACILITY = " select * from petition where category id = facility ";
 	private static final String VIEW_TEACHER = " select * from petition where category id = teacher ";
 
@@ -73,8 +67,8 @@ public class MainFrame extends JFrame{
 				log = resultSet.getInt("id");
 				checker1 = Integer.toString(log);
 				checker2 = resultSet.getString("title");
-				checker3 = resultSet.getString("user_id");
-				body.append("\t"+ checker1 + "\t"+"\t"+"\t"+ checker2 +"\t"+"\t"+"\t"+"\t"+ "\s"+"\s" +checker3 + "\t"+ "\n");
+				checker3 = resultSet.getString("acc_id");
+				body.append("\t"+ checker1 + "\t"+"\t"+"\t"+ checker2 +"\t"+"\t"+"\t"+"\t"+ "\s" +checker3 + "\t"+ "\n");
 				
 			}
 			
