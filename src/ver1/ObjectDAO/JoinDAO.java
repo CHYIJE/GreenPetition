@@ -13,7 +13,13 @@ import ver1.models.UserDTO;
 
 public class JoinDAO {
 	SigninFrame mContext;
+
+	public void setContext(SigninFrame context) {
+		this.mContext = context;
+	}
+
 	UserDTO dto;
+
 	// 회원가입
 
 	String resultRow = null;
@@ -28,7 +34,11 @@ public class JoinDAO {
 		}
 	}
 
+<<<<<<< HEAD
 	public void joinUser(UserDTO dto, SigninFrame mContext) {
+=======
+	public void joinUser(UserDTO dto, SigninFrame mContext) throws SQLException {
+>>>>>>> 3e2dde5a7a1f1aa14fbc3591f757a6f13a019978
 		this.mContext = mContext;
 
 		String insertQuery = "INSERT INTO user(name, acc_id, acc_pw) values (? ,?, ?) ";
@@ -60,11 +70,14 @@ public class JoinDAO {
 				} else {
 					conn.rollback();
 				}
+<<<<<<< HEAD
 				System.out.println("break 처리 완료");
 				break;
 			}
 
 		} catch (SQLException e) {
+=======
+>>>>>>> 3e2dde5a7a1f1aa14fbc3591f757a6f13a019978
 
 		}
 	}
