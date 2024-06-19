@@ -21,7 +21,6 @@ public class LoginFrame extends JFrame {
 	private JButton join_button;
 	
 	public LoginFrame() {
-<<<<<<< HEAD
 
 		JPanel panel = new JPanel();
 		JLabel label_id = new JLabel("ID : ");
@@ -54,7 +53,6 @@ public class LoginFrame extends JFrame {
 			}
 		});
 
-=======
 		initData();
 		setInitLayout();
 		addAction();
@@ -100,16 +98,13 @@ public class LoginFrame extends JFrame {
 	}
 	
 	public void addAction() {
->>>>>>> 408047b42b18f83ce5fd6565d362be229d858525
 		join_button.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-<<<<<<< HEAD
 
 				
 				// 충돌 시험
-=======
 				JOptionPane.showMessageDialog(null, "회원가입 창으로 이동합니다.");
 				new SigninFrame();
 			}
@@ -122,7 +117,6 @@ public class LoginFrame extends JFrame {
 					
 				}
 				
->>>>>>> 408047b42b18f83ce5fd6565d362be229d858525
 			}
 		});
 	}
@@ -130,8 +124,4 @@ public class LoginFrame extends JFrame {
 	public static void main(String[] args) {
 		new LoginFrame();
 	}
-<<<<<<< HEAD
-=======
-	
->>>>>>> 408047b42b18f83ce5fd6565d362be229d858525
 }
