@@ -10,9 +10,16 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import javax.swing.JTextPane;
 
+import lombok.Getter;
+import ver1.ObjectDAO.JoinDAO;
+
+@Getter
 public class SigninFrame extends JFrame{
+	
+	JoinDAO dao;
+	
+	SigninFrame mContext = this;
 	
 	private JLabel frame;
 	private JTextField idField;
@@ -27,6 +34,7 @@ public class SigninFrame extends JFrame{
 	}
 		
 	public void initData() {
+		
 		setTitle("Sign-In");
 		frame = new JLabel(new ImageIcon("img/signinFrame.png"));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -56,10 +64,10 @@ public class SigninFrame extends JFrame{
 		setResizable(false);
 		setLocationRelativeTo(null);
 		
-		add(signIn);
 		add(idField);
 		add(pwField);
 		add(nameField);
+		add(signIn);
 		
 		setVisible(true);
 	}
@@ -69,13 +77,26 @@ public class SigninFrame extends JFrame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null, "회원가입이 완료되었습니다.");
-				dispose();
+				
+				if(!idField.getText().equals("") && !pwField.getText().equals("") && !nameField.getText().equals("")) {
+					dao = new JoinDAO();
+					
+						
+						JOptionPane.showMessageDialog(null, "회원가입이 완료되었습니다.");
+						dispose();
+						
+					
+				} else {
+					JOptionPane.showMessageDialog(null, "ID/PW/NAME 입력해주세요.");
+				}
 			}
+			
 		});
+		
 	}
 	
 	public static void main(String[] args) {
 		new SigninFrame();
+		
 	}
 }

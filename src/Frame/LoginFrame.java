@@ -13,9 +13,11 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+
 import lombok.Data;
 
 @Data
+
 public class LoginFrame extends JFrame {
 
 	private JLabel frame;
@@ -56,7 +58,6 @@ public class LoginFrame extends JFrame {
 
 			}
 		});
-
 
 		initData();
 		setInitLayout();
@@ -109,6 +110,10 @@ public class LoginFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
+
+				
+				// 충돌 시험
+
 				JOptionPane.showMessageDialog(null, "회원가입 창으로 이동합니다.");
 				new SigninFrame();
 			}
@@ -117,10 +122,18 @@ public class LoginFrame extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+
 				if(text_id != null && text_pw != null) {
 					new MainFrame();
 				}
 
+
+				if(text_id.getText().equals("")) {
+					System.out.println("입력되지 않음");
+				}
+				System.out.println(text_id.getText());
+				new MainFrame();
+				
 			}
 		});
 	}
