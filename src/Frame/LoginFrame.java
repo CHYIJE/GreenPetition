@@ -20,12 +20,6 @@ import lombok.ToString;
 import ver1.ObjectDAO.LoginDAO;
 import ver1.models.UserDTO;
 
-@Getter
-@Setter
-@ToString
-@AllArgsConstructor
-@Builder
-
 public class LoginFrame extends JFrame {
 
 	LoginDAO dao;
@@ -91,8 +85,6 @@ public class LoginFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				// 충돌 시험
-
 				JOptionPane.showMessageDialog(null, "회원가입 창으로 이동합니다.");
 				new SigninFrame();
 			}
@@ -101,34 +93,23 @@ public class LoginFrame extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-			
-
-				// 수정중
-//				if (text_id != null && text_pw != null) {
-//					new MainFrame();
-//				}
-				
-
 				if (text_id.getText().equals("")) {
 					System.out.println("아이디 입력되지 않음");
 					JOptionPane.showMessageDialog(null, "아이디를 입력해주세요.");
 					return;
-				} else if(text_pw.getText().equals("")) {
+				} else if (text_pw.getText().equals("")) {
 					JOptionPane.showMessageDialog(null, "비밀번호를 입력해주세요.");
 					System.out.println("비밀번호 입력되지 않음");
 					return;
 				} else {
 					System.out.println(text_id.getText());
-					new MainFrame();	
+					new MainFrame();
 					dispose();
 				}
-			}
-<<<<<<< HEAD
-			
-=======
 
->>>>>>> 3b388f769c469e2c604221ea7151f4bdfafd11d7
+			}
+		});
+
 	}
 
 	public static void main(String[] args) {
