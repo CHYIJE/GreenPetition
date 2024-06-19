@@ -19,7 +19,6 @@ public class DuplicationDAO {
 		try {
 			dupliUser(dto, mContext);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

@@ -59,9 +59,6 @@ public class JoinDAO {
 			} else {
 				conn.rollback();
 			}
-
-			System.out.println("break 처리 완료");
-
 		}
 	}
 }
