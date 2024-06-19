@@ -124,7 +124,11 @@ public class LoginFrame extends JFrame {
 					dispose();
 				}
 			}
+<<<<<<< HEAD
 			
+=======
+
+>>>>>>> 3b388f769c469e2c604221ea7151f4bdfafd11d7
 	}
 
 	public static void main(String[] args) {
