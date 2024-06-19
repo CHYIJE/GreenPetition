@@ -14,6 +14,7 @@ public class MainFrame extends JFrame{
 	private JLabel frame;
 	private JButton facilityButton;
 	private JButton teacherButton;
+	private JButton articleButton;
 	
 	public MainFrame() {
 		initData();
@@ -34,9 +35,14 @@ public class MainFrame extends JFrame{
 		facilityButton.setBackground(new Color(255,255,255));
 		
 		teacherButton = new JButton(new ImageIcon("img/teacherText.png"));
-		teacherButton.setBounds(35, 270, 125, 40);
+		teacherButton.setBounds(34, 290, 125, 40);
 		teacherButton.setBorderPainted(false);
 		teacherButton.setBackground(new Color(255,255,255));
+		
+		articleButton = new JButton(new ImageIcon("img/writeArticleButton.png"));
+		articleButton.setBounds(10, 50, 200, 100);
+		articleButton.setBorderPainted(false);
+		articleButton.setBackground(new Color(255,255,255));
 	}
 	
 	public void setInitLayout() {
@@ -45,6 +51,8 @@ public class MainFrame extends JFrame{
 		setLocationRelativeTo(null);
 		
 		add(facilityButton);
+		add(teacherButton);
+		add(articleButton);
 		
 		setVisible(true);
 		
@@ -56,6 +64,21 @@ public class MainFrame extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("시설 버튼");
 				
+			}
+		});
+		
+		teacherButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("강사 버튼");
+			}
+		});
+		articleButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("글 작성 버튼");
 			}
 		});
 	}
