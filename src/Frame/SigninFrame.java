@@ -19,10 +19,7 @@ public class SigninFrame extends JFrame{
 	private JTextField pwField;
 	private JTextField nameField;
 	private JButton signIn;
-	
-	private JTextPane testIdField;
-	private JTextPane testPwField;
-	
+
 	public SigninFrame() {
 		initData();
 		setInitLayout();
@@ -36,27 +33,23 @@ public class SigninFrame extends JFrame{
 		setContentPane(frame);
 		setSize(1280, 900);
 		
-//		idField = new JTextField();
-//		idField.setBorder(javax.swing.BorderFactory.createEmptyBorder());
-//		idField.setBounds(500, 250, 220, 40);
-		
-		testIdField = new JTextPane();
-		testIdField.insertIcon(new ImageIcon("img/textField.png"));
-		testIdField.setBounds(480, 260, 300, 80);
-		
-		testPwField = new JTextPane();
-		testPwField.insertIcon(new ImageIcon("img/textField.png"));
-		testPwField.setBounds(480, 460, 300, 80);
+		idField = new JTextField();
+		idField.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+		idField.setBounds(500, 270, 260, 30);
 		
 		pwField = new JTextField();
 		pwField.setBorder(javax.swing.BorderFactory.createEmptyBorder());
-		pwField.setBounds(500, 450, 220, 40);
+		pwField.setBounds(500, 460, 260, 30);
 		
+		nameField = new JTextField();
+		nameField.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+		nameField.setBounds(500, 640, 260, 30);
 		
 		signIn = new JButton(new ImageIcon("img/signinButton190_68.png"));
-		signIn.setBounds(520, 730, 220, 80);
+		signIn.setBounds(520, 770, 220, 80);
 		signIn.setBorderPainted(false);
 		signIn.setBackground(new Color(255,255,255));
+		
 	}
 	public void setInitLayout() {
 		setLayout(null);
@@ -64,10 +57,9 @@ public class SigninFrame extends JFrame{
 		setLocationRelativeTo(null);
 		
 		add(signIn);
-//		add(idField);
-//		add(pwField);
-		add(testIdField);
-		add(testPwField);
+		add(idField);
+		add(pwField);
+		add(nameField);
 		
 		setVisible(true);
 	}

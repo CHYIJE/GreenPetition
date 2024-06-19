@@ -118,7 +118,7 @@ public class LoginFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(text_id != null && text_pw != null) {
-					
+					new MainFrame();
 				}
 
 			}
