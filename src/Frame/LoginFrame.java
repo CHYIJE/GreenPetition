@@ -50,12 +50,9 @@ public class LoginFrame extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-<<<<<<< HEAD
 
-=======
 				
 				// 충돌 시험
->>>>>>> 034cdbeabb476d8fd15af8e3002bf391d1af39de
 			}
 		});
 
