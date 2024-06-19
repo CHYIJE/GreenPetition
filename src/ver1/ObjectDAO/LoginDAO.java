@@ -7,14 +7,24 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import Frame.LoginFrame;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import ver1.DBConnectionManager;
 import ver1.models.UserDTO;
 
+@Getter
+@Setter
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
 public class LoginDAO {
+	LoginFrame mContext;
+	UserDTO dto;
 
-	public static void main(String[] args) {
-
-	}
 
 //	// 회원 추가
 //	public void addUser(UserDTO dto) throws SQLException {
@@ -52,28 +62,29 @@ public class LoginDAO {
 //		}
 //	}
 
-	// 회원 전체 조회 -> 중복 확인 로그인
-	public List<UserDTO> checkUser() throws SQLException {
-		List<UserDTO> list = new ArrayList<>();
-		String query = " SELECT * FROM user ";
-		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
-			PreparedStatement pstmt = conn.prepareStatement(query);
-
-			ResultSet rs = pstmt.executeQuery();
-
-			while (rs.next()) {
-				UserDTO dto = new UserDTO().builder().name(rs.getString("name")).acc_id(rs.getString("acc_id"))
-						.acc_pw(rs.getString("acc_pw")).build();
-				list.add(dto);
-			}
-		}
-		return null;
-	}
+//	// 회원 전체 조회 -> 중복 확인 로그인
+//	public List<UserDTO> checkUser() throws SQLException {
+//		List<UserDTO> list = new ArrayList<>();
+//		String query = " SELECT * FROM user ";
+//		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
+//			PreparedStatement pstmt = conn.prepareStatement(query);
+//
+//			ResultSet rs = pstmt.executeQuery();
+//
+//			while (rs.next()) {
+//				UserDTO dto = new UserDTO().builder().name(rs.getString("name")).acc_id(rs.getString("acc_id"))
+//						.acc_pw(rs.getString("acc_pw")).build();
+//				list.add(dto);
+//			}
+//		}
+//		return null;
+//	}
 
 	// 회원 체크 
-	private static boolean loginCheckUser(Connection conn, String acc_id, String acc_pw) throws SQLException {
+	public static boolean loginCheckUser(Connection conn, String acc_id, String acc_pw) throws SQLException {
 		String query = "SELECT * FROM user WHERE acc_id = ? AND acc_pw = ? ";
 		boolean result = false;
+		
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, acc_id);
@@ -85,12 +96,12 @@ public class LoginDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+		
 		if (result) {
 			return true;
+		} else {
+			return false;
 		}
-
-		return false;
 	}
 
 } // end of class

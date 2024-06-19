@@ -21,6 +21,8 @@ public class JoinDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
+		
 	}
 	
 	public void joinUser(UserDTO dto, SigninFrame mContext) throws SQLException{
