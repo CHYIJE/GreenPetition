@@ -153,11 +153,11 @@ public class LoginFrame extends JFrame {
 					return;
 				} else {
 					System.out.println(text_id.getText());
-					new MainFrame();
-					
+					new MainFrame();	
+					dispose();
 				}
 			}
-		});
+		});	
 	}
 
 	public static void main(String[] args) {
