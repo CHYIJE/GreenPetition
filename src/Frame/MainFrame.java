@@ -1,6 +1,7 @@
 package Frame;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
@@ -33,6 +34,12 @@ public class MainFrame extends JFrame{
 	private JButton teacherButton;
 	private JButton articleButton;
 	private JTextArea body;
+	
+	private String checker1;
+	private String checker2;
+	private String checker3;
+	
+	private int log;
 
 	
 	public MainFrame() {
@@ -49,8 +56,33 @@ public class MainFrame extends JFrame{
 		
 		add(body);
 		
+		
+		
 		body.setText("");
 		//ArrayList<BoardDAO> arr = new ArrayList<BoardDao>();
+		Font bodyfont = new Font("D2CODING", Font.BOLD, 22); 
+		body.setFont(bodyfont);
+		
+		body.append("\t"+"no"+"\t"+"\t"+"\t"+"\t"+"제목"+"\t"+"\t"+"\t"+"\t"+"\t"+"작성자"+"\t"+"\n");
+		body.append("-----------------------------------------------------------------------------------------"+"\n");
+		try (Connection conn = DBConnectionManager.getInstance().getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(VIEW_ALL)){
+			ResultSet resultSet = pstmt.executeQuery();
+			while(resultSet.next()) {
+				
+				log = resultSet.getInt("id");
+				checker1 = Integer.toString(log);
+				checker2 = resultSet.getString("title");
+				checker3 = resultSet.getString("user_id");
+				body.append("\t"+ checker1 + "\t"+"\t"+"\t"+ checker2 +"\t"+"\t"+"\t"+"\t"+ "\s"+"\s" +checker3 + "\t"+ "\n");
+				
+			}
+			
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
 		
 	}
 	

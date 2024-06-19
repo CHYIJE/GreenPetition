@@ -1,8 +1,6 @@
 package ver1.ObjectDAO;
 
-<<<<<<< HEAD
-public class BoardDAO {
-=======
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -24,6 +22,5 @@ public class BoardDAO {
 		}
 	}
 
->>>>>>> 2fd70c60d3633e97aa83650b04fe28c55ce0ef87
 
 }
