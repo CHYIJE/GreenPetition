@@ -101,6 +101,8 @@ public class LoginFrame extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				
+			
 
 				// 수정중
 //				if (text_id != null && text_pw != null) {
@@ -122,27 +124,7 @@ public class LoginFrame extends JFrame {
 					dispose();
 				}
 			}
-<<<<<<< HEAD
-		});
-
-		login_button.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				String id = "아이디";
-				String password = "비밀번호";
-
-				if (id.equals(text_id.getText()) && password.equals(text_pw.getText())) {
-					JOptionPane.showMessageDialog(null, "로그인 성공");
-				} else {
-					JOptionPane.showMessageDialog(null, "로그인 실패");
-				}
-
-			}
-		});
-=======
-		});	
->>>>>>> 6a3b4a8ab6af5a6a47ff1d033f3ba4ceccfaeb25
+			
 	}
 
 	public static void main(String[] args) {
