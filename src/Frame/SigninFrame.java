@@ -3,6 +3,7 @@ package Frame;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -13,13 +14,14 @@ import javax.swing.JTextField;
 
 import lombok.Getter;
 import ver1.ObjectDAO.JoinDAO;
+import ver1.models.UserDTO;
 
 @Getter
 public class SigninFrame extends JFrame{
 	
 	JoinDAO dao;
 	
-	SigninFrame mContext = this;
+	SigninFrame mContext;
 	
 	private JLabel frame;
 	private JTextField idField;
@@ -78,20 +80,26 @@ public class SigninFrame extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				if(!idField.getText().equals("") && !pwField.getText().equals("") && !nameField.getText().equals("")) {
-					dao = new JoinDAO();
-					
-						
-						JOptionPane.showMessageDialog(null, "회원가입이 완료되었습니다.");
-						dispose();
-						
-					
-				} else {
-					JOptionPane.showMessageDialog(null, "ID/PW/NAME 입력해주세요.");
-				}
-			}
-			
-		});
+				if (!idField.getText().isEmpty() && !pwField.getText().isEmpty() && !nameField.getText().isEmpty()) {
+                    try {
+                        // Create UserDTO instance and populate it with fields
+                        UserDTO user = new UserDTO();
+                        user.setAcc_id(idField.getText());
+                        user.setAcc_pw(pwField.getText());
+                        user.setName(nameField.getText());
+                        
+                        // Call joinUser method from JoinDAO
+                        dao.joinUser(user);
+                    } catch (SQLException e1) {
+                        e1.printStackTrace();
+                        JOptionPane.showMessageDialog(null, "회원가입 중 오류가 발생하였습니다.");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "ID/PW/NAME을 모두 입력해주세요.");
+                }
+            }
+        });
+		
 		
 	}
 	
