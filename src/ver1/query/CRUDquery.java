@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class CRUDquery {
 	// INSERT
-	private static final String INSERT_USER = " INSERT INTO user(name, acc_id, acc_pw) values ( ?, ?, ? ) "; // 회원가입
+	public static final String INSERT_USER = " INSERT INTO user(name, acc_id, acc_pw) values ( ?, ?, ? ) "; // 회원가입
 	private static final String INSERT_ARTICLE = " INSERT INTO petition(title, user_id, category_id, content, date, agree, disagree) values ( ?, ?, now(), ?, ? )";
 	
 	// SELECT
