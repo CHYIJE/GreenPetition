@@ -1,5 +1,6 @@
 package ver1.ObjectDAO;
 
+<<<<<<< HEAD
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -18,5 +19,8 @@ public class BoardDAO {
 			pstmt.executeUpdate();
 		}
 	}
+=======
+public class BoardDAO {
+>>>>>>> e6b776f635e02e46e1846d5ca5d609be4bef3b5e
 
 }
