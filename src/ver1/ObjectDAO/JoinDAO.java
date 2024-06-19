@@ -31,6 +31,8 @@ public class JoinDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		
 	}
 	
 	// 회원가입
