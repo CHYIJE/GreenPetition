@@ -3,23 +3,55 @@ package Frame;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextArea;
+
+import ver1.DBConnectionManager;
+import ver1.ObjectDAO.BoardDAO;
 
 public class MainFrame extends JFrame{
+	
+	private static final String VIEW_ALL = " select * from petition ";
+	private static final String VIEW_FACILITY = " select * from petition where category id = facility ";
+	private static final String VIEW_TEACHER = " select * from petition where category id = teacher ";
+
 	
 	private JLabel frame;
 	private JButton facilityButton;
 	private JButton teacherButton;
 	private JButton articleButton;
+	private JTextArea body;
+
 	
 	public MainFrame() {
 		initData();
 		setInitLayout();
 		addAction();
+		body();
+	}
+	
+	public void body() {
+		body = new JTextArea();
+		body.setBounds(250, 110, 1000, 700);
+		body.setBackground(new Color(213,222,232));
+		
+		add(body);
+		
+		body.setText("");
+		//ArrayList<BoardDAO> arr = new ArrayList<BoardDao>();
+		
 	}
 	
 	public void initData() {
@@ -28,6 +60,8 @@ public class MainFrame extends JFrame{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setContentPane(frame);
 		setSize(1280, 900);
+		
+		
 		
 		facilityButton = new JButton(new ImageIcon("img/facilityText.png"));
 		facilityButton.setBounds(35, 180, 125, 40);
