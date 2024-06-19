@@ -18,6 +18,10 @@ public class JoinDAO {
 
 	UserDTO dto;
 
+	// 회원가입
+	
+	String resultRow = null;
+	
 	public JoinDAO(UserDTO dto, SigninFrame mContext) {
 
 		try {
@@ -30,28 +34,38 @@ public class JoinDAO {
 
 	public void joinUser(UserDTO dto, SigninFrame mContext) throws SQLException {
 		this.mContext = mContext;
-		String checkIdQuery = "SELECT acc_id From user";
+		
+		String checkIdQuery = "SELECT acc_id FROM user ";
 		String insertQuery = "INSERT INTO user(name, acc_id, acc_pw) values (? ,?, ?) ";
-
-		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
-			PreparedStatement ptmt = conn.prepareStatement(insertQuery);
-			ptmt.setString(1, mContext.getIdField().getText());
-			ptmt.setString(2, mContext.getPwField().getText());
-			ptmt.setString(3, mContext.getNameField().getText());
-
-			int testRow = ptmt.executeUpdate();
-			System.out.println(testRow);
-
-		}
 		
-		
-		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
-			PreparedStatement ptmt = conn.prepareStatement(checkIdQuery);
+		try (Connection conn = DBConnectionManager.getInstance().getConnection()){
+			conn.setAutoCommit(false);
 			
-			ResultSet rs = ptmt.executeQuery();
-			rs = 
-					
-			
+			PreparedStatement selectptmt = conn.prepareStatement(checkIdQuery);
+			ResultSet rs = selectptmt.executeQuery();
+			System.out.println("while 들어가기 전");
+				while(rs.next()) {
+					System.out.println("while 들어오긴 함");
+					if(mContext.getIdField().getText().equals(rs.getString("acc_id"))) {
+						System.out.println("rollback");
+						conn.rollback();
+					} else {
+						PreparedStatement insertptmt = conn.prepareStatement(insertQuery);
+						insertptmt.setString(1, mContext.getIdField().getText());
+						insertptmt.setString(2, mContext.getPwField().getText());
+						insertptmt.setString(3, mContext.getNameField().getText());
+						
+						insertptmt.addBatch();
+						
+						conn.commit();
+						int testRow = insertptmt.executeUpdate();
+						System.out.println(testRow);
+						
+					}
+					System.out.println("break 처리 완료");
+					break;
+				}
+
 		}
 	}
 }
