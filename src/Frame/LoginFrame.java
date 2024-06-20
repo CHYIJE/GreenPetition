@@ -12,26 +12,14 @@ import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
 import ver1.ObjectDAO.LoginDAO;
 import ver1.models.UserDTO;
-
-@Getter
-@Setter
-@ToString
-@AllArgsConstructor
-@Builder
-
 public class LoginFrame extends JFrame {
 
-	LoginDAO dao;
+	LoginDAO logindao;
 	UserDTO dto;
 
-	LoginFrame mcontext = this;
+	LoginFrame mContext = this;
 
 	private JLabel frame;
 	private JTextField text_id;
@@ -52,20 +40,20 @@ public class LoginFrame extends JFrame {
 		setContentPane(frame);
 		setSize(1280, 900);
 
-		text_id = new JTextField();
+		mContext.text_id = new JTextField();
 		text_id.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 		text_id.setBounds(500, 300, 260, 30);
 
-		text_pw = new JPasswordField();
+		mContext.text_pw = new JPasswordField();
 		text_pw.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 		text_pw.setBounds(500, 570, 260, 30);
 
-		login_button = new JButton(new ImageIcon("img/loginButton.png"));
+		mContext.login_button = new JButton(new ImageIcon("img/loginButton.png"));
 		login_button.setBounds(640, 740, 220, 80);
 		login_button.setBorderPainted(false);
 		login_button.setBackground(new Color(255, 255, 255));
 
-		join_button = new JButton(new ImageIcon("img/signinButton190_68.png"));
+		mContext.join_button = new JButton(new ImageIcon("img/signinButton190_68.png"));
 		join_button.setBounds(380, 740, 220, 80);
 		join_button.setBorderPainted(false);
 		join_button.setBackground(new Color(255, 255, 255));
@@ -91,8 +79,6 @@ public class LoginFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				// 충돌 시험
-
 				JOptionPane.showMessageDialog(null, "회원가입 창으로 이동합니다.");
 				new SigninFrame();
 			}
@@ -101,22 +87,15 @@ public class LoginFrame extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
-				// 수정중
-//				if (text_id != null && text_pw != null) {
-//					new MainFrame();
-//				}
-				
-
-				if (text_id.getText().equals("")) {
-					System.out.println("아이디 입력되지 않음");
-					JOptionPane.showMessageDialog(null, "아이디를 입력해주세요.");
-					return;
-				} else if(text_pw.getText().equals("")) {
-					JOptionPane.showMessageDialog(null, "비밀번호를 입력해주세요.");
-					System.out.println("비밀번호 입력되지 않음");
-					return;
+				if(!text_id.getText().equals("") && !text_pw.getText().equals("")) {
+					try {
+						logindao = new LoginDAO(dto, mContext);
+						dispose();
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
 				} else {
+<<<<<<< HEAD
 					System.out.println(text_id.getText());
 					new MainFrame();	
 					dispose();
@@ -135,10 +114,24 @@ public class LoginFrame extends JFrame {
 					JOptionPane.showMessageDialog(null, "로그인 성공");
 				} else {
 					JOptionPane.showMessageDialog(null, "로그인 실패");
+=======
+					JOptionPane.showMessageDialog(null, "ID/PW를 입력해주세요.");
+					return;
+>>>>>>> 006fd8658d269d5b86947ddbcec80efe3b2d05ce
 				}
 
 			}
 		});
+<<<<<<< HEAD
+=======
+
+	}
+	public JTextField getTextId() {
+		return text_id;
+	}
+	public JTextField getTextPw() {
+		return text_pw;
+>>>>>>> 006fd8658d269d5b86947ddbcec80efe3b2d05ce
 	}
 
 	public static void main(String[] args) {

@@ -33,14 +33,17 @@ public class DuplicationDAO {
 			
 			PreparedStatement checkptmt = conn.prepareStatement(checkIdQuery);
 			checkptmt.setString(1, mContext.getIdField().getText());
+			
 			ResultSet rs = checkptmt.executeQuery();
 			
 			if(rs.next()) {
-				JOptionPane.showMessageDialog(null, "이미 존재하는 ID 입니다.");
+				JOptionPane.showMessageDialog(null, "중복된 ID 입니다.");
+				conn.rollback();
+				mContext.getSignIn().setEnabled(false);
 			} else {
 				JOptionPane.showMessageDialog(null, "사용 가능한 ID 입니다.");
+				mContext.getSignIn().setEnabled(true);
 			}
-			
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
