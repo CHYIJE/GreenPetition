@@ -122,7 +122,6 @@ public class LoginFrame extends JFrame {
 					dispose();
 				}
 			}
-<<<<<<< HEAD
 		});
 
 		login_button.addActionListener(new ActionListener() {
@@ -140,9 +139,6 @@ public class LoginFrame extends JFrame {
 
 			}
 		});
-=======
-		});	
->>>>>>> 6a3b4a8ab6af5a6a47ff1d033f3ba4ceccfaeb25
 	}
 
 	public static void main(String[] args) {
