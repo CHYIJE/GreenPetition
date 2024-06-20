@@ -28,9 +28,10 @@ public class UserInfo {
 		
 		if(users.isEmpty()) {
 			System.out.println("empty");
-			this.users.put(dao.getUserId(), dao.getUserAccId());
 			System.out.println(users.size());
-			System.out.println(users.get(dao.getUserAccId()));
+			users.put(1, "temp");
+			System.out.println(users.size());
+			System.out.println(users.get(1));
 		}
 	}
 	
