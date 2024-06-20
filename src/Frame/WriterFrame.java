@@ -23,10 +23,7 @@ public class WriterFrame extends JFrame {
 
 	WriterDAO writerDAO;
 	WriterDTO dto;
-<<<<<<< HEAD
 	LoginDAO loginDAO;
-=======
->>>>>>> 7a049af10a212519f12a6093b369196d34baf686
 	WriterFrame mContext = this;
 
 	private JLabel frame;
@@ -128,12 +125,7 @@ public class WriterFrame extends JFrame {
                             .content(contentField.getText())
                             .build();
 					try {
-<<<<<<< HEAD
 						writerDAO = new WriterDAO(dto, mContext,loginDAO);
-=======
-						writerDAO = new WriterDAO(dto, mContext);
-						new MainFrame(null);
->>>>>>> 7a049af10a212519f12a6093b369196d34baf686
 					} catch (Exception e1) {
 						e1.printStackTrace();
 					}
@@ -142,10 +134,7 @@ public class WriterFrame extends JFrame {
 				} else {
 					JOptionPane.showMessageDialog(null, "제목/내용 입력해주세요.");
 				}
-<<<<<<< HEAD
 				new MainFrame(loginDAO);
-=======
->>>>>>> 7a049af10a212519f12a6093b369196d34baf686
 			}
 		});
 
