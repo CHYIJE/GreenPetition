@@ -15,11 +15,11 @@ import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+
 import ver1.DBConnectionManager;
 import ver1.ObjectDAO.LoginDAO;
+import javax.swing.SwingConstants;
 
 @Getter
 
@@ -28,7 +28,6 @@ public class MainFrame extends JFrame {
 	private static final String VIEW_ALL = " select petition.id, petition.title, user.acc_id from petition join user on petition.user_id = user.id ";
 	private static final String VIEW_FACILITY = " select petition.id, petition.title, user.acc_id from petition join user on petition.user_id = user.id where petition.category = 'facility' ";
 	private static final String VIEW_TEACHER = " select petition.id, petition.title, user.acc_id from petition join user on petition.user_id = user.id where petition.category = 'teacher' ";
-	private static final String IDCHECK = " select user.name,user.acc_id from user ";
 
 	private JLabel frame;
 	private JButton facilityButton;
@@ -36,6 +35,10 @@ public class MainFrame extends JFrame {
 	private JButton articleButton;
 	private JTextArea body;
 	private JLabel check;
+
+	private JButton minusButton;
+	private JButton plusButton;
+	private JTextField page;
 
 	private String checker1;
 	private String checker2;
@@ -54,25 +57,25 @@ public class MainFrame extends JFrame {
 		addAction();
 		body();
 		checkId();
+		numbersheet();
 	}
 
 	public void checkId() {
 
 		check = new JLabel();
-		add(check);
+		getContentPane().add(check);
 		check.setText(mcontext.getUserId() + " 님 접속중입니다!");
 		Font bodyfont = new Font("D2CODING", Font.BOLD, 25);
 		check.setFont(bodyfont);
-		check.setBounds(950, 40, 400, 100);
+		check.setBounds(900, 40, 350, 100);
 
 	}
-
 
 	public void body() {
 
 		body = new JTextArea();
 		body.setEditable(false);
-		body.setBounds(250, 110, 1000, 700);
+		body.setBounds(250, 110, 1000, 500);
 		body.setBackground(new Color(213, 222, 232));
 
 		getContentPane().add(body);
@@ -253,6 +256,43 @@ public class MainFrame extends JFrame {
 			}
 
 		});
+
 	}
+
+	public void numbersheet() {
+		minusButton = new JButton(" < ");
+		plusButton = new JButton(" > ");
+		page = new JTextField();
+		page.setHorizontalAlignment(SwingConstants.CENTER);
+		page.setFont(new Font("HY헤드라인M", Font.BOLD, 17));
+		page.setEditable(false);
+
+		minusButton.setBounds(650, 650, 50, 50);
+		plusButton.setBounds(800, 650, 50, 50);
+		page.setBounds(710, 650, 80, 50);
+		getContentPane().add(minusButton);
+		getContentPane().add(plusButton);
+		getContentPane().add(page);
+		
+		minusButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		plusButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+
+	}
+	
 
 }
