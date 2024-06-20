@@ -1,11 +1,8 @@
 package Frame;
 
-import java.awt.Button;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -14,13 +11,12 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import javax.swing.plaf.basic.BasicOptionPaneUI.ButtonActionListener;
 
 import ver1.ObjectDAO.LoginDAO;
 import ver1.models.UserDTO;
 public class LoginFrame extends JFrame {
 
-	LoginDAO logindao;
+	LoginDAO lgContext;
 	UserDTO dto;
 
 	LoginFrame mContext = this;
@@ -31,6 +27,7 @@ public class LoginFrame extends JFrame {
 	private JButton login_button;
 	private JButton join_button;
 
+	
 	public LoginFrame() {
 		initData();
 		setInitLayout();
@@ -73,33 +70,10 @@ public class LoginFrame extends JFrame {
 		add(login_button);
 		add(join_button);
 
+
 		setVisible(true);
 	}
 	
-	private void addEventListener() {
-		
-		this.addKeyListener(new KeyListener() {
-			
-			@Override
-			public void keyTyped(KeyEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void keyReleased(KeyEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void keyPressed(KeyEvent e) {
-				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
-					
-				}
-			}
-		});
-	}
 
 	public void addAction() {
 
@@ -118,36 +92,44 @@ public class LoginFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if(!text_id.getText().equals("") && !text_pw.getText().equals("")) {
 					try {
-						logindao = new LoginDAO(dto, mContext);
-						dispose();
+						new LoginDAO(dto, mContext);
+//						dispose();
+//						frame.setVisible(false);
+						new MainFrame(lgContext);
 					} catch (Exception e2) {
 
 					}
 				} else {
+					JOptionPane.showMessageDialog(null, "ID/PW를 입력해주세요.");
 
 					System.out.println(text_id.getText());
-					new MainFrame();	
+					
 				}
 			}
 		});
 
-		login_button.addActionListener(new ActionListener() {
+//		login_button.addActionListener(new ActionListener() {
+//
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				String id = "아이디";
+//				String password = "비밀번호";
+//
+//				if (id.equals(text_id.getText()) && password.equals(text_pw.getText())) {
+//					JOptionPane.showMessageDialog(null, "로그인 성공");
+//				} else {
+//					JOptionPane.showMessageDialog(null, "로그인 실패");
+//
+//					JOptionPane.showMessageDialog(null, "ID/PW를 입력해주세요.");
+//				
+//
+//				}
+//			}
+//		});
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				String id = "아이디";
-				String password = "비밀번호";
 
-				if (id.equals(text_id.getText()) && password.equals(text_pw.getText())) {
-					JOptionPane.showMessageDialog(null, "로그인 성공");
-				} else {
-					JOptionPane.showMessageDialog(null, "로그인 실패\nID/PW를 확인해주세요. ");
-					return;
-				}
-			}
-		});
+
 	}
-	
 	public JTextField getTextId() {
 		return text_id;
 	}

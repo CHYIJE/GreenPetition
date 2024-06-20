@@ -13,46 +13,62 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
 import ver1.DBConnectionManager;
+import ver1.ObjectDAO.LoginDAO;
 
-@Getter
 
-@AllArgsConstructor
 public class MainFrame extends JFrame {
 
 	private static final String VIEW_ALL = " select petition.id, petition.title, user.acc_id from petition join user on petition.user_id = user.id ";
 	private static final String VIEW_FACILITY = " select petition.id, petition.title, user.acc_id from petition join user on petition.user_id = user.id where petition.category = 'facility' ";
 	private static final String VIEW_TEACHER = " select petition.id, petition.title, user.acc_id from petition join user on petition.user_id = user.id where petition.category = 'teacher' ";
+	private static final String IDCHECK = " select user.name,user.acc_id from user ";
 
 	private JLabel frame;
 	private JButton facilityButton;
 	private JButton teacherButton;
 	private JButton articleButton;
 	private JTextArea body;
-
+	
+	LoginFrame mContext;
+	
 	private String checker1;
 	private String checker2;
 	private String checker3;
+	String getUserName;
+	private JLabel check;
 
 	private int log;
 
-	public MainFrame() {
+	private String id;
+	private String name;
+	private LoginDAO mcontext;
+
+	public MainFrame(LoginDAO mcontext) {
+		this.mcontext = mcontext;
 		initData();
 		setInitLayout();
 		addAction();
 		body();
+		checkId();
 	}
+
+	public void checkId() {
+
+		check = new JLabel();
+		add(check);
+		check.setText(mcontext.getUserId() + " 님 접속중입니다!");
+		Font bodyfont = new Font("D2CODING", Font.BOLD, 25);
+		check.setFont(bodyfont);
+		check.setBounds(950, 40, 400, 100);
+
+	}
+
 
 	public void body() {
 
 		body = new JTextArea();
-		body.setRows(3);
-		body.setColumns(12);
 		body.setEditable(false);
 		body.setBounds(250, 110, 1000, 700);
 		body.setBackground(new Color(213, 222, 232));
@@ -164,12 +180,12 @@ public class MainFrame extends JFrame {
 						checker2 = resultSet.getString("title");
 						checker3 = resultSet.getString("acc_id");
 						if (checker2.length() <= 6) {
-							body.append("\t" + "\t" + checker1 + "\t" + "\t" + "\t" + checker2 + "\t" + "\t" + "\t" + "\s"
-									+ "\s" + "\s" + "\s" + "\s" + "\s" + "\s" + "\t" + "\t" + checker3 + "\t" + "\t" + "\t"
-									+ "\n");
+							body.append("\t" + "\t" + checker1 + "\t" + "\t" + "\t" + checker2 + "\t" + "\t" + "\t"
+									+ "\s" + "\s" + "\s" + "\s" + "\s" + "\s" + "\s" + "\t" + "\t" + checker3 + "\t"
+									+ "\t" + "\t" + "\n");
 						} else {
-							body.append("\t" + "\t" + checker1 + "\t" + "\t" + " " + " " + checker2 + "\t" + "\t" + "\t" + "\t"
-									+ checker3 + "\t" + "\t" + "\t" + "\n");
+							body.append("\t" + "\t" + checker1 + "\t" + "\t" + " " + " " + checker2 + "\t" + "\t" + "\t"
+									+ "\t" + checker3 + "\t" + "\t" + "\t" + "\n");
 						}
 					}
 
@@ -212,12 +228,12 @@ public class MainFrame extends JFrame {
 						checker2 = resultSet.getString("title");
 						checker3 = resultSet.getString("acc_id");
 						if (checker2.length() <= 6) {
-							body.append("\t" + "\t" + checker1 + "\t" + "\t" + "\t" + checker2 + "\t" + "\t" + "\t" + "\s"
-									+ "\s" + "\s" + "\s" + "\s" + "\s" + "\s" + "\t" + "\t" + checker3 + "\t" + "\t" + "\t"
-									+ "\n");
+							body.append("\t" + "\t" + checker1 + "\t" + "\t" + "\t" + checker2 + "\t" + "\t" + "\t"
+									+ "\s" + "\s" + "\s" + "\s" + "\s" + "\s" + "\s" + "\t" + "\t" + checker3 + "\t"
+									+ "\t" + "\t" + "\n");
 						} else {
-							body.append("\t" + "\t" + checker1 + "\t" + "\t" + " " + " " + checker2 + "\t" + "\t" + "\t" + "\t"
-									+ checker3 + "\t" + "\t" + "\t" + "\n");
+							body.append("\t" + "\t" + checker1 + "\t" + "\t" + " " + " " + checker2 + "\t" + "\t" + "\t"
+									+ "\t" + checker3 + "\t" + "\t" + "\t" + "\n");
 						}
 					}
 
@@ -236,8 +252,5 @@ public class MainFrame extends JFrame {
 
 		});
 	}
-
-	public static void main(String[] args) {
-		new MainFrame();
-	}
 }
+
