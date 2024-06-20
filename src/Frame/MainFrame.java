@@ -7,15 +7,18 @@ import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.Vector;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 
 import ver1.DBConnectionManager;
 import ver1.ObjectDAO.LoginDAO;
+import ver1.models.BoardDTO;
 
 
 public class MainFrame extends JFrame {
@@ -58,7 +61,7 @@ public class MainFrame extends JFrame {
 
 		check = new JLabel();
 		add(check);
-		check.setText(mcontext.getUserId() + " 님 접속중입니다!");
+		check.setText(mcontext.getUserName() + " 님 접속중입니다!");
 		Font bodyfont = new Font("D2CODING", Font.BOLD, 25);
 		check.setFont(bodyfont);
 		check.setBounds(950, 40, 400, 100);
@@ -252,5 +255,23 @@ public class MainFrame extends JFrame {
 
 		});
 	}
+	class PetitionTable {
+		JTable table;
+		Vector data = new Vector<>();
+		Vector<String> colName = new Vector<>();
+		
+		public void setData(){
+			colName.add("id");
+			colName.add("acc_id");
+			colName.add("acc_pw");
+		}
+		public void setTable() {
+			String[] header = new String[5];
+			Object[][] petetion = new String[header.length][15];
+			table = new JTable(petetion, header);
+			
+		}
+	}
+	
 }
 
