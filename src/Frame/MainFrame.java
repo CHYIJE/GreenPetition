@@ -78,7 +78,7 @@ public class MainFrame extends JFrame {
 		getContentPane().add(check);
 
 		add(check);
-		check.setText(mcontext.getUserName() + " 님 접속중입니다!");
+		check.setText(mcontext.getUserAccId() + " 님 접속중입니다!");
 		Font bodyfont = new Font("D2CODING", Font.BOLD, 25);
 		check.setFont(bodyfont);
 		check.setBounds(900, 40, 350, 100);

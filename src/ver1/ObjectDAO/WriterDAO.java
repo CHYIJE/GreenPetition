@@ -3,6 +3,7 @@ package ver1.ObjectDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Map;
 
 import javax.swing.JOptionPane;
 
@@ -66,6 +67,14 @@ public class WriterDAO {
 				conn.rollback();
 			}
 		}
+	}
+	class UserInfo{
+		private static Map<Integer, String> users;
+		
+		public UserInfo() {
+
+		}
+		
 	}
 	
 }
