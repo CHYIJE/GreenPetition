@@ -1,8 +1,11 @@
 package Frame;
 
+import java.awt.Button;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -11,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.plaf.basic.BasicOptionPaneUI.ButtonActionListener;
 
 import ver1.ObjectDAO.LoginDAO;
 import ver1.models.UserDTO;
@@ -70,6 +74,31 @@ public class LoginFrame extends JFrame {
 		add(join_button);
 
 		setVisible(true);
+	}
+	
+	private void addEventListener() {
+		
+		this.addKeyListener(new KeyListener() {
+			
+			@Override
+			public void keyTyped(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+					
+				}
+			}
+		});
 	}
 
 	public void addAction() {
