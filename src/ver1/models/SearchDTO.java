@@ -11,9 +11,9 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class patitionDTO {
+public class SearchDTO {
+ // db  petition의 제목과 내용 선언
 	private int id;
-	private int user_id;
-	private Category category;
-	
+	private String title;
+	private String content;
 }
