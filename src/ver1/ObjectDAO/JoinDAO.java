@@ -34,8 +34,12 @@ public class JoinDAO {
 		
 		
 	}
+<<<<<<< HEAD
+
+=======
 	
 	// 회원가입
+>>>>>>> 2406dc6d81dbfc598db08477ac661e204de9cce8
 	public void joinUser(UserDTO dto, SigninFrame mContext) throws SQLException {
 
 		this.mContext = mContext;
@@ -53,12 +57,29 @@ public class JoinDAO {
 
 			int rowCount = insertptmt.executeUpdate();
 
+<<<<<<< HEAD
+					System.out.println(rs.getString("acc_id"));
+					int testRow = insertptmt.executeUpdate();
+
+					conn.commit();
+					System.out.println(testRow);
+				} else {
+					conn.rollback();
+				}
+
+				System.out.println("break 처리 완료");
+				break;
+			}
+
+		} catch (SQLException e) {
+=======
 			if(rowCount > 0) {
 				conn.commit();
 				JOptionPane.showMessageDialog(null, "회원가입이 완료되었습니다.");
 			} else {
 				conn.rollback();
 			}
+>>>>>>> 2406dc6d81dbfc598db08477ac661e204de9cce8
 		}
 	}
 }
