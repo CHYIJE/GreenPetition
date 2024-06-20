@@ -24,6 +24,8 @@ public class LoginDAO {
 	LoginFrame mContext;
 	UserDTO dto;
 	MainFrame mainFrame;
+	String userId;
+	String userPw;
 
 	public LoginDAO(UserDTO dto, LoginFrame mContext) {
 		try {
@@ -39,6 +41,7 @@ public class LoginDAO {
 
 		String idQuery = " SELECT * FROM user where acc_id = ? ";
 		String passwordQuery = " SELECT * FROM user where acc_id = ? AND acc_pw = ? ";
+		String loginQuery = " SELECT name FROM user where acc_id = ? and acc_pw = ? ";
 
 		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
 			conn.setAutoCommit(false);
@@ -60,15 +63,15 @@ public class LoginDAO {
 
 				if (rs2.next()) {
 					JOptionPane.showMessageDialog(null, "로그인 성공");
+					userId = rs2.getString("id");
 					mainFrame = new MainFrame();
 
 				} else if (rs2.next() == false) {
+				} else {
 					JOptionPane.showMessageDialog(null, "ID 또는 Password 가 일치하지 않습니다.");
 					conn.rollback();
-					return;
-				} else {
-					return;
-				}
+					
+				} 
 			}
 
 		}
