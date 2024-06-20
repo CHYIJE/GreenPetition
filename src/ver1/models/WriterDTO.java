@@ -18,5 +18,6 @@ public class WriterDTO {
 	private String uid;
 	private String title;
 	private String content;
-
+	private String category;
+	private String date;
 }

@@ -14,6 +14,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import lombok.Getter;
+import ver1.ObjectDAO.LoginDAO;
 import ver1.ObjectDAO.WriterDAO;
 import ver1.models.WriterDTO;
 
@@ -22,7 +23,6 @@ public class WriterFrame extends JFrame {
 
 	WriterDAO writerDAO;
 	WriterDTO dto;
-
 	WriterFrame mContext = this;
 
 	private JLabel frame;
@@ -118,6 +118,7 @@ public class WriterFrame extends JFrame {
 						&& !mContext.contentField.getText().equals("")) {
 					try {
 						writerDAO = new WriterDAO(dto, mContext);
+						new MainFrame(null);
 					} catch (Exception e1) {
 						e1.printStackTrace();
 					}
@@ -126,7 +127,6 @@ public class WriterFrame extends JFrame {
 				} else {
 					JOptionPane.showMessageDialog(null, "제목/내용 입력해주세요.");
 				}
-				new MainFrame(null);
 			}
 		});
 

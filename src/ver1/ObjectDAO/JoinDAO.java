@@ -45,9 +45,9 @@ public class JoinDAO {
 	            conn.setAutoCommit(false);
 
 	            PreparedStatement insertptmt = conn.prepareStatement(insertQuery);
-	            insertptmt.setString(1, mContext.getIdField().getText());
-	            insertptmt.setString(2, mContext.getPwField().getText());
-	            insertptmt.setString(3, mContext.getNameField().getText());
+	            insertptmt.setString(1, mContext.getNameField().getText());
+	            insertptmt.setString(2, mContext.getIdField().getText());
+	            insertptmt.setString(3, mContext.getPwField().getText());
 
 	            int rowCount = insertptmt.executeUpdate();
 

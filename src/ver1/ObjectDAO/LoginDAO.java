@@ -9,14 +9,13 @@ import javax.swing.JOptionPane;
 
 import Frame.LoginFrame;
 import Frame.MainFrame;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import ver1.DBConnectionManager;
 import ver1.models.UserDTO;
 
 public class LoginDAO {
 	LoginFrame mContext;
 	UserDTO dto;
+	LoginDAO dao = this;
 	MainFrame mainFrame;
 	private int userId;
 	private String userName;
@@ -59,7 +58,7 @@ public class LoginDAO {
 				if (rs2.next()) {
 					JOptionPane.showMessageDialog(null, "로그인 성공");
 					
-					userId = rs2.getInt("id");
+					dao.userId = rs2.getInt("id");
 					userName = rs2.getString("acc_id");
 					
 					mainFrame = new MainFrame(this);
@@ -77,7 +76,7 @@ public class LoginDAO {
 	}
 
 	public int getUserId() {
-		return userId;
+		return dao.userId;
 	}
 
 	public String getUserName() {

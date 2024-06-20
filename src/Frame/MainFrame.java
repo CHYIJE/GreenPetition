@@ -18,7 +18,6 @@ import javax.swing.JTextArea;
 
 import ver1.DBConnectionManager;
 import ver1.ObjectDAO.LoginDAO;
-import ver1.models.BoardDTO;
 
 
 public class MainFrame extends JFrame {
@@ -251,9 +250,12 @@ public class MainFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("글 작성 버튼");
+				new WriterFrame();
 			}
 
 		});
+		
+		
 	}
 	class PetitionTable {
 		JTable table;
