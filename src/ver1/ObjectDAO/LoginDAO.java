@@ -4,93 +4,110 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
+import javax.swing.JOptionPane;
+
+import Frame.LoginFrame;
+import Frame.MainFrame;
 import ver1.DBConnectionManager;
 import ver1.models.UserDTO;
 
+<<<<<<< HEAD
+@Getter
+@Setter
+@ToString
+@AllArgsConstructor
 public class LoginDAO {
-
-	public static void main(String[] args) {
-
-	}
-
-//	// 회원 추가
-//	public void addUser(UserDTO dto) throws SQLException {
-//
-//		String query = "INSERT INTO user(name, acc_id, acc_pw) values(?, ?, ?)";
-//		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
-//			PreparedStatement pstmt = conn.prepareStatement(query);
-//			pstmt.setString(1, dto.getName());
-//			pstmt.setString(2, dto.getAcc_id());
-//			pstmt.setString(3, dto.getAcc_pw());
-//			pstmt.executeUpdate();
-//		}
-//	} // end of addUser
-
-//	// 회원 정보 수정하기    일단 이름으로 찾기
-//	public void updateUser(String name, UserDTO dto) throws SQLException {
-//		String query = " UPDATE user SET name = ?, acc_id = ?, acc_pw = ? WHERE name = ? ";
-//		try (Connection conn = DBConnectionManager.getInstance().getConnection()){
-//			PreparedStatement pstmt = conn.prepareStatement(query);
-//			pstmt.setString(1, dto.getName());
-//			pstmt.setString(2, dto.getAcc_id());
-//			pstmt.setString(3, dto.getAcc_pw());
-//			pstmt.setString(4, name);
-//			pstmt.executeUpdate();
-//		}
-//	}
-
-//	// 회원 삭제
-//	public void deleteUser(int id) throws SQLException {
-//		String query = " DELETE FROM user WHERE id = ?";
-//		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
-//			PreparedStatement pstmt = conn.prepareStatement(query);
-//			pstmt.setInt(1, id);
-//			pstmt.executeUpdate();
-//		}
-//	}
-
-	// 회원 전체 조회 -> 중복 확인 로그인
-	public List<UserDTO> checkUser() throws SQLException {
-		List<UserDTO> list = new ArrayList<>();
-		String query = " SELECT * FROM user ";
-		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
-			PreparedStatement pstmt = conn.prepareStatement(query);
-
-			ResultSet rs = pstmt.executeQuery();
-
-			while (rs.next()) {
-				UserDTO dto = new UserDTO().builder().name(rs.getString("name")).acc_id(rs.getString("acc_id"))
-						.acc_pw(rs.getString("acc_pw")).build();
-				list.add(dto);
-			}
+	LoginFrame mContext;
+	UserDTO dto;
+	
+	public LoginDAO(UserDTO dto, LoginFrame mContext){
+		
+		try {
+			loginCheckUser(dto, mContext);
+			this.mContext = mContext;
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		return null;
 	}
+
+
 
 	// 회원 체크 
-	private static boolean loginCheckUser(Connection conn, String acc_id, String acc_pw) throws SQLException {
-		String query = "SELECT * FROM user WHERE acc_id = ? AND acc_pw = ? ";
-		boolean result = false;
-		try {
-			PreparedStatement pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, acc_id);
-			pstmt.setString(2, acc_pw);
-			ResultSet rs = pstmt.executeQuery();
+	public void loginCheckUser(UserDTO dto, LoginFrame mcontext) throws SQLException {
+		
+		this.mContext = mcontext;
+		
+		String idQuery = " SELECT acc_id FROM user WHERE acc_id = ? ";
+		String pwQuery = " SELECT acc_pw FROM user WHERE acc_pw = ? ";
+		
+		try (Connection conn = DBConnectionManager.getInstance().getConnection()){
+			
+			conn.setAutoCommit(false);
+			
+			PreparedStatement ptmt = conn.prepareStatement(idQuery);
+			ptmt.setString(1, mcontext.get);
 
-			result = rs.next();
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+=======
+public class LoginDAO {
+	LoginFrame mContext;
+	UserDTO dto;
+	MainFrame mainFrame;
 
-		if (result) {
-			return true;
+	public LoginDAO(UserDTO dto, LoginFrame mContext) {
+		try {
+			loginUser(dto, mContext);
+			this.mContext = mContext;
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
+	}
 
-		return false;
+	public void loginUser(UserDTO dto, LoginFrame mContext) throws SQLException {
+		this.mContext = mContext;
+
+		String idQuery = " SELECT * FROM user where acc_id = ? ";
+		String passwordQuery = " SELECT * FROM user where acc_id = ? AND acc_pw = ? ";
+
+		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
+			conn.setAutoCommit(false);
+			PreparedStatement idptmt = conn.prepareStatement(idQuery);
+			idptmt.setString(1, mContext.getTextId().getText());
+
+			ResultSet rs1 = idptmt.executeQuery();
+
+			if (rs1.next() == false) {
+				JOptionPane.showMessageDialog(null, "존재하지 않는 ID입니다.");
+			} else {
+
+				PreparedStatement pwptmt = conn.prepareStatement(passwordQuery);
+
+				pwptmt.setString(1, mContext.getTextId().getText());
+				pwptmt.setString(2, mContext.getTextPw().getText());
+
+				ResultSet rs2 = pwptmt.executeQuery();
+
+				if (rs2.next()) {
+					JOptionPane.showMessageDialog(null, "로그인 성공");
+					mainFrame = new MainFrame();
+
+				} else if (rs2.next() == false){
+					JOptionPane.showMessageDialog(null, "ID 또는 Password 가 일치하지 않습니다.");
+					conn.rollback();
+					return;
+				} else {
+					return;
+				}
+			}
+
+		} 
+
+>>>>>>> 006fd8658d269d5b86947ddbcec80efe3b2d05ce
 	}
 
 } // end of class

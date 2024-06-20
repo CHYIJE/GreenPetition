@@ -2,10 +2,9 @@ package ver1.ObjectDAO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+
+import javax.swing.JOptionPane;
 
 import Frame.SigninFrame;
 import ver1.DBConnectionManager;
@@ -32,8 +31,15 @@ public class JoinDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		
 	}
+<<<<<<< HEAD
 
+=======
+	
+	// 회원가입
+>>>>>>> 2406dc6d81dbfc598db08477ac661e204de9cce8
 	public void joinUser(UserDTO dto, SigninFrame mContext) throws SQLException {
 
 		this.mContext = mContext;
@@ -44,21 +50,14 @@ public class JoinDAO {
 
 			conn.setAutoCommit(false);
 
-			List<UserDTO> idlist = new ArrayList<>();
-			String checkIdQuery = "SELECT acc_id FROM user ";
-			PreparedStatement selectptmt = conn.prepareStatement(checkIdQuery);
-			ResultSet rs = selectptmt.executeQuery();
+			PreparedStatement insertptmt = conn.prepareStatement(insertQuery);
+			insertptmt.setString(1, mContext.getIdField().getText());
+			insertptmt.setString(2, mContext.getPwField().getText());
+			insertptmt.setString(3, mContext.getNameField().getText());
 
-			while (rs.next()) {
-				UserDTO dto1 = new UserDTO().builder().acc_id(rs.getString("acc_id")).build();
-				idlist.add(dto1);
-				System.out.println("while 들어오긴 함");
-				if (idlist.equals(mContext.getIdField().getText())) {
-					PreparedStatement insertptmt = conn.prepareStatement(insertQuery);
-					insertptmt.setString(1, mContext.getIdField().getText());
-					insertptmt.setString(2, mContext.getPwField().getText());
-					insertptmt.setString(3, mContext.getNameField().getText());
+			int rowCount = insertptmt.executeUpdate();
 
+<<<<<<< HEAD
 					System.out.println(rs.getString("acc_id"));
 					int testRow = insertptmt.executeUpdate();
 
@@ -73,6 +72,14 @@ public class JoinDAO {
 			}
 
 		} catch (SQLException e) {
+=======
+			if(rowCount > 0) {
+				conn.commit();
+				JOptionPane.showMessageDialog(null, "회원가입이 완료되었습니다.");
+			} else {
+				conn.rollback();
+			}
+>>>>>>> 2406dc6d81dbfc598db08477ac661e204de9cce8
 		}
 	}
 }

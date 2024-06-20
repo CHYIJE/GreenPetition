@@ -15,6 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextArea;
 
 import lombok.AllArgsConstructor;
+<<<<<<< HEAD
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ver1.DBConnectionManager;
@@ -22,6 +23,16 @@ import ver1.DBConnectionManager;
 @AllArgsConstructor
 public class MainFrame extends JFrame {
 
+=======
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import ver1.DBConnectionManager;
+@Getter
+
+@AllArgsConstructor
+public class MainFrame extends JFrame{
+	
+>>>>>>> 2406dc6d81dbfc598db08477ac661e204de9cce8
 	private static final String VIEW_ALL = " select petition.id, petition.title, user.acc_id from petition join user on petition.user_id = user.id ";
 	private static final String VIEW_FACILITY = " select petition.id, petition.title, user.acc_id from petition where petition.category = facility join user on petition.user_id = user.id ";
 	private static final String VIEW_TEACHER = " select * from petition where category id = teacher ";
