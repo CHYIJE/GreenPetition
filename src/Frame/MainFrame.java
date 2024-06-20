@@ -19,6 +19,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import ver1.DBConnectionManager;
+import ver1.ObjectDAO.LoginDAO;
 
 @Getter
 
@@ -34,6 +35,7 @@ public class MainFrame extends JFrame {
 	private JButton teacherButton;
 	private JButton articleButton;
 	private JTextArea body;
+	private JLabel check;
 
 	private String checker1;
 	private String checker2;
@@ -41,18 +43,24 @@ public class MainFrame extends JFrame {
 
 	private int log;
 
+	private String id;
 	public MainFrame() {
+		
 		initData();
 		setInitLayout();
 		addAction();
 		body();
 	}
 
+	public void checkId() {
+		id = LoginDAO.getUserId();
+		check = new JLabel();
+		
+	}
+	
 	public void body() {
 
 		body = new JTextArea();
-		body.setRows(3);
-		body.setColumns(12);
 		body.setEditable(false);
 		body.setBounds(250, 110, 1000, 700);
 		body.setBackground(new Color(213, 222, 232));

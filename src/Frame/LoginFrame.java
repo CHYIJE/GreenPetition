@@ -97,8 +97,7 @@ public class LoginFrame extends JFrame {
 				} else {
 
 					System.out.println(text_id.getText());
-					new MainFrame();	
-					dispose();
+					
 				}
 			}
 		});
@@ -116,7 +115,7 @@ public class LoginFrame extends JFrame {
 					JOptionPane.showMessageDialog(null, "로그인 실패");
 
 					JOptionPane.showMessageDialog(null, "ID/PW를 입력해주세요.");
-					return;
+				
 
 				}
 
