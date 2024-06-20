@@ -24,8 +24,8 @@ import javax.swing.SwingConstants;
 
 public class MainFrame extends JFrame {
 
-	private static final String VIEW_ALL = " select petition.id, petition.title, user.acc_id from petition join user on petition.user_id = user.id ";
-	private static final String VIEW_SELECT = " select petition.id, petition.title, user.acc_id from petition join user on petition.user_id = user.id where petition.id > ? and petition.id <= ? ";
+	private static final String VIEW_ALL = " select petition.id, petition.title, user.acc_id from petition join user on petition.user_id = user.id where petition.id >= ? and petition.id <= ? order by petition.id ASC ";
+	private static final String VIEW_SELECT = " select petition.id, petition.title, user.acc_id from petition join user on petition.user_id = user.id where petition.id > ? and petition.id <= ? order by petition.id ASC";
 	private static final String VIEW_FACILITY = " select petition.id, petition.title, user.acc_id from petition join user on petition.user_id = user.id where petition.category = 'facility' ";
 	private static final String VIEW_TEACHER = " select petition.id, petition.title, user.acc_id from petition join user on petition.user_id = user.id where petition.category = 'teacher' ";
 
@@ -52,7 +52,7 @@ public class MainFrame extends JFrame {
 	private String id;
 	private String name;
 	private LoginDAO mcontext;
-	
+
 	private int num;
 	private String stnum;
 	private int max;
@@ -61,10 +61,11 @@ public class MainFrame extends JFrame {
 		this.mcontext = mcontext;
 		initData();
 		setInitLayout();
+		numbersheet();
 		addAction();
 		body();
 		checkId();
-		numbersheet();
+
 	}
 
 	public void checkId() {
@@ -97,6 +98,9 @@ public class MainFrame extends JFrame {
 		body.append("-----------------------------------------------------------------------------------------" + "\n");
 		try (Connection conn = DBConnectionManager.getInstance().getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(VIEW_ALL)) {
+
+			pstmt.setInt(1, 1);
+			pstmt.setInt(2, 10);
 			ResultSet resultSet = pstmt.executeQuery();
 			while (resultSet.next()) {
 
@@ -105,7 +109,7 @@ public class MainFrame extends JFrame {
 				checker2 = resultSet.getString("title");
 				checker3 = resultSet.getString("acc_id");
 
-				if (checker2.length() <= 6) {
+				if (checker2.length() <= 10) {
 					body.append("\t" + "\t" + checker1 + "\t" + "\t" + "\t" + checker2 + "\t" + "\t" + "\t" + "\s"
 							+ "\s" + "\s" + "\s" + "\s" + "\s" + "\s" + "\t" + "\t" + checker3 + "\t" + "\t" + "\t"
 							+ "\n");
@@ -191,7 +195,7 @@ public class MainFrame extends JFrame {
 						checker1 = Integer.toString(log);
 						checker2 = resultSet.getString("title");
 						checker3 = resultSet.getString("acc_id");
-						if (checker2.length() <= 6) {
+						if (checker2.length() <= 10) {
 							body.append("\t" + "\t" + checker1 + "\t" + "\t" + "\t" + checker2 + "\t" + "\t" + "\t"
 									+ "\s" + "\s" + "\s" + "\s" + "\s" + "\s" + "\s" + "\t" + "\t" + checker3 + "\t"
 									+ "\t" + "\t" + "\n");
@@ -239,7 +243,7 @@ public class MainFrame extends JFrame {
 						checker1 = Integer.toString(log);
 						checker2 = resultSet.getString("title");
 						checker3 = resultSet.getString("acc_id");
-						if (checker2.length() <= 6) {
+						if (checker2.length() <= 10) {
 							body.append("\t" + "\t" + checker1 + "\t" + "\t" + "\t" + checker2 + "\t" + "\t" + "\t"
 									+ "\s" + "\s" + "\s" + "\s" + "\s" + "\s" + "\s" + "\t" + "\t" + checker3 + "\t"
 									+ "\t" + "\t" + "\n");
@@ -247,11 +251,11 @@ public class MainFrame extends JFrame {
 							body.append("\t" + "\t" + checker1 + "\t" + "\t" + " " + " " + checker2 + "\t" + "\t" + "\t"
 									+ "\t" + checker3 + "\t" + "\t" + "\t" + "\n");
 						}
-						
-						if(log % 10 == 0) {
+
+						if (log % 10 == 0 && log != 0) {
 							max++;
 						}
-						
+
 					}
 
 				} catch (Exception e2) {
@@ -272,7 +276,7 @@ public class MainFrame extends JFrame {
 	}
 
 	public void numbersheet() {
-		
+
 		minusButton = new JButton(" < ");
 		plusButton = new JButton(" > ");
 		page = new JTextField();
@@ -280,74 +284,105 @@ public class MainFrame extends JFrame {
 		page.setFont(new Font("HY헤드라인M", Font.BOLD, 17));
 		page.setEditable(false);
 
-		minusButton.setBounds(650, 650, 50, 50);
-		plusButton.setBounds(800, 650, 50, 50);
-		page.setBounds(710, 650, 80, 50);
-		
+		minusButton.setBounds(950, 650, 50, 50);
+		plusButton.setBounds(1100, 650, 50, 50);
+		page.setBounds(1010, 650, 80, 50);
+
 		getContentPane().add(minusButton);
 		getContentPane().add(plusButton);
 		getContentPane().add(page);
-		
-		
+
 		num = 1;
 		stnum = Integer.toString(num);
 		page.setText(stnum);
 		max = 1;
-		
-		
-		
+
 		minusButton.addActionListener(new ActionListener() {
-			
-			
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				if(num <= 0) {
+				if (num <= 1) {
 					num = 1;
-				}else {
+				} else {
 					num--;
 				}
 				stnum = Integer.toString(num);
 				page.setText(stnum);
-				
-				try (
-						Connection conn = DBConnectionManager.getInstance().getConnection();
-						PreparedStatement pstmt = conn.prepareStatement(VIEW_SELECT)){
-					pstmt.setInt(1, num);
-					pstmt.setInt(2, num*10);
-					int rowsInsertedCount = pstmt.executeUpdate();
+
+				try (Connection conn = DBConnectionManager.getInstance().getConnection();
+						PreparedStatement pstmt = conn.prepareStatement(VIEW_SELECT)) {
+					pstmt.setInt(1, num-1);
+					pstmt.setInt(2, num * 10);
+					ResultSet resultSet = pstmt.executeQuery();
+					body.setText("");
+					body.append("\t" + "\t" + "no" + "\t" + "\t" + "\t" + "제목" + "\t" + "\t" + "\t" + "\t" + "\t" + "작성자"
+							+ "\t" + "\n");
+					body.append("-----------------------------------------------------------------------------------------"
+							+ "\n");
+					while (resultSet.next()) {
+						log = resultSet.getInt("id");
+						checker1 = Integer.toString(log);
+						checker2 = resultSet.getString("title");
+						checker3 = resultSet.getString("acc_id");
+						if (checker2.length() <= 10) {
+							body.append("\t" + "\t" + checker1 + "\t" + "\t" + "\t" + checker2 + "\t" + "\t" + "\t"
+									+ "\s" + "\s" + "\s" + "\s" + "\s" + "\s" + "\s" + "\t" + "\t" + checker3 + "\t"
+									+ "\t" + "\t" + "\n");
+						} else {
+							body.append("\t" + "\t" + checker1 + "\t" + "\t" + " " + " " + checker2 + "\t" + "\t" + "\t"
+									+ "\t" + checker3 + "\t" + "\t" + "\t" + "\n");
+						}
+					}
 				} catch (SQLException e2) {
 					e2.printStackTrace();
 				}
-				
+
 			}
 		});
-		
+
 		plusButton.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				if(num > max) {
+				if (num > max) {
 					num = max;
-				}else {
+				} else {
 					num++;
 				}
 				stnum = Integer.toString(num);
 				page.setText(stnum);
-				
-				try (
-						Connection conn = DBConnectionManager.getInstance().getConnection();
-						PreparedStatement pstmt = conn.prepareStatement(VIEW_SELECT)){
-					pstmt.setInt(1, num);
-					pstmt.setInt(2, num*10);
-					int rowsInsertedCount = pstmt.executeUpdate();
+
+				try (Connection conn = DBConnectionManager.getInstance().getConnection();
+						PreparedStatement pstmt = conn.prepareStatement(VIEW_SELECT)) {
+					pstmt.setInt(1, (num * 10)-10);
+					pstmt.setInt(2, num * 10);
+					ResultSet resultSet = pstmt.executeQuery();
+					body.setText("");
+					body.append("\t" + "\t" + "no" + "\t" + "\t" + "\t" + "제목" + "\t" + "\t" + "\t" + "\t" + "\t" + "작성자"
+							+ "\t" + "\n");
+					body.append("-----------------------------------------------------------------------------------------"
+							+ "\n");
+					while (resultSet.next()) {
+						log = resultSet.getInt("id");
+						checker1 = Integer.toString(log);
+						checker2 = resultSet.getString("title");
+						checker3 = resultSet.getString("acc_id");
+						if (checker2.length() <= 10) {
+							body.append("\t" + "\t" + checker1 + "\t" + "\t" + "\t" + checker2 + "\t" + "\t" + "\t"
+									+ "\s" + "\s" + "\s" + "\s" + "\s" + "\s" + "\s" + "\t" + "\t" + checker3 + "\t"
+									+ "\t" + "\t" + "\n");
+						} else {
+							body.append("\t" + "\t" + checker1 + "\t" + "\t" + " " + " " + checker2 + "\t" + "\t" + "\t"
+									+ "\t" + checker3 + "\t" + "\t" + "\t" + "\n");
+						}
+					}
+
 				} catch (SQLException e2) {
 					e2.printStackTrace();
 				}
-				
-				
+
 			}
 		});
 
