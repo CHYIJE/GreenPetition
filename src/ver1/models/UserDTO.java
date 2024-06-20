@@ -14,6 +14,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @Builder
 public class UserDTO {
+	private int id;
 	private String name;
 	private String acc_id;
 	private String acc_pw;
