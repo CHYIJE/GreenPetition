@@ -9,57 +9,20 @@ import javax.swing.JOptionPane;
 
 import Frame.LoginFrame;
 import Frame.MainFrame;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import ver1.DBConnectionManager;
 import ver1.models.UserDTO;
 
-<<<<<<< HEAD
-@Getter
-@Setter
-@ToString
+@NoArgsConstructor
 @AllArgsConstructor
 public class LoginDAO {
 	LoginFrame mContext;
-	UserDTO dto;
-	
-	public LoginDAO(UserDTO dto, LoginFrame mContext){
-		
-		try {
-			loginCheckUser(dto, mContext);
-			this.mContext = mContext;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-
-
-	// 회원 체크 
-	public void loginCheckUser(UserDTO dto, LoginFrame mcontext) throws SQLException {
-		
-		this.mContext = mcontext;
-		
-		String idQuery = " SELECT acc_id FROM user WHERE acc_id = ? ";
-		String pwQuery = " SELECT acc_pw FROM user WHERE acc_pw = ? ";
-		
-		try (Connection conn = DBConnectionManager.getInstance().getConnection()){
-			
-			conn.setAutoCommit(false);
-			
-			PreparedStatement ptmt = conn.prepareStatement(idQuery);
-			ptmt.setString(1, mcontext.get);
-
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-=======
-public class LoginDAO {
-	LoginFrame mContext;
+	LoginDAO lgContext = this;
 	UserDTO dto;
 	MainFrame mainFrame;
-	String userId;
-	String userPw;
+	private int userId;
+	private String userName;
 
 	public LoginDAO(UserDTO dto, LoginFrame mContext) {
 		try {
@@ -72,7 +35,7 @@ public class LoginDAO {
 
 	public void loginUser(UserDTO dto, LoginFrame mContext) throws SQLException {
 		this.mContext = mContext;
-
+		this.lgContext = lgContext;
 		String idQuery = " SELECT * FROM user where acc_id = ? ";
 		String passwordQuery = " SELECT * FROM user where acc_id = ? AND acc_pw = ? ";
 		String loginQuery = " SELECT name FROM user where acc_id = ? and acc_pw = ? ";
@@ -97,7 +60,8 @@ public class LoginDAO {
 
 				if (rs2.next()) {
 					JOptionPane.showMessageDialog(null, "로그인 성공");
-					userId = rs2.getString("id");
+					lgContext.userName = rs2.getString("name");
+					
 					mainFrame = new MainFrame();
 
 				} else {
@@ -109,7 +73,16 @@ public class LoginDAO {
 
 		} 
 
->>>>>>> 006fd8658d269d5b86947ddbcec80efe3b2d05ce
 	}
+	public int getuserId() {
+		return userId;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	
 
 } // end of class

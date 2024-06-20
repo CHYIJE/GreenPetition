@@ -1,6 +1,8 @@
 package Frame;
 
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -9,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
@@ -16,7 +19,7 @@ import ver1.ObjectDAO.LoginDAO;
 import ver1.models.UserDTO;
 public class LoginFrame extends JFrame {
 
-	LoginDAO logindao;
+	LoginDAO lgContext;
 	UserDTO dto;
 
 	LoginFrame mContext = this;
@@ -27,10 +30,12 @@ public class LoginFrame extends JFrame {
 	private JButton login_button;
 	private JButton join_button;
 
+	
 	public LoginFrame() {
 		initData();
 		setInitLayout();
 		addAction();
+
 	}
 
 	public void initData() {
@@ -69,8 +74,10 @@ public class LoginFrame extends JFrame {
 		add(login_button);
 		add(join_button);
 
+
 		setVisible(true);
 	}
+	
 
 	public void addAction() {
 
@@ -89,41 +96,21 @@ public class LoginFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if(!text_id.getText().equals("") && !text_pw.getText().equals("")) {
 					try {
-						logindao = new LoginDAO(dto, mContext);
-						dispose();
+						new LoginDAO(dto, mContext);
+//						dispose();
+//						frame.setVisible(false);
+						
+						new MainFrame();
 					} catch (Exception e2) {
 
 					}
 				} else {
-<<<<<<< HEAD
-					System.out.println(text_id.getText());
-					new MainFrame();	
-					dispose();
-				}
-			}
-		});
-
-		login_button.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				String id = "아이디";
-				String password = "비밀번호";
-
-				if (id.equals(text_id.getText()) && password.equals(text_pw.getText())) {
-					JOptionPane.showMessageDialog(null, "로그인 성공");
-				} else {
-					JOptionPane.showMessageDialog(null, "로그인 실패");
-=======
 					JOptionPane.showMessageDialog(null, "ID/PW를 입력해주세요.");
-					return;
->>>>>>> 006fd8658d269d5b86947ddbcec80efe3b2d05ce
 				}
-
 			}
 		});
-<<<<<<< HEAD
-=======
+
+
 
 	}
 	public JTextField getTextId() {
@@ -131,7 +118,6 @@ public class LoginFrame extends JFrame {
 	}
 	public JTextField getTextPw() {
 		return text_pw;
->>>>>>> 006fd8658d269d5b86947ddbcec80efe3b2d05ce
 	}
 
 	public static void main(String[] args) {

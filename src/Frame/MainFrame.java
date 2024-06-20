@@ -2,6 +2,7 @@ package Frame;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
@@ -12,12 +13,13 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import ver1.DBConnectionManager;
+import ver1.ObjectDAO.LoginDAO;
 @Getter
 
 @AllArgsConstructor
@@ -34,10 +36,13 @@ public class MainFrame extends JFrame{
 	private JButton articleButton;
 	private JTextArea body;
 	
+	LoginDAO lgContext;
+	LoginFrame mContext;
+	
 	private String checker1;
 	private String checker2;
 	private String checker3;
-	
+	String getUserName;
 	private int log;
 
 	
@@ -46,6 +51,8 @@ public class MainFrame extends JFrame{
 		setInitLayout();
 		addAction();
 		body();
+		AppendName name = new AppendName();
+		name.paintComponent(getGraphics());
 	}
 	
 	public void body() {
@@ -146,6 +153,23 @@ public class MainFrame extends JFrame{
 			}
 		});
 	}
+	class AppendName extends JPanel{
+		
+		public void paintComponent(Graphics g) {
+			super.paintComponents(g);
+			Font f = new Font("맑은고딕", Font.BOLD, 30);
+			g.setFont(f);
+			g.setColor(Color.BLUE);
+//			g.drawString("Hello", 1100, 140);
+			g.drawString(lgContext.getUserName().toString(), 1100, 100);
+			g.drawString(lgContext.getUserName(), 1100, 100);
+			getUserName = lgContext.getUserName();
+			g.drawString(getUserName, 1100, 100);
+			System.out.println(lgContext.getUserName());
+			System.out.println(getUserName);
+		}
+	}
+	
 	
 	public static void main(String[] args) {
 		new MainFrame();
