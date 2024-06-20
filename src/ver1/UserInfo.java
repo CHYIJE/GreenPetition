@@ -7,11 +7,11 @@ import Frame.LoginFrame;
 import ver1.ObjectDAO.LoginDAO;
 
 public class UserInfo {
-	LoginFrame frame;
-	LoginDAO dao;
+	static LoginFrame frame;
+	static LoginDAO dao;
 	
 	private static UserInfo userInfo = new UserInfo();
-	private Map<Integer, String> users = new HashMap<>();
+	private static Map<Integer, String> users = new HashMap<>();
 	
 	private UserInfo() {
 	}
@@ -24,12 +24,14 @@ public class UserInfo {
 		return userInfo;
 	}
 	
-	public void loadUser() {
+	public static void loadUser() {
 		
 		if(users.isEmpty()) {
 			System.out.println("empty");
 			System.out.println(users.size());
 			users.put(1, "temp");
+			users.put(2, frame.getTextId().getText());
+			users.put(3, dao.getUserAccId());
 			System.out.println(users.size());
 			System.out.println(users.get(1));
 		}
