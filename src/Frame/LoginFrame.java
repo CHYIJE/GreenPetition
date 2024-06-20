@@ -92,7 +92,7 @@ public class LoginFrame extends JFrame {
 						logindao = new LoginDAO(dto, mContext);
 						dispose();
 					} catch (Exception e2) {
-						e2.printStackTrace();
+
 					}
 				} else {
 
