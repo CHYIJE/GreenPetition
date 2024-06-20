@@ -95,10 +95,8 @@ public class LoginFrame extends JFrame {
 						e2.printStackTrace();
 					}
 				} else {
-<<<<<<< HEAD
 					System.out.println(text_id.getText());
 					new MainFrame();	
-					dispose();
 				}
 			}
 		});
@@ -113,25 +111,18 @@ public class LoginFrame extends JFrame {
 				if (id.equals(text_id.getText()) && password.equals(text_pw.getText())) {
 					JOptionPane.showMessageDialog(null, "로그인 성공");
 				} else {
-					JOptionPane.showMessageDialog(null, "로그인 실패");
-=======
-					JOptionPane.showMessageDialog(null, "ID/PW를 입력해주세요.");
+					JOptionPane.showMessageDialog(null, "로그인 실패\nID/PW를 확인해주세요. ");
 					return;
->>>>>>> 006fd8658d269d5b86947ddbcec80efe3b2d05ce
 				}
-
 			}
 		});
-<<<<<<< HEAD
-=======
-
 	}
+	
 	public JTextField getTextId() {
 		return text_id;
 	}
 	public JTextField getTextPw() {
 		return text_pw;
->>>>>>> 006fd8658d269d5b86947ddbcec80efe3b2d05ce
 	}
 
 	public static void main(String[] args) {

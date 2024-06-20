@@ -9,51 +9,17 @@ import javax.swing.JOptionPane;
 
 import Frame.LoginFrame;
 import Frame.MainFrame;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import ver1.DBConnectionManager;
 import ver1.models.UserDTO;
 
-<<<<<<< HEAD
 @Getter
 @Setter
 @ToString
 @AllArgsConstructor
-public class LoginDAO {
-	LoginFrame mContext;
-	UserDTO dto;
-	
-	public LoginDAO(UserDTO dto, LoginFrame mContext){
-		
-		try {
-			loginCheckUser(dto, mContext);
-			this.mContext = mContext;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-
-
-	// 회원 체크 
-	public void loginCheckUser(UserDTO dto, LoginFrame mcontext) throws SQLException {
-		
-		this.mContext = mcontext;
-		
-		String idQuery = " SELECT acc_id FROM user WHERE acc_id = ? ";
-		String pwQuery = " SELECT acc_pw FROM user WHERE acc_pw = ? ";
-		
-		try (Connection conn = DBConnectionManager.getInstance().getConnection()){
-			
-			conn.setAutoCommit(false);
-			
-			PreparedStatement ptmt = conn.prepareStatement(idQuery);
-			ptmt.setString(1, mcontext.get);
-
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-=======
 public class LoginDAO {
 	LoginFrame mContext;
 	UserDTO dto;
@@ -96,7 +62,7 @@ public class LoginDAO {
 					JOptionPane.showMessageDialog(null, "로그인 성공");
 					mainFrame = new MainFrame();
 
-				} else if (rs2.next() == false){
+				} else if (rs2.next() == false) {
 					JOptionPane.showMessageDialog(null, "ID 또는 Password 가 일치하지 않습니다.");
 					conn.rollback();
 					return;
@@ -105,9 +71,8 @@ public class LoginDAO {
 				}
 			}
 
-		} 
+		}
 
->>>>>>> 006fd8658d269d5b86947ddbcec80efe3b2d05ce
 	}
 
 } // end of class
