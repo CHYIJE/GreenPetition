@@ -94,9 +94,9 @@ public class LoginFrame extends JFrame {
 				if(!text_id.getText().equals("") && !text_pw.getText().equals("")) {
 					try {
 						new LoginDAO(dto, mContext);
-//						dispose();
+						dispose();
 //						frame.setVisible(false);
-						new MainFrame(lgContext);
+//						new MainFrame(lgContext);
 					} catch (Exception e2) {
 
 					}

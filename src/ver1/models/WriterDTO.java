@@ -15,8 +15,9 @@ import lombok.ToString;
 @Builder
 public class WriterDTO {
 
+	private int user_id; // 사용자 ID
 	private String uid;
 	private String title;
 	private String content;
-
+    private String category; // 카테고리
 }

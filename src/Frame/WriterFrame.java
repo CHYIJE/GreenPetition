@@ -14,6 +14,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import lombok.Getter;
+import ver1.ObjectDAO.LoginDAO;
 import ver1.ObjectDAO.WriterDAO;
 import ver1.models.WriterDTO;
 
@@ -22,7 +23,7 @@ public class WriterFrame extends JFrame {
 
 	WriterDAO writerDAO;
 	WriterDTO dto;
-
+	LoginDAO loginDAO;
 	WriterFrame mContext = this;
 
 	private JLabel frame;
@@ -35,11 +36,12 @@ public class WriterFrame extends JFrame {
 	private String category = "-1";
 	private LocalDate date = LocalDate.now();
 
-	public WriterFrame() {
-		initData();
-		setInitLayout();
-		addAction();
-	}
+	public WriterFrame(LoginDAO loginDAO) {
+        this.loginDAO = loginDAO; // LoginDAO 객체를 초기화
+        initData();
+        setInitLayout();
+        addAction();
+    }
 
 	public void initData() {
 
@@ -116,8 +118,14 @@ public class WriterFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if (!mContext.category.equals("-1") && !mContext.titleField.getText().equals("")
 						&& !mContext.contentField.getText().equals("")) {
+					// WriterDTO 객체를 생성하고 데이터를 설정합니다.
+                    dto = WriterDTO.builder()
+                            .category(category)
+                            .title(titleField.getText())
+                            .content(contentField.getText())
+                            .build();
 					try {
-						writerDAO = new WriterDAO(dto, mContext);
+						writerDAO = new WriterDAO(dto, mContext,loginDAO);
 					} catch (Exception e1) {
 						e1.printStackTrace();
 					}
@@ -126,13 +134,13 @@ public class WriterFrame extends JFrame {
 				} else {
 					JOptionPane.showMessageDialog(null, "제목/내용 입력해주세요.");
 				}
-				new MainFrame(null);
+				new MainFrame(loginDAO);
 			}
 		});
 
 	}
 
-	public static void main(String[] args) {
-		new WriterFrame();
-	}
+//	public static void main(String[] args) {
+//		new WriterFrame();
+//	}
 }
