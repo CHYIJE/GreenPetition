@@ -94,41 +94,22 @@ public class LoginFrame extends JFrame {
 				if(!text_id.getText().equals("") && !text_pw.getText().equals("")) {
 					try {
 						new LoginDAO(dto, mContext);
+<<<<<<< HEAD
 						dispose();
 //						frame.setVisible(false);
 //						new MainFrame(lgContext);
+=======
+>>>>>>> 7a049af10a212519f12a6093b369196d34baf686
 					} catch (Exception e2) {
 
 					}
 				} else {
 					JOptionPane.showMessageDialog(null, "ID/PW를 입력해주세요.");
-
-					System.out.println(text_id.getText());
+					
 					
 				}
 			}
 		});
-
-//		login_button.addActionListener(new ActionListener() {
-//
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				String id = "아이디";
-//				String password = "비밀번호";
-//
-//				if (id.equals(text_id.getText()) && password.equals(text_pw.getText())) {
-//					JOptionPane.showMessageDialog(null, "로그인 성공");
-//				} else {
-//					JOptionPane.showMessageDialog(null, "로그인 실패");
-//
-//					JOptionPane.showMessageDialog(null, "ID/PW를 입력해주세요.");
-//				
-//
-//				}
-//			}
-//		});
-
-
 
 	}
 	public JTextField getTextId() {

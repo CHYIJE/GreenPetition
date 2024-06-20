@@ -7,32 +7,44 @@ import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import java.util.Vector;
+
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
+
+import lombok.Getter;
 
 import ver1.DBConnectionManager;
 import ver1.ObjectDAO.LoginDAO;
-
+import javax.swing.SwingConstants;
 
 public class MainFrame extends JFrame {
 
-	private static final String VIEW_ALL = " select petition.id, petition.title, user.acc_id from petition join user on petition.user_id = user.id ";
+	private static final String VIEW_ALL = " select petition.id, petition.title, user.acc_id from petition join user on petition.user_id = user.id where petition.id >= ? and petition.id <= ? order by petition.id ASC ";
+	private static final String VIEW_SELECT = " select petition.id, petition.title, user.acc_id from petition join user on petition.user_id = user.id where petition.id > ? and petition.id <= ? order by petition.id ASC";
 	private static final String VIEW_FACILITY = " select petition.id, petition.title, user.acc_id from petition join user on petition.user_id = user.id where petition.category = 'facility' ";
 	private static final String VIEW_TEACHER = " select petition.id, petition.title, user.acc_id from petition join user on petition.user_id = user.id where petition.category = 'teacher' ";
-	private static final String IDCHECK = " select user.name,user.acc_id from user ";
 
 	private JLabel frame;
 	private JButton facilityButton;
 	private JButton teacherButton;
 	private JButton articleButton;
 	private JTextArea body;
-	
+
+	private JButton minusButton;
+	private JButton plusButton;
+	private JTextField page;
+
 	LoginFrame mContext;
-	
+
 	private String checker1;
 	private String checker2;
 	private String checker3;
@@ -45,32 +57,39 @@ public class MainFrame extends JFrame {
 	private String name;
 	private LoginDAO mcontext;
 
+	private int num;
+	private String stnum;
+	private int max;
+
 	public MainFrame(LoginDAO mcontext) {
 		this.mcontext = mcontext;
 		initData();
 		setInitLayout();
+		numbersheet();
 		addAction();
 		body();
 		checkId();
+
 	}
 
 	public void checkId() {
 
 		check = new JLabel();
+		getContentPane().add(check);
+
 		add(check);
-		check.setText(mcontext.getUserId() + " 님 접속중입니다!");
+		check.setText(mcontext.getUserName() + " 님 접속중입니다!");
 		Font bodyfont = new Font("D2CODING", Font.BOLD, 25);
 		check.setFont(bodyfont);
-		check.setBounds(950, 40, 400, 100);
+		check.setBounds(900, 40, 350, 100);
 
 	}
-
 
 	public void body() {
 
 		body = new JTextArea();
 		body.setEditable(false);
-		body.setBounds(250, 110, 1000, 700);
+		body.setBounds(250, 110, 1000, 500);
 		body.setBackground(new Color(213, 222, 232));
 
 		getContentPane().add(body);
@@ -85,6 +104,9 @@ public class MainFrame extends JFrame {
 		body.append("-----------------------------------------------------------------------------------------" + "\n");
 		try (Connection conn = DBConnectionManager.getInstance().getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(VIEW_ALL)) {
+
+			pstmt.setInt(1, 1);
+			pstmt.setInt(2, 10);
 			ResultSet resultSet = pstmt.executeQuery();
 			while (resultSet.next()) {
 
@@ -93,7 +115,7 @@ public class MainFrame extends JFrame {
 				checker2 = resultSet.getString("title");
 				checker3 = resultSet.getString("acc_id");
 
-				if (checker2.length() <= 6) {
+				if (checker2.length() <= 10) {
 					body.append("\t" + "\t" + checker1 + "\t" + "\t" + "\t" + checker2 + "\t" + "\t" + "\t" + "\s"
 							+ "\s" + "\s" + "\s" + "\s" + "\s" + "\s" + "\t" + "\t" + checker3 + "\t" + "\t" + "\t"
 							+ "\n");
@@ -179,7 +201,7 @@ public class MainFrame extends JFrame {
 						checker1 = Integer.toString(log);
 						checker2 = resultSet.getString("title");
 						checker3 = resultSet.getString("acc_id");
-						if (checker2.length() <= 6) {
+						if (checker2.length() <= 10) {
 							body.append("\t" + "\t" + checker1 + "\t" + "\t" + "\t" + checker2 + "\t" + "\t" + "\t"
 									+ "\s" + "\s" + "\s" + "\s" + "\s" + "\s" + "\s" + "\t" + "\t" + checker3 + "\t"
 									+ "\t" + "\t" + "\n");
@@ -227,7 +249,7 @@ public class MainFrame extends JFrame {
 						checker1 = Integer.toString(log);
 						checker2 = resultSet.getString("title");
 						checker3 = resultSet.getString("acc_id");
-						if (checker2.length() <= 6) {
+						if (checker2.length() <= 10) {
 							body.append("\t" + "\t" + checker1 + "\t" + "\t" + "\t" + checker2 + "\t" + "\t" + "\t"
 									+ "\s" + "\s" + "\s" + "\s" + "\s" + "\s" + "\s" + "\t" + "\t" + checker3 + "\t"
 									+ "\t" + "\t" + "\n");
@@ -235,6 +257,11 @@ public class MainFrame extends JFrame {
 							body.append("\t" + "\t" + checker1 + "\t" + "\t" + " " + " " + checker2 + "\t" + "\t" + "\t"
 									+ "\t" + checker3 + "\t" + "\t" + "\t" + "\n");
 						}
+
+						if (log % 10 == 0 && log != 0) {
+							max++;
+						}
+
 					}
 
 				} catch (Exception e2) {
@@ -248,10 +275,147 @@ public class MainFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("글 작성 버튼");
+<<<<<<< HEAD
 				new WriterFrame(mcontext);
+=======
+				new WriterFrame();
+>>>>>>> 7a049af10a212519f12a6093b369196d34baf686
 			}
 
 		});
+		
 	}
-}
+	class PetitionTable {
+		JTable table;
+		Vector data = new Vector<>();
+		Vector<String> colName = new Vector<>();
+		
+		public void setData(){
+			colName.add("id");
+			colName.add("acc_id");
+			colName.add("acc_pw");
+		}
+		public void setTable() {
+			String[] header = new String[5];
+			Object[][] petetion = new String[header.length][15];
+			table = new JTable(petetion, header);
+			
+		}
+	}
+	
 
+
+	public void numbersheet() {
+
+		minusButton = new JButton(" < ");
+		plusButton = new JButton(" > ");
+		page = new JTextField();
+		page.setHorizontalAlignment(SwingConstants.CENTER);
+		page.setFont(new Font("HY헤드라인M", Font.BOLD, 17));
+		page.setEditable(false);
+
+		minusButton.setBounds(950, 650, 50, 50);
+		plusButton.setBounds(1100, 650, 50, 50);
+		page.setBounds(1010, 650, 80, 50);
+
+		getContentPane().add(minusButton);
+		getContentPane().add(plusButton);
+		getContentPane().add(page);
+
+		num = 1;
+		stnum = Integer.toString(num);
+		page.setText(stnum);
+		max = 1;
+
+		minusButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				if (num <= 1) {
+					num = 1;
+				} else {
+					num--;
+				}
+				stnum = Integer.toString(num);
+				page.setText(stnum);
+
+				try (Connection conn = DBConnectionManager.getInstance().getConnection();
+						PreparedStatement pstmt = conn.prepareStatement(VIEW_SELECT)) {
+					pstmt.setInt(1, num-1);
+					pstmt.setInt(2, num * 10);
+					ResultSet resultSet = pstmt.executeQuery();
+					body.setText("");
+					body.append("\t" + "\t" + "no" + "\t" + "\t" + "\t" + "제목" + "\t" + "\t" + "\t" + "\t" + "\t" + "작성자"
+							+ "\t" + "\n");
+					body.append("-----------------------------------------------------------------------------------------"
+							+ "\n");
+					while (resultSet.next()) {
+						log = resultSet.getInt("id");
+						checker1 = Integer.toString(log);
+						checker2 = resultSet.getString("title");
+						checker3 = resultSet.getString("acc_id");
+						if (checker2.length() <= 10) {
+							body.append("\t" + "\t" + checker1 + "\t" + "\t" + "\t" + checker2 + "\t" + "\t" + "\t"
+									+ "\s" + "\s" + "\s" + "\s" + "\s" + "\s" + "\s" + "\t" + "\t" + checker3 + "\t"
+									+ "\t" + "\t" + "\n");
+						} else {
+							body.append("\t" + "\t" + checker1 + "\t" + "\t" + " " + " " + checker2 + "\t" + "\t" + "\t"
+									+ "\t" + checker3 + "\t" + "\t" + "\t" + "\n");
+						}
+					}
+				} catch (SQLException e2) {
+					e2.printStackTrace();
+				}
+
+			}
+		});
+
+		plusButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				if (num > max) {
+					num = max;
+				} else {
+					num++;
+				}
+				stnum = Integer.toString(num);
+				page.setText(stnum);
+
+				try (Connection conn = DBConnectionManager.getInstance().getConnection();
+						PreparedStatement pstmt = conn.prepareStatement(VIEW_SELECT)) {
+					pstmt.setInt(1, (num * 10)-10);
+					pstmt.setInt(2, num * 10);
+					ResultSet resultSet = pstmt.executeQuery();
+					body.setText("");
+					body.append("\t" + "\t" + "no" + "\t" + "\t" + "\t" + "제목" + "\t" + "\t" + "\t" + "\t" + "\t" + "작성자"
+							+ "\t" + "\n");
+					body.append("-----------------------------------------------------------------------------------------"
+							+ "\n");
+					while (resultSet.next()) {
+						log = resultSet.getInt("id");
+						checker1 = Integer.toString(log);
+						checker2 = resultSet.getString("title");
+						checker3 = resultSet.getString("acc_id");
+						if (checker2.length() <= 10) {
+							body.append("\t" + "\t" + checker1 + "\t" + "\t" + "\t" + checker2 + "\t" + "\t" + "\t"
+									+ "\s" + "\s" + "\s" + "\s" + "\s" + "\s" + "\s" + "\t" + "\t" + checker3 + "\t"
+									+ "\t" + "\t" + "\n");
+						} else {
+							body.append("\t" + "\t" + checker1 + "\t" + "\t" + " " + " " + checker2 + "\t" + "\t" + "\t"
+									+ "\t" + checker3 + "\t" + "\t" + "\t" + "\n");
+						}
+					}
+
+				} catch (SQLException e2) {
+					e2.printStackTrace();
+				}
+
+			}
+		});
+
+	}
+
+}

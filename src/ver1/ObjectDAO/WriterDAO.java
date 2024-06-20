@@ -58,6 +58,7 @@ public class WriterDAO {
             psmt.setString(3, dto.getTitle());
             psmt.setString(4, dto.getContent());
 
+<<<<<<< HEAD
             int rowCount = psmt.executeUpdate();
 
             if (rowCount > 0) {
@@ -69,3 +70,23 @@ public class WriterDAO {
         }
     }
 }
+=======
+			PreparedStatement psmt = conn.prepareStatement(insertQuery);
+			psmt.setInt(1, dao.getUserId());
+			psmt.setString(2, mContext.getCategory());
+			psmt.setString(3, mContext.getTitleField().getText());
+			psmt.setString(4, mContext.getContentField().getText());
+
+			int rowCount = psmt.executeUpdate();
+
+			if (rowCount > 0) {
+				conn.commit();
+				JOptionPane.showMessageDialog(null, "test");
+			} else {
+				conn.rollback();
+			}
+		}
+	}
+	
+}
+>>>>>>> 7a049af10a212519f12a6093b369196d34baf686
