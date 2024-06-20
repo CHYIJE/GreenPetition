@@ -12,17 +12,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-<<<<<<< HEAD
-
-import lombok.Data;
-import lombok.Getter;
-
-
-@Data
-=======
 import ver1.ObjectDAO.LoginDAO;
 import ver1.models.UserDTO;
->>>>>>> 2406dc6d81dbfc598db08477ac661e204de9cce8
 public class LoginFrame extends JFrame {
 
 	LoginDAO logindao;
@@ -35,13 +26,7 @@ public class LoginFrame extends JFrame {
 	private JPasswordField text_pw;
 	private JButton login_button;
 	private JButton join_button;
-<<<<<<< HEAD
-	private String id;
-	private String password;
-	
-=======
 
->>>>>>> 2406dc6d81dbfc598db08477ac661e204de9cce8
 	public LoginFrame() {
 		initData();
 		setInitLayout();
@@ -110,7 +95,7 @@ public class LoginFrame extends JFrame {
 						e2.printStackTrace();
 					}
 				} else {
-<<<<<<< HEAD
+
 					System.out.println(text_id.getText());
 					new MainFrame();	
 					dispose();
@@ -122,23 +107,22 @@ public class LoginFrame extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				id = "아이디";
-				password = "비밀번호";
+				String id = "아이디";
+				String password = "비밀번호";
 
 				if (id.equals(text_id.getText()) && password.equals(text_pw.getText())) {
 					JOptionPane.showMessageDialog(null, "로그인 성공");
 				} else {
 					JOptionPane.showMessageDialog(null, "로그인 실패");
-=======
+
 					JOptionPane.showMessageDialog(null, "ID/PW를 입력해주세요.");
 					return;
->>>>>>> 006fd8658d269d5b86947ddbcec80efe3b2d05ce
+
 				}
 
 			}
 		});
-<<<<<<< HEAD
-=======
+
 
 	}
 	public JTextField getTextId() {
@@ -146,46 +130,8 @@ public class LoginFrame extends JFrame {
 	}
 	public JTextField getTextPw() {
 		return text_pw;
->>>>>>> 006fd8658d269d5b86947ddbcec80efe3b2d05ce
 	}
 
-<<<<<<< HEAD
-		join_button.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-
-				
-				// 충돌 시험
-
-				JOptionPane.showMessageDialog(null, "회원가입 창으로 이동합니다.");
-				new SigninFrame();
-			}
-		});
-		login_button.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-				if(text_id != null && text_pw != null) {
-					new MainFrame();
-					dispose();
-				}
-
-
-				if(text_id.getText().equals("")) {
-					System.out.println("입력되지 않음");
-				}
-				System.out.println(text_id.getText());
-				new MainFrame();
-				dispose();
-			}
-		});
-	}
-	
-=======
->>>>>>> 2406dc6d81dbfc598db08477ac661e204de9cce8
 	public static void main(String[] args) {
 		new LoginFrame();
 	}

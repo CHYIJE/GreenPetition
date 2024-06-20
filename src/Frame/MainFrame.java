@@ -13,77 +13,58 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 import lombok.AllArgsConstructor;
-<<<<<<< HEAD
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import ver1.DBConnectionManager;
-@Data
-@AllArgsConstructor
-public class MainFrame extends JFrame {
-
-=======
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import ver1.DBConnectionManager;
+
 @Getter
 
 @AllArgsConstructor
-public class MainFrame extends JFrame{
-	
->>>>>>> 2406dc6d81dbfc598db08477ac661e204de9cce8
-	private static final String VIEW_ALL = " select petition.id, petition.title, user.acc_id from petition join user on petition.user_id = user.id ";
-	private static final String VIEW_FACILITY = " select petition.id, petition.title, user.acc_id from petition where petition.category = facility join user on petition.user_id = user.id ";
-	private static final String VIEW_TEACHER = " select * from petition where category id = teacher ";
+public class MainFrame extends JFrame {
 
-	private LoginFrame loginFrame;
-	
+	private static final String VIEW_ALL = " select petition.id, petition.title, user.acc_id from petition join user on petition.user_id = user.id ";
+	private static final String VIEW_FACILITY = " select petition.id, petition.title, user.acc_id from petition join user on petition.user_id = user.id where petition.category = 'facility' ";
+	private static final String VIEW_TEACHER = " select petition.id, petition.title, user.acc_id from petition join user on petition.user_id = user.id where petition.category = 'teacher' ";
+
 	private JLabel frame;
 	private JButton facilityButton;
 	private JButton teacherButton;
 	private JButton articleButton;
 	private JTextArea body;
-	private JLabel id;
 
 	private String checker1;
 	private String checker2;
 	private String checker3;
 
 	private int log;
-	
-	private String localID;
 
 	public MainFrame() {
-		
 		initData();
 		setInitLayout();
 		addAction();
 		body();
 	}
-	
-	public void checkID() {
-		id = new JLabel();
-		localID = loginFrame.getId();
-		id.setText(localID + " 님 환영합니다!");
-		id.setBounds(900, 50, 20, 20);
-		
-		add(id);
-	}
 
 	public void body() {
+
 		body = new JTextArea();
+		body.setRows(3);
+		body.setColumns(12);
+		body.setEditable(false);
 		body.setBounds(250, 110, 1000, 700);
 		body.setBackground(new Color(213, 222, 232));
 
-		add(body);
+		getContentPane().add(body);
 
 		body.setText("");
 		// ArrayList<BoardDAO> arr = new ArrayList<BoardDao>();
 		Font bodyfont = new Font("D2CODING", Font.BOLD, 22);
 		body.setFont(bodyfont);
 
-		body.append("\t" + "no" + "\t" + "\t" + "\t" + "\t" + "제목" + "\t" + "\t" + "\t" + "\t" + "\t" + "작성자" + "\t"
+		body.append("\t" + "\t" + "no" + "\t" + "\t" + "\t" + "제목" + "\t" + "\t" + "\t" + "\t" + "\t" + "작성자" + "\t"
 				+ "\n");
 		body.append("-----------------------------------------------------------------------------------------" + "\n");
 		try (Connection conn = DBConnectionManager.getInstance().getConnection();
@@ -95,13 +76,20 @@ public class MainFrame extends JFrame{
 				checker1 = Integer.toString(log);
 				checker2 = resultSet.getString("title");
 				checker3 = resultSet.getString("acc_id");
-				body.append("\t" + checker1 + "\t" + "\t" + "\t" + checker2 + "\t" + "\t" + "\t" + "\t" + "\s"
-						+ checker3 + "\t" + "\n");
+
+				if (checker2.length() <= 6) {
+					body.append("\t" + "\t" + checker1 + "\t" + "\t" + "\t" + checker2 + "\t" + "\t" + "\t" + "\s"
+							+ "\s" + "\s" + "\s" + "\s" + "\s" + "\s" + "\t" + "\t" + checker3 + "\t" + "\t" + "\t"
+							+ "\n");
+				} else {
+					body.append("\t" + "\t" + checker1 + "\t" + "\t" + " " + " " + checker2 + "\t" + "\t" + "\t" + "\t"
+							+ checker3 + "\t" + "\t" + "\t" + "\n");
+				}
 
 			}
 
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		}
 
 	}
@@ -130,31 +118,44 @@ public class MainFrame extends JFrame{
 	}
 
 	public void setInitLayout() {
-		setLayout(null);
+		getContentPane().setLayout(null);
 		setResizable(false);
 		setLocationRelativeTo(null);
 
-		add(facilityButton);
-		add(teacherButton);
-		add(articleButton);
+		getContentPane().add(facilityButton);
+		getContentPane().add(teacherButton);
+		getContentPane().add(articleButton);
 
 		setVisible(true);
 
 	}
 
 	public void addAction() {
+
 		facilityButton.addActionListener(new ActionListener() {
+
+			String a;
+			int num;
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+
 				body.setText("");
-				
-				body.append("\t" + "no" + "\t" + "\t" + "\t" + "\t" + "제목" + "\t" + "\t" + "\t" + "\t" + "\t" + "작성자" + "\t"
+
+				body.append("\t" + "\t" + "no" + "\t" + "\t" + "\t" + "제목" + "\t" + "\t" + "\t" + "\t" + "\t" + "작성자"
+						+ "\t" + "\n");
+				body.append("-----------------------------------------------------------------------------------------"
 						+ "\n");
-				body.append("-----------------------------------------------------------------------------------------" + "\n");
+				if (num == 0) {
+					a = VIEW_FACILITY;
+					num = 1;
+				} else {
+					a = VIEW_ALL;
+					num = 0;
+				}
+
 				try (Connection conn = DBConnectionManager.getInstance().getConnection();
-						PreparedStatement pstmt = conn.prepareStatement(VIEW_FACILITY)) {
+						PreparedStatement pstmt = conn.prepareStatement(a)) {
 					ResultSet resultSet = pstmt.executeQuery();
 					while (resultSet.next()) {
 
@@ -162,9 +163,14 @@ public class MainFrame extends JFrame{
 						checker1 = Integer.toString(log);
 						checker2 = resultSet.getString("title");
 						checker3 = resultSet.getString("acc_id");
-						body.append("\t" + checker1 + "\t" + "\t" + "\t" + checker2 + "\t" + "\t" + "\t" + "\t" + "\s"
-								+ checker3 + "\t" + "\n");
-
+						if (checker2.length() <= 6) {
+							body.append("\t" + "\t" + checker1 + "\t" + "\t" + "\t" + checker2 + "\t" + "\t" + "\t" + "\s"
+									+ "\s" + "\s" + "\s" + "\s" + "\s" + "\s" + "\t" + "\t" + checker3 + "\t" + "\t" + "\t"
+									+ "\n");
+						} else {
+							body.append("\t" + "\t" + checker1 + "\t" + "\t" + " " + " " + checker2 + "\t" + "\t" + "\t" + "\t"
+									+ checker3 + "\t" + "\t" + "\t" + "\n");
+						}
 					}
 
 				} catch (Exception e2) {
@@ -176,9 +182,49 @@ public class MainFrame extends JFrame{
 
 		teacherButton.addActionListener(new ActionListener() {
 
+			String a;
+			int num;
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("강사 버튼");
+
+				body.setText("");
+
+				body.append("\t" + "\t" + "no" + "\t" + "\t" + "\t" + "제목" + "\t" + "\t" + "\t" + "\t" + "\t" + "작성자"
+						+ "\t" + "\n");
+				body.append("-----------------------------------------------------------------------------------------"
+						+ "\n");
+				if (num == 0) {
+					a = VIEW_TEACHER;
+					num = 1;
+				} else {
+					a = VIEW_ALL;
+					num = 0;
+				}
+
+				try (Connection conn = DBConnectionManager.getInstance().getConnection();
+						PreparedStatement pstmt = conn.prepareStatement(a)) {
+					ResultSet resultSet = pstmt.executeQuery();
+					while (resultSet.next()) {
+
+						log = resultSet.getInt("id");
+						checker1 = Integer.toString(log);
+						checker2 = resultSet.getString("title");
+						checker3 = resultSet.getString("acc_id");
+						if (checker2.length() <= 6) {
+							body.append("\t" + "\t" + checker1 + "\t" + "\t" + "\t" + checker2 + "\t" + "\t" + "\t" + "\s"
+									+ "\s" + "\s" + "\s" + "\s" + "\s" + "\s" + "\t" + "\t" + checker3 + "\t" + "\t" + "\t"
+									+ "\n");
+						} else {
+							body.append("\t" + "\t" + checker1 + "\t" + "\t" + " " + " " + checker2 + "\t" + "\t" + "\t" + "\t"
+									+ checker3 + "\t" + "\t" + "\t" + "\n");
+						}
+					}
+
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+
 			}
 		});
 		articleButton.addActionListener(new ActionListener() {
@@ -187,7 +233,11 @@ public class MainFrame extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("글 작성 버튼");
 			}
+
 		});
 	}
 
+	public static void main(String[] args) {
+		new MainFrame();
+	}
 }
