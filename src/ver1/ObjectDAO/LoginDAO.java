@@ -63,8 +63,8 @@ public class LoginDAO {
 
 				if (rs2.next()) {
 					JOptionPane.showMessageDialog(null, "로그인 성공");
-					userId = rs2.getString("id");
-					mainFrame = new MainFrame();
+					userId = rs2.getString("acc_id");
+					mainFrame = new MainFrame(this);
 
 				} else {
 					JOptionPane.showMessageDialog(null, "ID 또는 Password 가 일치하지 않습니다.");
@@ -72,6 +72,9 @@ public class LoginDAO {
 
 				}
 			}
+
 		}
+
 	}
+
 }
