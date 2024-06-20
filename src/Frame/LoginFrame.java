@@ -15,9 +15,10 @@ import javax.swing.JTextField;
 
 
 import lombok.Data;
+import lombok.Getter;
+
 
 @Data
-
 public class LoginFrame extends JFrame {
 
 	private JLabel frame;
@@ -25,6 +26,8 @@ public class LoginFrame extends JFrame {
 	private JPasswordField text_pw;
 	private JButton login_button;
 	private JButton join_button;
+	private String id;
+	private String password;
 	
 	public LoginFrame() {
 
@@ -47,8 +50,8 @@ public class LoginFrame extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String id = "아이디";
-				String password = "비밀번호";
+				id = "아이디";
+				password = "비밀번호";
 
 				if (id.equals(text_id.getText()) && password.equals(text_password.getText())) {
 					JOptionPane.showMessageDialog(null, "로그인 성공");
@@ -125,6 +128,7 @@ public class LoginFrame extends JFrame {
 
 				if(text_id != null && text_pw != null) {
 					new MainFrame();
+					dispose();
 				}
 
 
@@ -133,7 +137,7 @@ public class LoginFrame extends JFrame {
 				}
 				System.out.println(text_id.getText());
 				new MainFrame();
-				
+				dispose();
 			}
 		});
 	}
