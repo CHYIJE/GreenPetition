@@ -24,6 +24,7 @@ public class WriterFrame extends JFrame {
 	WriterDAO writerDAO;
 	WriterDTO dto;
 	WriterFrame mContext = this;
+	LoginDAO logindao;
 
 	private JLabel frame;
 	private JTextField titleField;
@@ -35,7 +36,8 @@ public class WriterFrame extends JFrame {
 	private String category = "-1";
 	private LocalDate date = LocalDate.now();
 
-	public WriterFrame() {
+	public WriterFrame(LoginDAO loginDAO) {
+		this.logindao = loginDAO;
 		initData();
 		setInitLayout();
 		addAction();
@@ -117,7 +119,7 @@ public class WriterFrame extends JFrame {
 				if (!mContext.category.equals("-1") && !mContext.titleField.getText().equals("")
 						&& !mContext.contentField.getText().equals("")) {
 					try {
-						writerDAO = new WriterDAO(dto, mContext);
+						writerDAO = new WriterDAO(dto, mContext, logindao);
 						new MainFrame(null);
 					} catch (Exception e1) {
 						e1.printStackTrace();
@@ -132,7 +134,4 @@ public class WriterFrame extends JFrame {
 
 	}
 
-	public static void main(String[] args) {
-		new WriterFrame();
-	}
 }

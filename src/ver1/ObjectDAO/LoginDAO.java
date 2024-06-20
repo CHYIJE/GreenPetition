@@ -17,8 +17,8 @@ public class LoginDAO {
 	UserDTO dto;
 	LoginDAO dao = this;
 	MainFrame mainFrame;
-	private int userId;
-	private String userName;
+	private int userId = 0;
+	private String userName = null;
 
 
 
@@ -30,7 +30,7 @@ public class LoginDAO {
 			e.printStackTrace();
 		}
 	}
-
+	// LoginFrame mContext == JtextField 끌고 오기
 	public void loginUser(UserDTO dto, LoginFrame mContext) throws SQLException {
 		this.mContext = mContext;
 		String idQuery = " SELECT * FROM user where acc_id = ? ";
@@ -57,8 +57,7 @@ public class LoginDAO {
 
 				if (rs2.next()) {
 					JOptionPane.showMessageDialog(null, "로그인 성공");
-					
-					dao.userId = rs2.getInt("id");
+					userId = rs2.getInt("id");
 					userName = rs2.getString("acc_id");
 					
 					mainFrame = new MainFrame(this);
@@ -76,7 +75,10 @@ public class LoginDAO {
 	}
 
 	public int getUserId() {
-		return dao.userId;
+		return userId;
+	}
+	public void setUserID(int userId) {
+		this.userId = userId;
 	}
 
 	public String getUserName() {

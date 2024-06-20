@@ -25,22 +25,25 @@ public class WriterDAO {
 	WriterFrame mContext;
 	WriterDTO dto;
 	LoginDAO dao;
-	private int test = -1;
+	UserDTO userdto;
+	private int test = 0;
 	MainFrame mainFrame;
 	String title;
 	String content;
 
-	public WriterDAO(WriterDTO dto, WriterFrame mContext) {
+	public WriterDAO(WriterDTO dto, WriterFrame mContext, LoginDAO dao) {
 		try {
-			writer(dto, mContext);
+			writer(dto, mContext, dao);
 			this.mContext = mContext;
+			this.dao = dao;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
-	private void writer(WriterDTO dto, WriterFrame mContext) throws SQLException {
+	private void writer(WriterDTO dto, WriterFrame mContext, LoginDAO dao)  throws SQLException {
 		this.mContext = mContext;
+		this.dao = dao;
 
 		String insertQuery = "INSERT INTO petition(user_id, category, title, content, date)"
 				+ " VALUES (?, ?, ?, ?, current_date())";
@@ -48,7 +51,6 @@ public class WriterDAO {
 		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
 
 			conn.setAutoCommit(false);
-
 			PreparedStatement psmt = conn.prepareStatement(insertQuery);
 			psmt.setInt(1, dao.getUserId());
 			psmt.setString(2, mContext.getCategory());

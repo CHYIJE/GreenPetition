@@ -250,7 +250,7 @@ public class MainFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("글 작성 버튼");
-				new WriterFrame();
+				new WriterFrame(mcontext);
 			}
 
 		});
