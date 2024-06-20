@@ -2,7 +2,6 @@ package Frame;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
@@ -13,19 +12,11 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 import ver1.DBConnectionManager;
 import ver1.ObjectDAO.LoginDAO;
-<<<<<<< HEAD
-=======
 
->>>>>>> 9fa56637e6aa63f5f9ce58c4b4f798cb136937c1
-@Getter
 
 public class MainFrame extends JFrame {
 
@@ -39,23 +30,15 @@ public class MainFrame extends JFrame {
 	private JButton teacherButton;
 	private JButton articleButton;
 	private JTextArea body;
-<<<<<<< HEAD
 	
-	LoginDAO lgContext;
 	LoginFrame mContext;
 	
 	private String checker1;
 	private String checker2;
 	private String checker3;
 	String getUserName;
-=======
 	private JLabel check;
 
-	private String checker1;
-	private String checker2;
-	private String checker3;
-
->>>>>>> 9fa56637e6aa63f5f9ce58c4b4f798cb136937c1
 	private int log;
 
 	private String id;
@@ -68,12 +51,7 @@ public class MainFrame extends JFrame {
 		setInitLayout();
 		addAction();
 		body();
-<<<<<<< HEAD
-		AppendName name = new AppendName();
-		name.paintComponent(getGraphics());
-=======
 		checkId();
->>>>>>> 9fa56637e6aa63f5f9ce58c4b4f798cb136937c1
 	}
 
 	public void checkId() {
@@ -274,29 +252,5 @@ public class MainFrame extends JFrame {
 
 		});
 	}
-<<<<<<< HEAD
-	class AppendName extends JPanel{
-		
-		public void paintComponent(Graphics g) {
-			super.paintComponents(g);
-			Font f = new Font("맑은고딕", Font.BOLD, 30);
-			g.setFont(f);
-			g.setColor(Color.BLUE);
-//			g.drawString("Hello", 1100, 140);
-			g.drawString(lgContext.getUserName().toString(), 1100, 100);
-			g.drawString(lgContext.getUserName(), 1100, 100);
-			getUserName = lgContext.getUserName();
-			g.drawString(getUserName, 1100, 100);
-			System.out.println(lgContext.getUserName());
-			System.out.println(getUserName);
-		}
-	}
-	
-	
-	public static void main(String[] args) {
-		new MainFrame();
-	}
-=======
-
->>>>>>> 9fa56637e6aa63f5f9ce58c4b4f798cb136937c1
 }
+

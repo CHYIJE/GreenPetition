@@ -1,8 +1,6 @@
 package Frame;
 
 import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -11,7 +9,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
@@ -99,15 +96,12 @@ public class LoginFrame extends JFrame {
 						new LoginDAO(dto, mContext);
 //						dispose();
 //						frame.setVisible(false);
-						
-						new MainFrame();
+						new MainFrame(lgContext);
 					} catch (Exception e2) {
 
 					}
 				} else {
-<<<<<<< HEAD
 					JOptionPane.showMessageDialog(null, "ID/PW를 입력해주세요.");
-=======
 
 					System.out.println(text_id.getText());
 					
@@ -115,30 +109,26 @@ public class LoginFrame extends JFrame {
 			}
 		});
 
-		login_button.addActionListener(new ActionListener() {
+//		login_button.addActionListener(new ActionListener() {
+//
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				String id = "아이디";
+//				String password = "비밀번호";
+//
+//				if (id.equals(text_id.getText()) && password.equals(text_pw.getText())) {
+//					JOptionPane.showMessageDialog(null, "로그인 성공");
+//				} else {
+//					JOptionPane.showMessageDialog(null, "로그인 실패");
+//
+//					JOptionPane.showMessageDialog(null, "ID/PW를 입력해주세요.");
+//				
+//
+//				}
+//			}
+//		});
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				String id = "아이디";
-				String password = "비밀번호";
 
-				if (id.equals(text_id.getText()) && password.equals(text_pw.getText())) {
-					JOptionPane.showMessageDialog(null, "로그인 성공");
-				} else {
-					JOptionPane.showMessageDialog(null, "로그인 실패");
-
-					JOptionPane.showMessageDialog(null, "ID/PW를 입력해주세요.");
-				
-
->>>>>>> 9fa56637e6aa63f5f9ce58c4b4f798cb136937c1
-				}
-			}
-		});
-
-<<<<<<< HEAD
-
-=======
->>>>>>> 9fa56637e6aa63f5f9ce58c4b4f798cb136937c1
 
 	}
 	public JTextField getTextId() {
