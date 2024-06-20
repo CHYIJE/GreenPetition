@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 import Frame.LoginFrame;
 import Frame.MainFrame;
 import lombok.AllArgsConstructor;
+<<<<<<< HEAD
 import lombok.NoArgsConstructor;
 import ver1.DBConnectionManager;
 import ver1.models.UserDTO;
@@ -19,6 +20,20 @@ import ver1.models.UserDTO;
 public class LoginDAO {
 	LoginFrame mContext;
 	LoginDAO lgContext = this;
+=======
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import ver1.DBConnectionManager;
+import ver1.models.UserDTO;
+
+@Getter
+@Setter
+@ToString
+@AllArgsConstructor
+public class LoginDAO {
+	LoginFrame mContext;
+>>>>>>> 9fa56637e6aa63f5f9ce58c4b4f798cb136937c1
 	UserDTO dto;
 	MainFrame mainFrame;
 	private int userId;
@@ -60,18 +75,23 @@ public class LoginDAO {
 
 				if (rs2.next()) {
 					JOptionPane.showMessageDialog(null, "로그인 성공");
+<<<<<<< HEAD
 					lgContext.userName = rs2.getString("name");
 					
 					mainFrame = new MainFrame();
+=======
+					userId = rs2.getString("acc_id");
+					mainFrame = new MainFrame(this);
+>>>>>>> 9fa56637e6aa63f5f9ce58c4b4f798cb136937c1
 
 				} else {
 					JOptionPane.showMessageDialog(null, "ID 또는 Password 가 일치하지 않습니다.");
 					conn.rollback();
-					
-				} 
+
+				}
 			}
 
-		} 
+		}
 
 	}
 	public int getuserId() {
@@ -85,4 +105,4 @@ public class LoginDAO {
 	}
 	
 
-} // end of class
+}

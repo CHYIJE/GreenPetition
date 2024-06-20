@@ -19,8 +19,6 @@ public class JoinDAO {
 
 	UserDTO dto;
 
-	// 회원가입
-
 	String resultRow = null;
 
 	public JoinDAO(UserDTO dto, SigninFrame mContext) {
@@ -31,34 +29,34 @@ public class JoinDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		
+
 	}
-	
+
 	// 회원가입
-	public void joinUser(UserDTO dto, SigninFrame mContext) throws SQLException {
 
-		this.mContext = mContext;
+	 public void joinUser(UserDTO dto, SigninFrame mContext) throws SQLException {
 
-		String insertQuery = "INSERT INTO user(name, acc_id, acc_pw) values (? ,?, ?) ";
+	        this.mContext = mContext;
 
-		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
+	        String insertQuery = "INSERT INTO user(name, acc_id, acc_pw) values (? ,?, ?) ";
 
-			conn.setAutoCommit(false);
+	        try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
 
-			PreparedStatement insertptmt = conn.prepareStatement(insertQuery);
-			insertptmt.setString(1, mContext.getIdField().getText());
-			insertptmt.setString(2, mContext.getPwField().getText());
-			insertptmt.setString(3, mContext.getNameField().getText());
+	            conn.setAutoCommit(false);
 
-			int rowCount = insertptmt.executeUpdate();
+	            PreparedStatement insertptmt = conn.prepareStatement(insertQuery);
+	            insertptmt.setString(1, mContext.getIdField().getText());
+	            insertptmt.setString(2, mContext.getPwField().getText());
+	            insertptmt.setString(3, mContext.getNameField().getText());
 
-			if(rowCount > 0) {
-				conn.commit();
-				JOptionPane.showMessageDialog(null, "회원가입이 완료되었습니다.");
-			} else {
-				conn.rollback();
-			}
-		}
+	            int rowCount = insertptmt.executeUpdate();
+
+	            if(rowCount > 0) {
+	                conn.commit();
+	                JOptionPane.showMessageDialog(null, "회원가입이 완료되었습니다.");
+	            } else {
+	                conn.rollback();
+	            }
+	        }
+	    }
 	}
-}
