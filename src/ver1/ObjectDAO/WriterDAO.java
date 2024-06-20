@@ -1,18 +1,70 @@
 package ver1.ObjectDAO;
 
-public class WriterDAO {
-	
-	// 글을 써야한다. 
-	
-	// 선택이 가능 정보를 끌어와야한다 
-	// 해당 유저가 카테고리를 선택해야한다 
-	// 글을 작성하기 위해 INSERT를 해야한다.
-	// 글을 글작성 프레임의 TEXT필드를 GET해서 
-	// 작성하기 버튼을 누르면 INSERT가 되어야한다.
-	
-	// 로그인 유저 확인
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
-	
-	// 수정, 삭제 
-	
+import javax.swing.JOptionPane;
+
+import Frame.LoginFrame;
+import Frame.MainFrame;
+import Frame.WriterFrame;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import ver1.DBConnectionManager;
+import ver1.models.UserDTO;
+import ver1.models.WriterDTO;
+
+@Getter
+@Setter
+@ToString
+@AllArgsConstructor
+public class WriterDAO {
+	WriterFrame mContext;
+	WriterDTO dto;
+	LoginDAO dao;
+	private int test = -1;
+	MainFrame mainFrame;
+	String title;
+	String content;
+
+	public WriterDAO(WriterDTO dto, WriterFrame mContext) {
+		try {
+			writer(dto, mContext);
+			this.mContext = mContext;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void writer(WriterDTO dto, WriterFrame mContext) throws SQLException {
+		this.mContext = mContext;
+
+		String insertQuery = "INSERT INTO petition(user_id, category, title, content, date)"
+				+ " VALUES (?, ?, ?, ?, current_date())";
+
+		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
+
+			conn.setAutoCommit(false);
+
+			PreparedStatement psmt = conn.prepareStatement(insertQuery);
+			test = dao.getUserId();
+			psmt.setInt(1, 1);
+			psmt.setString(2, mContext.getCategory());
+			psmt.setString(3, mContext.getTitleField().getText());
+			psmt.setString(4, mContext.getContentField().getText());
+
+			int rowCount = psmt.executeUpdate();
+
+			if (rowCount > 0) {
+				conn.commit();
+				JOptionPane.showMessageDialog(null, "test");
+			} else {
+				conn.rollback();
+			}
+		}
+	}
+
 }
