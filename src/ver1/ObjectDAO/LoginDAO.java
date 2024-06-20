@@ -10,22 +10,18 @@ import javax.swing.JOptionPane;
 import Frame.LoginFrame;
 import Frame.MainFrame;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.NoArgsConstructor;
 import ver1.DBConnectionManager;
 import ver1.models.UserDTO;
 
-@Getter
-@Setter
-@ToString
-@AllArgsConstructor
 public class LoginDAO {
 	LoginFrame mContext;
 	UserDTO dto;
 	MainFrame mainFrame;
-	String userId;
-	String userPw;
+	private int userId;
+	private String userName;
+
+
 
 	public LoginDAO(UserDTO dto, LoginFrame mContext) {
 		try {
@@ -38,7 +34,6 @@ public class LoginDAO {
 
 	public void loginUser(UserDTO dto, LoginFrame mContext) throws SQLException {
 		this.mContext = mContext;
-
 		String idQuery = " SELECT * FROM user where acc_id = ? ";
 		String passwordQuery = " SELECT * FROM user where acc_id = ? AND acc_pw = ? ";
 		String loginQuery = " SELECT name FROM user where acc_id = ? and acc_pw = ? ";
@@ -63,9 +58,13 @@ public class LoginDAO {
 
 				if (rs2.next()) {
 					JOptionPane.showMessageDialog(null, "로그인 성공");
-					userId = rs2.getString("acc_id");
+
+					
+					userId = rs2.getInt("id");
+					userName = rs2.getString("acc_id");
 					
 					mainFrame = new MainFrame(this);
+					System.out.println(userId);
 
 				} else {
 					JOptionPane.showMessageDialog(null, "ID 또는 Password 가 일치하지 않습니다.");
@@ -76,6 +75,18 @@ public class LoginDAO {
 
 		}
 
+	}
+
+	public int getUserId() {
+		return userId;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 }

@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -21,11 +22,10 @@ import ver1.DBConnectionManager;
 import ver1.ObjectDAO.LoginDAO;
 import javax.swing.SwingConstants;
 
-@Getter
-
 public class MainFrame extends JFrame {
 
 	private static final String VIEW_ALL = " select petition.id, petition.title, user.acc_id from petition join user on petition.user_id = user.id ";
+	private static final String VIEW_SELECT = " select petition.id, petition.title, user.acc_id from petition join user on petition.user_id = user.id where petition.id > ? and petition.id <= ? ";
 	private static final String VIEW_FACILITY = " select petition.id, petition.title, user.acc_id from petition join user on petition.user_id = user.id where petition.category = 'facility' ";
 	private static final String VIEW_TEACHER = " select petition.id, petition.title, user.acc_id from petition join user on petition.user_id = user.id where petition.category = 'teacher' ";
 
@@ -34,21 +34,28 @@ public class MainFrame extends JFrame {
 	private JButton teacherButton;
 	private JButton articleButton;
 	private JTextArea body;
-	private JLabel check;
 
 	private JButton minusButton;
 	private JButton plusButton;
 	private JTextField page;
 
+	LoginFrame mContext;
+
 	private String checker1;
 	private String checker2;
 	private String checker3;
+	String getUserName;
+	private JLabel check;
 
 	private int log;
 
 	private String id;
 	private String name;
 	private LoginDAO mcontext;
+	
+	private int num;
+	private String stnum;
+	private int max;
 
 	public MainFrame(LoginDAO mcontext) {
 		this.mcontext = mcontext;
@@ -240,6 +247,11 @@ public class MainFrame extends JFrame {
 							body.append("\t" + "\t" + checker1 + "\t" + "\t" + " " + " " + checker2 + "\t" + "\t" + "\t"
 									+ "\t" + checker3 + "\t" + "\t" + "\t" + "\n");
 						}
+						
+						if(log % 10 == 0) {
+							max++;
+						}
+						
 					}
 
 				} catch (Exception e2) {
@@ -260,6 +272,7 @@ public class MainFrame extends JFrame {
 	}
 
 	public void numbersheet() {
+		
 		minusButton = new JButton(" < ");
 		plusButton = new JButton(" > ");
 		page = new JTextField();
@@ -270,15 +283,43 @@ public class MainFrame extends JFrame {
 		minusButton.setBounds(650, 650, 50, 50);
 		plusButton.setBounds(800, 650, 50, 50);
 		page.setBounds(710, 650, 80, 50);
+		
 		getContentPane().add(minusButton);
 		getContentPane().add(plusButton);
 		getContentPane().add(page);
 		
+		
+		num = 1;
+		stnum = Integer.toString(num);
+		page.setText(stnum);
+		max = 1;
+		
+		
+		
 		minusButton.addActionListener(new ActionListener() {
+			
+			
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+
+				if(num <= 0) {
+					num = 1;
+				}else {
+					num--;
+				}
+				stnum = Integer.toString(num);
+				page.setText(stnum);
+				
+				try (
+						Connection conn = DBConnectionManager.getInstance().getConnection();
+						PreparedStatement pstmt = conn.prepareStatement(VIEW_SELECT)){
+					pstmt.setInt(1, num);
+					pstmt.setInt(2, num*10);
+					int rowsInsertedCount = pstmt.executeUpdate();
+				} catch (SQLException e2) {
+					e2.printStackTrace();
+				}
 				
 			}
 		});
@@ -287,12 +328,29 @@ public class MainFrame extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+
+				if(num > max) {
+					num = max;
+				}else {
+					num++;
+				}
+				stnum = Integer.toString(num);
+				page.setText(stnum);
+				
+				try (
+						Connection conn = DBConnectionManager.getInstance().getConnection();
+						PreparedStatement pstmt = conn.prepareStatement(VIEW_SELECT)){
+					pstmt.setInt(1, num);
+					pstmt.setInt(2, num*10);
+					int rowsInsertedCount = pstmt.executeUpdate();
+				} catch (SQLException e2) {
+					e2.printStackTrace();
+				}
+				
 				
 			}
 		});
 
 	}
-	
 
 }
