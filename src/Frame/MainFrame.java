@@ -77,7 +77,6 @@ public class MainFrame extends JFrame{
 				
 			}
 			
-			
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
