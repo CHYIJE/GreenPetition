@@ -68,13 +68,5 @@ public class WriterDAO {
 			}
 		}
 	}
-	class UserInfo{
-		private static Map<Integer, String> users;
-		
-		public UserInfo() {
-
-		}
-		
-	}
 	
 }

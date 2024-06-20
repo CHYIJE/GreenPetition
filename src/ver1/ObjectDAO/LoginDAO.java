@@ -59,13 +59,18 @@ public class LoginDAO {
 
 				ResultSet rs2 = pwptmt.executeQuery();
 
-				if (rs2.next()) { 
+				if (rs2.next()) { // 인증 -- DB에서 일치하는지 알아보는 if => 넌 DB에 있구나 내가 저장할게 Map에다가
 					JOptionPane.showMessageDialog(null, "로그인 성공");
-					userId = rs2.getInt("id"); 
+					userId = rs2.getInt("id"); // 6
 					useraccId = rs2.getString("acc_id"); 
+					try {
+						UserInfo userinfo = UserInfo.getInstance();
+						userinfo.loadUser();
+						
+					} catch (Exception e) {
+						// TODO: handle exception
+					}
 					
-					
-	
 					mainFrame = new MainFrame(this);
 
 				} else {
