@@ -12,7 +12,6 @@ import javax.swing.JOptionPane;
 import Frame.LoginFrame;
 import Frame.MainFrame;
 import ver1.DBConnectionManager;
-import ver1.UserInfo;
 import ver1.models.UserDTO;
 
 public class LoginDAO {
@@ -20,14 +19,14 @@ public class LoginDAO {
 	UserDTO dto;
 	LoginDAO dao = this;
 	MainFrame mainFrame;
-	UserInfo userinfo;
 	private int userId = 0;
 	private String useraccId = null;
-
+	
 
 
 	public LoginDAO(UserDTO dto, LoginFrame mContext) {
 		try {
+			
 			loginUser(dto, mContext);
 			this.mContext = mContext;
 		} catch (SQLException e) {
@@ -61,11 +60,10 @@ public class LoginDAO {
 
 				if (rs2.next()) { // 인증 -- DB에서 일치하는지 알아보는 if => 넌 DB에 있구나 내가 저장할게 Map에다가
 					JOptionPane.showMessageDialog(null, "로그인 성공");
-					userId = rs2.getInt("id"); // 6
-					useraccId = rs2.getString("acc_id"); 
 					try {
-						UserInfo userinfo = UserInfo.getInstance();
-						userinfo.loadUser();
+						insertUser();
+						userId = rs2.getInt("id"); // 6
+						useraccId = rs2.getString("acc_id");
 						
 					} catch (Exception e) {
 						// TODO: handle exception
@@ -83,6 +81,16 @@ public class LoginDAO {
 		}
 
 	}
+	public void insertUser() {
+		Map<Integer, String> users = new HashMap<>();
+		users.put(userId, useraccId);
+		System.out.println(users.size());
+	}
+		
+		
+		
+	
+
 
 	public int getUserId() {
 		return userId;
