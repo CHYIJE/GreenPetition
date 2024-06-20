@@ -50,8 +50,7 @@ public class WriterDAO {
 			conn.setAutoCommit(false);
 
 			PreparedStatement psmt = conn.prepareStatement(insertQuery);
-			test = dao.getUserId();
-			psmt.setInt(1, 1);
+			psmt.setInt(1, dao.getUserId());
 			psmt.setString(2, mContext.getCategory());
 			psmt.setString(3, mContext.getTitleField().getText());
 			psmt.setString(4, mContext.getContentField().getText());
@@ -66,5 +65,5 @@ public class WriterDAO {
 			}
 		}
 	}
-
+	
 }

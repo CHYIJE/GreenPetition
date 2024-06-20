@@ -9,10 +9,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import java.util.Vector;
+
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
@@ -72,7 +76,9 @@ public class MainFrame extends JFrame {
 
 		check = new JLabel();
 		getContentPane().add(check);
-		check.setText(mcontext.getUserId() + " 님 접속중입니다!");
+
+		add(check);
+		check.setText(mcontext.getUserName() + " 님 접속중입니다!");
 		Font bodyfont = new Font("D2CODING", Font.BOLD, 25);
 		check.setFont(bodyfont);
 		check.setBounds(900, 40, 350, 100);
@@ -269,11 +275,31 @@ public class MainFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("글 작성 버튼");
+				new WriterFrame();
 			}
 
 		});
-
+		
 	}
+	class PetitionTable {
+		JTable table;
+		Vector data = new Vector<>();
+		Vector<String> colName = new Vector<>();
+		
+		public void setData(){
+			colName.add("id");
+			colName.add("acc_id");
+			colName.add("acc_pw");
+		}
+		public void setTable() {
+			String[] header = new String[5];
+			Object[][] petetion = new String[header.length][15];
+			table = new JTable(petetion, header);
+			
+		}
+	}
+	
+
 
 	public void numbersheet() {
 
