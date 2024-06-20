@@ -13,15 +13,10 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
 import ver1.DBConnectionManager;
 import ver1.ObjectDAO.LoginDAO;
 
-@Getter
 
 public class MainFrame extends JFrame {
 
@@ -35,11 +30,14 @@ public class MainFrame extends JFrame {
 	private JButton teacherButton;
 	private JButton articleButton;
 	private JTextArea body;
-	private JLabel check;
-
+	
+	LoginFrame mContext;
+	
 	private String checker1;
 	private String checker2;
 	private String checker3;
+	String getUserName;
+	private JLabel check;
 
 	private int log;
 
@@ -254,5 +252,5 @@ public class MainFrame extends JFrame {
 
 		});
 	}
-
 }
+
