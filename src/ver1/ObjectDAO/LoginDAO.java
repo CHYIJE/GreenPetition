@@ -70,12 +70,12 @@ public class LoginDAO {
 				} else {
 					JOptionPane.showMessageDialog(null, "ID 또는 Password 가 일치하지 않습니다.");
 					conn.rollback();
-					
-				} 
+
+				}
 			}
 
 		}
 
+		}
 	}
 
-} // end of class
