@@ -164,8 +164,8 @@ public class MainFrame extends JFrame {
 				model.setRowCount(0); // 기존 데이터 초기화
 
 				for (PatitionDTO result : searchResults) {
-					model.addRow(new Object[] { result.getId(), result.getUser_id(), result.getCategory(),
-							result.getTitle(), result.getContent(), result.getDate() });
+					model.addRow(new Object[] { result.getId(), result.getTitle(), result.getUser_id(), 
+							result.getCategory(), result.getDate() });
 				}
 			}
 		});
