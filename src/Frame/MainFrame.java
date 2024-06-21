@@ -8,9 +8,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
+import java.util.List;
 import java.util.Vector;
-
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -19,12 +18,12 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-
-import lombok.Getter;
+import javax.swing.SwingConstants;
 
 import ver1.DBConnectionManager;
 import ver1.ObjectDAO.LoginDAO;
-import javax.swing.SwingConstants;
+import ver1.ObjectDAO.SearchDAO;
+import ver1.models.PatitionDTO;
 
 public class MainFrame extends JFrame {
 
@@ -37,6 +36,7 @@ public class MainFrame extends JFrame {
 	private JButton facilityButton;
 	private JButton teacherButton;
 	private JButton articleButton;
+	private JButton searchButton;
 	private JTextArea body;
 
 	private JButton minusButton;
@@ -61,8 +61,13 @@ public class MainFrame extends JFrame {
 	private String stnum;
 	private int max;
 
+	private SearchDAO searchDAO;
+	private JTextField searchField; // 검색 필드 추가
+
+	
 	public MainFrame(LoginDAO mcontext) {
 		this.mcontext = mcontext;
+		searchDAO = new SearchDAO(); // SearchDAO 초기화
 		initData();
 		setInitLayout();
 		numbersheet();
@@ -153,6 +158,14 @@ public class MainFrame extends JFrame {
 		articleButton.setBounds(10, 50, 200, 100);
 		articleButton.setBorderPainted(false);
 		articleButton.setBackground(new Color(255, 255, 255));
+		
+		searchField = new JTextField(20); // 검색 필드 추가
+        searchField.setBounds(800, 700, 180, 40);
+		
+		searchButton = new JButton("검색"); // 검색 버튼
+		searchButton.setBounds(1000, 700, 100, 100);
+		searchButton.setBorderPainted(false);
+		searchButton.setBackground(new Color(255, 255, 255));
 	}
 
 	public void setInitLayout() {
@@ -163,6 +176,8 @@ public class MainFrame extends JFrame {
 		getContentPane().add(facilityButton);
 		getContentPane().add(teacherButton);
 		getContentPane().add(articleButton);
+		getContentPane().add(searchField); // 검색 필드 추가
+        getContentPane().add(searchButton); // 검색 버튼 추가 
 
 		setVisible(true);
 
@@ -281,8 +296,25 @@ public class MainFrame extends JFrame {
 			}
 
 		});
+		searchButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String searchTerm = searchField.getText();
+                List<PatitionDTO> searchResults = searchDAO.titleSearch(searchTerm);
+                body.setText("");
+
+                body.append("\t" + "\t" + "no" + "\t" + "\t" + "\t" + "제목" + "\t" + "\t" + "\t" + "\t" + "\t" + "작성자" + "\t" + "\n");
+                body.append("-----------------------------------------------------------------------------------------" + "\n");
+
+                for (PatitionDTO result : searchResults) {
+                    body.append("\t" + "\t" + result.getId() + "\t" + result.getDate() + "\t" + result.getTitle() + "\t" + "\t" + "\t" + + result.getUser_id() + "\t" + "\n");
+                }
+            }
+        });
+    }
 		
-	}
+	
 	class PetitionTable {
 		JTable table;
 		Vector data = new Vector<>();
@@ -300,8 +332,6 @@ public class MainFrame extends JFrame {
 			
 		}
 	}
-	
-
 
 	public void numbersheet() {
 
