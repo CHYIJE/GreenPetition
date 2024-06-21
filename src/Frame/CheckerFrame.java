@@ -15,6 +15,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
@@ -53,6 +54,9 @@ public class CheckerFrame extends JFrame {
 	private int userId;
 	private int patitionId;
 	private String comment1;
+//	private JTable replyTable;
+//	private Reply reply;
+//	private JScrollPane replyScroll;
 
 	public CheckerFrame(int id) {
 		this.patitionId = id;
@@ -122,6 +126,21 @@ public class CheckerFrame extends JFrame {
 		l.setBounds(380, 700, 220, 80);
 		l.setBorderPainted(false);
 		l.setBackground(new Color(238, 238, 238));
+
+//		reply = new Reply();
+//		replyTable = reply.insertReply();
+//
+//		replyScroll = new JScrollPane(replyTable);
+//		replyScroll.setViewportView(replyTable);
+//		replyScroll.setBounds(270, 800, 780, 100);
+//
+//		replyTable.getTableHeader().setReorderingAllowed(false);
+//		replyTable.getTableHeader().setResizingAllowed(false);
+//		replyTable.setRowSelectionAllowed(false);
+//		replyTable.getColumn("id").setPreferredWidth(3);
+//		replyTable.getColumn("content").setPreferredWidth(780);
+//		replyTable.setShowVerticalLines(false);
+//		replyTable.setShowHorizontalLines(false);
 
 		commentButton = new JButton();
 		commentButton.setBounds(1080, 600, 120, 25);
