@@ -20,8 +20,6 @@ public class LoginDAO {
 	private int userId;
 	private String userName;
 
-
-
 	public LoginDAO(UserDTO dto, LoginFrame mContext) {
 		try {
 			loginUser(dto, mContext);
