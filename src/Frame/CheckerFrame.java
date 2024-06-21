@@ -18,6 +18,7 @@ import javax.swing.JTextField;
 import ver1.DBConnectionManager;
 import ver1.ObjectDAO.CheckerDAO;
 import ver1.models.CheckerDTO;
+import ver1.models.Vote;
 
 public class CheckerFrame extends JFrame {
 
@@ -29,12 +30,14 @@ public class CheckerFrame extends JFrame {
 	CheckerDTO dto;
 	CheckerFrame mContext = this;
 	MainFrame main;
+	Vote vote;
 
 	private JLabel frame;
 	private JTextField title;
 	private JTextField name;
 	private JTextField date;
 	private JTextArea content;
+	private JButton back;
 	private JButton w;
 	private JButton l;
 	private JButton comment;
@@ -76,7 +79,7 @@ public class CheckerFrame extends JFrame {
 		date.setText(dto.getDate());
 
 		mContext.content = new JTextArea();
-		content.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+		content.setBorder(BorderFactory.createEmptyBorder());
 		content.setBounds(80, 100, 1120, 550);
 		content.setBackground(new Color(213, 222, 232));
 		content.setEditable(false);
@@ -84,19 +87,24 @@ public class CheckerFrame extends JFrame {
 		content.setText(dto.getContent());
 
 		w = new JButton(new ImageIcon("img/facilityButton.png"));
-		w.setBounds(180, 700, 220, 80);
+		w.setBounds(80, 700, 220, 80);
 		w.setBorderPainted(false);
 		w.setBackground(new Color(255, 255, 255));
 
 		l = new JButton(new ImageIcon("img/teacherButton.png"));
-		l.setBounds(480, 700, 220, 80);
+		l.setBounds(380, 700, 220, 80);
 		l.setBorderPainted(false);
 		l.setBackground(new Color(255, 255, 255));
 
 		comment = new JButton(new ImageIcon("img/writeArticleButton.png"));
-		comment.setBounds(780, 700, 220, 80);
+		comment.setBounds(680, 700, 220, 80);
 		comment.setBorderPainted(false);
 		comment.setBackground(new Color(255, 255, 255));
+		
+		back = new JButton(new ImageIcon("img/writeArticleButton.png"));
+		back.setBounds(980, 700, 220, 80);
+		back.setBorderPainted(false);
+		back.setBackground(new Color(255, 255, 255));
 
 	}
 
@@ -112,6 +120,7 @@ public class CheckerFrame extends JFrame {
 		add(w);
 		add(l);
 		add(comment);
+		add(back);
 
 		setVisible(true);
 	}
@@ -131,7 +140,7 @@ public class CheckerFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO 반대수 올라가게
-
+				vote.upvote();
 			}
 
 		});
@@ -143,18 +152,28 @@ public class CheckerFrame extends JFrame {
 			}
 
 		});
+		
+		back.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new MainFrame(null);
+			}
+			
+		});
 	}
 
 	private void getInfo() {
 		try (Connection conn = DBConnectionManager.getInstance().getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(SELECT)) {
-			pstmt.setInt(1, /* TODO 메인 > 글 id 가져와야함 */46);
+			pstmt.setInt(1, /* TODO 메인 > 글 id 가져와야함 */4);
 			ResultSet resultSet = pstmt.executeQuery();
 			while (resultSet.next()) {
 				dto = CheckerDTO.builder().petition_id(resultSet.getInt("id")).name(resultSet.getString("name"))
 						.date(resultSet.getString("date")).title(resultSet.getString("title"))
 						.content(resultSet.getString("content")).agree(resultSet.getInt("agree"))
 						.disagree(resultSet.getInt("disagree")).build();
+				vote = Vote.builder().build();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

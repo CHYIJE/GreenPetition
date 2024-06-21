@@ -12,6 +12,7 @@ import Frame.LoginFrame;
 import Frame.MainFrame;
 import Frame.WriterFrame;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -22,49 +23,79 @@ import ver1.ObjectDAO.LoginDAO;
 @Setter
 @ToString
 @AllArgsConstructor
+@Builder
 public class Vote {
 
-	// 찬성반대
-	// 중복투표불가 (찬성, 반대)(같은거 여러번)
-	// 체크시 count +1
+	private static final String INSERTQUERY = "INSERT INTO vote(petition_id, user_id) values(?, ?)";
+	private static final String CHECKQUERY = "SELECT * FROM vote where petition_id = ? and user_id = ?";
 
 	UserDTO userDto;
 	PatitionDTO paDto;
 	LoginDAO loginDao;
 	WriterFrame mContext;
-	public int agreeCount = 0;
-	public int disagreeCount = 0;
+	MainFrame main;
 
 	// 중복체크
-	public void checkUser(UserDTO dto, WriterFrame mContext) throws SQLException {
+	public boolean checkUser(UserDTO dto, WriterFrame mContext) throws SQLException {
 
 		this.mContext = mContext;
-		String checkQuery = " SELECT * FROM vote where user_id = ? ";
 
 		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
 			conn.setAutoCommit(false);
-			PreparedStatement ptmt = conn.prepareStatement(checkQuery);
-			ptmt.setString(1, loginDao.getUserName());
+			PreparedStatement ptmt = conn.prepareStatement(CHECKQUERY);
+//			ptmt.setInt(1, main.getPetitionId());
+//			ptmt.setInt(2, loginDao.getUserName());
+			ptmt.setInt(1, 1);
+			ptmt.setInt(2, 1);
 
 			ResultSet rs = ptmt.executeQuery();
 
 			if (rs.next()) {
 				JOptionPane.showMessageDialog(null, "이미 투표 하셨습니다.");
-				conn.rollback();
-				
 				// 투표 막기
+				return false;
+
 			} else {
-				// agreeCount++;
-				// disagreeCount++;
 				JOptionPane.showMessageDialog(null, "투표 완료 되었습니다.");
 				// 투표 허용
+				return true;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return false;
 
 	}
-	
-	
+
+	public void upvote() {
+		try {
+			boolean temp = checkUser(userDto, mContext);
+			if (temp) {
+				up();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void up() {
+		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
+			conn.setAutoCommit(false);
+			PreparedStatement ptmt = conn.prepareStatement(INSERTQUERY);
+//			ptmt.setInt(1, main.getPetitionId());
+//			ptmt.setInt(2, loginDao.getUserName());
+			ptmt.setInt(1, 1);
+			ptmt.setInt(2, 1);
+			
+			int rs = ptmt.executeUpdate();
+			System.out.println(rs);
+		} catch (Exception e) {
+
+		}
+	}
+
+	public void down() {
+
+	}
 
 } // end of class
