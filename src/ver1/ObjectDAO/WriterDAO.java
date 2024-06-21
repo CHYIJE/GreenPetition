@@ -3,6 +3,7 @@ package ver1.ObjectDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Map;
 
 import javax.swing.JOptionPane;
 
@@ -25,13 +26,13 @@ public class WriterDAO {
 	WriterFrame mContext;
 	WriterDTO dto;
 	LoginDAO dao;
-	private int test = -1;
+	UserDTO userdto;
+	private int test = 0;
 	MainFrame mainFrame;
 	String title;
 	String content;
 
-	
-    
+
     private LoginDAO loginDAO;
 
     public WriterDAO(WriterDTO dto, WriterFrame mContext, LoginDAO loginDAO) {

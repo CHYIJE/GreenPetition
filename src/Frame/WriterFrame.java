@@ -25,6 +25,7 @@ public class WriterFrame extends JFrame {
 	WriterDTO dto;
 	LoginDAO loginDAO;
 	WriterFrame mContext = this;
+	LoginDAO logindao;
 
 	private JLabel frame;
 	private JTextField titleField;
@@ -42,6 +43,7 @@ public class WriterFrame extends JFrame {
         setInitLayout();
         addAction();
     }
+
 
 	public void initData() {
 
@@ -125,7 +127,9 @@ public class WriterFrame extends JFrame {
                             .content(contentField.getText())
                             .build();
 					try {
+
 						writerDAO = new WriterDAO(dto, mContext,loginDAO);
+
 					} catch (Exception e1) {
 						e1.printStackTrace();
 					}
@@ -140,7 +144,4 @@ public class WriterFrame extends JFrame {
 
 	}
 
-//	public static void main(String[] args) {
-//		new WriterFrame();
-//	}
 }
