@@ -38,7 +38,6 @@ public class WriterFrame extends JFrame {
 	private LocalDate date = LocalDate.now();
 
 	public WriterFrame(LoginDAO loginDAO) {
-
         this.loginDAO = loginDAO; // LoginDAO 객체를 초기화
         initData();
         setInitLayout();
@@ -129,7 +128,7 @@ public class WriterFrame extends JFrame {
                             .build();
 					try {
 						writerDAO = new WriterDAO(dto, mContext, logindao);
-						new MainFrame(null);
+						
 
 					} catch (Exception e1) {
 						e1.printStackTrace();
