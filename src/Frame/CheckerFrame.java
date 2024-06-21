@@ -21,6 +21,7 @@ import javax.swing.border.EmptyBorder;
 
 import ver1.DBConnectionManager;
 import ver1.ObjectDAO.CheckerDAO;
+import ver1.ObjectDAO.CommentWriterDAO;
 import ver1.models.CheckerDTO;
 import ver1.models.Vote;
 
@@ -36,6 +37,7 @@ public class CheckerFrame extends JFrame {
 	MainFrame main;
 	Vote vote;
 
+	private CommentWriterDAO commentDao;
 	private JLabel frame;
 	private JTextField title;
 	private JTextField name;
@@ -48,10 +50,12 @@ public class CheckerFrame extends JFrame {
 	private JButton commentButton;
 	private JPanel contentpane;
 	private JScrollPane sp;
-	private int id;
+	private int userId;
+	private int patitionId;
+	private String comment1;
 
 	public CheckerFrame(int id) {
-		this.id = id;
+		this.patitionId = id;
 		getInfo();
 		initData();
 		setInitLayout();
@@ -174,7 +178,8 @@ public class CheckerFrame extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
+				comment1 = comment.getText();
+				commentDao = new CommentWriterDAO(userId, patitionId, comment1);
 			}
 
 		});
@@ -192,7 +197,7 @@ public class CheckerFrame extends JFrame {
 	private void getInfo() {
 		try (Connection conn = DBConnectionManager.getInstance().getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(SELECT)) {
-			pstmt.setInt(1, id);
+			pstmt.setInt(1, patitionId);
 			ResultSet resultSet = pstmt.executeQuery();
 			while (resultSet.next()) {
 				dto = CheckerDTO.builder().user_id(resultSet.getInt("u.id")).petition_id(resultSet.getInt("p.id"))
@@ -200,6 +205,7 @@ public class CheckerFrame extends JFrame {
 						.title(resultSet.getString("title")).content(resultSet.getString("content"))
 						.agree(resultSet.getInt("agree")).disagree(resultSet.getInt("disagree")).build();
 				vote = Vote.builder().build();
+				userId = dto.getUser_id();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
