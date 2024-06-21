@@ -32,7 +32,6 @@ public class LoginFrame extends JFrame {
 		initData();
 		setInitLayout();
 		addAction();
-
 	}
 
 	public void initData() {

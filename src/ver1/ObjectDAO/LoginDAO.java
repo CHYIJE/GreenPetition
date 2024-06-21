@@ -20,8 +20,6 @@ public class LoginDAO {
 	private int userId;
 	private String userName;
 
-
-
 	public LoginDAO(UserDTO dto, LoginFrame mContext) {
 		try {
 			loginUser(dto, mContext);
@@ -32,6 +30,7 @@ public class LoginDAO {
 	}
 
 	public void loginUser(UserDTO dto, LoginFrame mContext) throws SQLException {
+		
 		this.mContext = mContext;
 		String idQuery = " SELECT * FROM user where acc_id = ? ";
 		String passwordQuery = " SELECT * FROM user where acc_id = ? AND acc_pw = ? ";
@@ -65,15 +64,13 @@ public class LoginDAO {
 					mainFrame = new MainFrame(this);
 					System.out.println(userId);
 
+				} else if (rs2.next() == false) {
 				} else {
 					JOptionPane.showMessageDialog(null, "ID 또는 Password 가 일치하지 않습니다.");
 					conn.rollback();
-
 				}
 			}
-
 		}
-
 	}
 
 	public int getUserId() {
@@ -87,5 +84,7 @@ public class LoginDAO {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
+	
+	
 
 }
