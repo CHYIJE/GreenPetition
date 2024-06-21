@@ -16,12 +16,13 @@ import lombok.ToString;
 public class CheckerDTO {
 
 	private int petition_id; // 글 ID
+	private int user_id;
 	private String name;
 	private String title;
 	private String content;
-    private String category; // 카테고리
-    private String date;
-    private int agree;
-    private int disagree;
-	
+	private String category; // 카테고리
+	private String date;
+	private int agree;
+	private int disagree;
+
 }

@@ -1,6 +1,5 @@
 package ver1.models;
 
-import java.awt.Button;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,7 +7,6 @@ import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
 
-import Frame.LoginFrame;
 import Frame.MainFrame;
 import Frame.WriterFrame;
 import lombok.AllArgsConstructor;
@@ -28,25 +26,30 @@ public class Vote {
 
 	private static final String INSERTQUERY = "INSERT INTO vote(petition_id, user_id) values(?, ?)";
 	private static final String CHECKQUERY = "SELECT * FROM vote where petition_id = ? and user_id = ?";
+	private static final String UPVOTE = "UPDATE petition SET agree = ? where id = ?";
+	private static final String DOWNVOTE = "UPDATE petition SET agree = ? where id = ?";
 
 	UserDTO userDto;
 	PatitionDTO paDto;
 	LoginDAO loginDao;
 	WriterFrame mContext;
 	MainFrame main;
+	CheckerDTO dto;
+	private int petitionId;
+	private int userId;
+	private int agree;
+	private int disagree;
 
 	// 중복체크
-	public boolean checkUser(UserDTO dto, WriterFrame mContext) throws SQLException {
+	private boolean checkUser(CheckerDTO dto, WriterFrame mContext) throws SQLException {
 
 		this.mContext = mContext;
 
 		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
 			conn.setAutoCommit(false);
 			PreparedStatement ptmt = conn.prepareStatement(CHECKQUERY);
-//			ptmt.setInt(1, main.getPetitionId());
-//			ptmt.setInt(2, loginDao.getUserName());
-			ptmt.setInt(1, 1);
-			ptmt.setInt(2, 1);
+			ptmt.setInt(1, petitionId);
+			ptmt.setInt(2, userId);
 
 			ResultSet rs = ptmt.executeQuery();
 
@@ -67,9 +70,12 @@ public class Vote {
 
 	}
 
-	public void upvote() {
+	public void upvote(int petitionId, int userId, int agree) {
+		this.petitionId = petitionId;
+		this.userId = userId;
+		this.agree = agree;
 		try {
-			boolean temp = checkUser(userDto, mContext);
+			boolean temp = checkUser(dto, mContext);
 			if (temp) {
 				up();
 			}
@@ -78,23 +84,50 @@ public class Vote {
 		}
 	}
 
-	public void up() {
-		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
-			conn.setAutoCommit(false);
-			PreparedStatement ptmt = conn.prepareStatement(INSERTQUERY);
-//			ptmt.setInt(1, main.getPetitionId());
-//			ptmt.setInt(2, loginDao.getUserName());
-			ptmt.setInt(1, 1);
-			ptmt.setInt(2, 1);
-			
-			int rs = ptmt.executeUpdate();
-			System.out.println(rs);
-		} catch (Exception e) {
-
+	public void downvote(int petitionId, int userId, int disagree) {
+		this.petitionId = petitionId;
+		this.userId = userId;
+		this.disagree = disagree;
+		try {
+			boolean temp = checkUser(dto, mContext);
+			if (temp) {
+				down();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 	}
 
-	public void down() {
+	private void up() {
+		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
+			PreparedStatement ptmt = conn.prepareStatement(INSERTQUERY);
+			ptmt.setInt(1, petitionId);
+			ptmt.setInt(2, userId);
+			ptmt.executeUpdate();
+
+			PreparedStatement pstmt = conn.prepareStatement(UPVOTE);
+			pstmt.setInt(1, agree);
+			pstmt.setInt(2, petitionId);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void down() {
+		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
+			PreparedStatement ptmt = conn.prepareStatement(INSERTQUERY);
+			ptmt.setInt(1, petitionId);
+			ptmt.setInt(2, userId);
+			ptmt.executeUpdate();
+
+			PreparedStatement pstmt = conn.prepareStatement(DOWNVOTE);
+			pstmt.setInt(1, disagree);
+			pstmt.setInt(2, petitionId);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 	}
 

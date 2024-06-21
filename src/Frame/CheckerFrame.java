@@ -1,5 +1,6 @@
 package Frame;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,8 +13,11 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 
 import ver1.DBConnectionManager;
 import ver1.ObjectDAO.CheckerDAO;
@@ -22,7 +26,7 @@ import ver1.models.Vote;
 
 public class CheckerFrame extends JFrame {
 
-	private static final String SELECT = "select p.id, p.title, p.content, p.date, p.agree, p.disagree, u.name from petition as p join user as u on p.user_id = u.id where p.id = ?";
+	private static final String SELECT = "select u.id, p.id, p.title, p.content, p.date, p.agree, p.disagree, u.name from petition as p join user as u on p.user_id = u.id where p.id = ?";
 //	private static final String UPVOTE = ""
 //	private static final String DOWNVOTE =S
 
@@ -41,6 +45,8 @@ public class CheckerFrame extends JFrame {
 	private JButton w;
 	private JButton l;
 	private JButton comment;
+	private JPanel contentpane;
+	private JScrollPane sp;
 
 	public CheckerFrame() {
 		getInfo();
@@ -79,32 +85,41 @@ public class CheckerFrame extends JFrame {
 		date.setText(dto.getDate());
 
 		mContext.content = new JTextArea();
-		content.setBorder(BorderFactory.createEmptyBorder());
+		content.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 		content.setBounds(80, 100, 1120, 550);
 		content.setBackground(new Color(213, 222, 232));
 		content.setEditable(false);
 		content.setLineWrap(true);
 		content.setText(dto.getContent());
 
+		mContext.contentpane = new JPanel();
+		contentpane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentpane.setLayout(new BorderLayout(0, 0));
+		setContentPane(contentpane);
+		sp = new JScrollPane(content, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		sp.setBounds(80, 100, 1120, 350);
+		sp.setBackground(new Color(238,238,238));
+
 		w = new JButton(new ImageIcon("img/facilityButton.png"));
 		w.setBounds(80, 700, 220, 80);
 		w.setBorderPainted(false);
-		w.setBackground(new Color(255, 255, 255));
+		w.setBackground(new Color(238,238,238));
 
 		l = new JButton(new ImageIcon("img/teacherButton.png"));
 		l.setBounds(380, 700, 220, 80);
 		l.setBorderPainted(false);
-		l.setBackground(new Color(255, 255, 255));
+		l.setBackground(new Color(238,238,238));
 
 		comment = new JButton(new ImageIcon("img/writeArticleButton.png"));
 		comment.setBounds(680, 700, 220, 80);
 		comment.setBorderPainted(false);
-		comment.setBackground(new Color(255, 255, 255));
-		
+		comment.setBackground(new Color(238,238,238));
+
 		back = new JButton(new ImageIcon("img/writeArticleButton.png"));
 		back.setBounds(980, 700, 220, 80);
 		back.setBorderPainted(false);
-		back.setBackground(new Color(255, 255, 255));
+		back.setBackground(new Color(238,238,238));
 
 	}
 
@@ -116,9 +131,9 @@ public class CheckerFrame extends JFrame {
 		add(title);
 		add(name);
 		add(date);
-		add(content);
 		add(w);
 		add(l);
+		add(sp);
 		add(comment);
 		add(back);
 
@@ -131,6 +146,7 @@ public class CheckerFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO 찬성수 올라가게
+				vote.upvote(dto.getPetition_id(), dto.getUser_id(), dto.getAgree());
 
 			}
 
@@ -140,7 +156,7 @@ public class CheckerFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO 반대수 올라가게
-				vote.upvote();
+				vote.downvote(dto.getPetition_id(), dto.getUser_id(), dto.getDisagree());
 			}
 
 		});
@@ -152,27 +168,27 @@ public class CheckerFrame extends JFrame {
 			}
 
 		});
-		
+
 		back.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new MainFrame(null);
 			}
-			
+
 		});
 	}
 
 	private void getInfo() {
 		try (Connection conn = DBConnectionManager.getInstance().getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(SELECT)) {
-			pstmt.setInt(1, /* TODO 메인 > 글 id 가져와야함 */4);
+			pstmt.setInt(1, 7);
 			ResultSet resultSet = pstmt.executeQuery();
 			while (resultSet.next()) {
-				dto = CheckerDTO.builder().petition_id(resultSet.getInt("id")).name(resultSet.getString("name"))
-						.date(resultSet.getString("date")).title(resultSet.getString("title"))
-						.content(resultSet.getString("content")).agree(resultSet.getInt("agree"))
-						.disagree(resultSet.getInt("disagree")).build();
+				dto = CheckerDTO.builder().user_id(resultSet.getInt("u.id")).petition_id(resultSet.getInt("p.id"))
+						.name(resultSet.getString("name")).date(resultSet.getString("date"))
+						.title(resultSet.getString("title")).content(resultSet.getString("content"))
+						.agree(resultSet.getInt("agree")).disagree(resultSet.getInt("disagree")).build();
 				vote = Vote.builder().build();
 			}
 		} catch (Exception e) {
