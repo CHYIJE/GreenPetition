@@ -19,7 +19,7 @@ public class AllArticle {
 	public JTable insertData() {
 
 		JTable articleTable = new JTable();
-		String query = "SELECT * FROM petition";
+		String query = "select p.id, p.title, u.acc_id, p.category, p.date from petition as p left join user as u on u.id = p.user_id order by id desc";
 
 		try (Connection conn = DBConnectionManager.getInstance().getConnection();
 				PreparedStatement ptmt = conn.prepareStatement(query);
@@ -27,7 +27,12 @@ public class AllArticle {
 
 			ResultSetMetaData metaData = rs.getMetaData();
 			int columncount = metaData.getColumnCount();
-			DefaultTableModel model = new DefaultTableModel();
+			DefaultTableModel model = new DefaultTableModel() {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+            };
 
 			for (int i = 1; i <= columncount; i++) {
 				model.addColumn(metaData.getColumnName(i));

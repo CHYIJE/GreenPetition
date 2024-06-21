@@ -80,7 +80,7 @@ public class MainFrame extends JFrame {
 
 		article = new AllArticle();
 		table = article.insertData();
-
+		
 		scroll = new JScrollPane(table);
 		scroll.setViewportView(table);
 		scroll.setBounds(270, 150, 780, 600);
@@ -90,6 +90,10 @@ public class MainFrame extends JFrame {
 //		table.getColumnModel().setColumnSelectionAllowed(false);
 		table.setRowSelectionAllowed(false);
 		table.getColumn("id").setPreferredWidth(3);
+		table.getColumn("title").setPreferredWidth(300);
+        table.getColumn("acc_id").setPreferredWidth(60);
+        table.getColumn("category").setPreferredWidth(30);
+        table.getColumn("date").setPreferredWidth(15);
 
 		scroll = new JScrollPane(table);
 		scroll.setViewportView(table);
