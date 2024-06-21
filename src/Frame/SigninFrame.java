@@ -67,7 +67,8 @@ public class SigninFrame extends JFrame {
 		duplication.setBounds(780, 250, 280, 80);
 		duplication.setBorderPainted(false);
 		duplication.setBackground(new Color(255, 255, 255));
-
+		
+		mContext.getSignIn().setEnabled(false);
 	}
 
 	public void setInitLayout() {
