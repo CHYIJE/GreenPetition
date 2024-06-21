@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.table.DefaultTableModel;
+
 import ver1.DBConnectionManager;
 import ver1.models.Category;
 import ver1.models.PatitionDTO;

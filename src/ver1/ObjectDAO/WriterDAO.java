@@ -3,11 +3,9 @@ package ver1.ObjectDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Map;
 
 import javax.swing.JOptionPane;
 
-import Frame.LoginFrame;
 import Frame.MainFrame;
 import Frame.WriterFrame;
 import lombok.AllArgsConstructor;
