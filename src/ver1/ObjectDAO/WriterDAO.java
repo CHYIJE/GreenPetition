@@ -34,7 +34,7 @@ public class WriterDAO {
     
     private LoginDAO loginDAO;
 
-    public WriterDAO(WriterDTO dto, WriterFrame mContext, LoginDAO ) {
+    public WriterDAO(WriterDTO dto, WriterFrame mContext, LoginDAO loginDAO) {
         this.dto = dto;
         this.mContext = mContext;
         this.loginDAO = loginDAO;
