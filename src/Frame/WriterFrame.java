@@ -37,11 +37,11 @@ public class WriterFrame extends JFrame {
 	private LocalDate date = LocalDate.now();
 
 	public WriterFrame(LoginDAO loginDAO) {
-        this.loginDAO = loginDAO; // LoginDAO 객체를 초기화
-        initData();
-        setInitLayout();
-        addAction();
-    }
+		this.loginDAO = loginDAO; // LoginDAO 객체를 초기화
+		initData();
+		setInitLayout();
+		addAction();
+	}
 
 	public void initData() {
 
@@ -60,6 +60,7 @@ public class WriterFrame extends JFrame {
 		contentField.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 		contentField.setBounds(300, 125, 900, 600);
 		contentField.setBackground(new Color(213, 222, 232));
+		contentField.setLineWrap(true);
 
 		facility = new JButton(new ImageIcon("img/facilityButton.png"));
 		facility.setBounds(0, 180, 220, 80);
@@ -119,22 +120,21 @@ public class WriterFrame extends JFrame {
 				if (!mContext.category.equals("-1") && !mContext.titleField.getText().equals("")
 						&& !mContext.contentField.getText().equals("")) {
 					// WriterDTO 객체를 생성하고 데이터를 설정합니다.
-                    dto = WriterDTO.builder()
-                            .category(category)
-                            .title(titleField.getText())
-                            .content(contentField.getText())
-                            .build();
+					dto = WriterDTO.builder().category(category).title(titleField.getText())
+							.content(contentField.getText()).build();
 					try {
-						writerDAO = new WriterDAO(dto, mContext,loginDAO);
+						writerDAO = new WriterDAO(dto, mContext, loginDAO);
+						new MainFrame(loginDAO);
+						return;
 					} catch (Exception e1) {
 						e1.printStackTrace();
 					}
 				} else if (mContext.category.equals("-1")) {
 					JOptionPane.showMessageDialog(null, "카테고리를 선택해주세요");
 				} else {
-					JOptionPane.showMessageDialog(null, "제목/내용 입력해주세요.");
+					JOptionPane.showMessageDialog(null, "제목/내용을 입력해주세요.");
 				}
-				new MainFrame(loginDAO);
+
 			}
 		});
 
