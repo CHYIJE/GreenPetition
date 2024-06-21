@@ -1,5 +1,6 @@
 package ver1.models;
 
+import java.awt.Button;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -31,14 +32,14 @@ public class Vote {
 	PatitionDTO paDto;
 	LoginDAO loginDao;
 	WriterFrame mContext;
-	public int agreeCount;
-	public int disagreeCount;
+	public int agreeCount = 0;
+	public int disagreeCount = 0;
 
 	// 중복체크
 	public void checkUser(UserDTO dto, WriterFrame mContext) throws SQLException {
 
 		this.mContext = mContext;
-		String checkQuery = " SELECT * FROM user where acc_id = ? ";
+		String checkQuery = " SELECT * FROM vote where user_id = ? ";
 
 		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
 			conn.setAutoCommit(false);
@@ -46,12 +47,15 @@ public class Vote {
 			ptmt.setString(1, loginDao.getUserName());
 
 			ResultSet rs = ptmt.executeQuery();
-			
-			if(rs.next()) {
+
+			if (rs.next()) {
 				JOptionPane.showMessageDialog(null, "이미 투표 하셨습니다.");
 				conn.rollback();
+				
 				// 투표 막기
 			} else {
+				// agreeCount++;
+				// disagreeCount++;
 				JOptionPane.showMessageDialog(null, "투표 완료 되었습니다.");
 				// 투표 허용
 			}
@@ -60,5 +64,7 @@ public class Vote {
 		}
 
 	}
+	
+	
 
 } // end of class
