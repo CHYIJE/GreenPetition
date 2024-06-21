@@ -39,11 +39,15 @@ public class WriterFrame extends JFrame {
 
 	public WriterFrame(LoginDAO loginDAO) {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> cyj
         this.loginDAO = loginDAO; // LoginDAO 객체를 초기화
         initData();
         setInitLayout();
         addAction();
     }
+<<<<<<< HEAD
 =======
 		this.logindao = loginDAO;
 		initData();
@@ -51,6 +55,9 @@ public class WriterFrame extends JFrame {
 		addAction();
 	}
 >>>>>>> c1c3b51f584b1209562fb97ca773d6a36b27c9fe
+=======
+
+>>>>>>> cyj
 
 	public void initData() {
 
@@ -135,11 +142,17 @@ public class WriterFrame extends JFrame {
                             .build();
 					try {
 <<<<<<< HEAD
+<<<<<<< HEAD
 						writerDAO = new WriterDAO(dto, mContext,loginDAO);
 =======
 						writerDAO = new WriterDAO(dto, mContext, logindao);
 						new MainFrame(null);
 >>>>>>> c1c3b51f584b1209562fb97ca773d6a36b27c9fe
+=======
+
+						writerDAO = new WriterDAO(dto, mContext,loginDAO);
+
+>>>>>>> cyj
 					} catch (Exception e1) {
 						e1.printStackTrace();
 					}
@@ -155,9 +168,12 @@ public class WriterFrame extends JFrame {
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 //	public static void main(String[] args) {
 //		new WriterFrame();
 //	}
 =======
 >>>>>>> c1c3b51f584b1209562fb97ca773d6a36b27c9fe
+=======
+>>>>>>> cyj
 }

@@ -60,17 +60,6 @@ public class LoginDAO {
 
 				if (rs2.next()) { // 인증 -- DB에서 일치하는지 알아보는 if => 넌 DB에 있구나 내가 저장할게 Map에다가
 					JOptionPane.showMessageDialog(null, "로그인 성공");
-<<<<<<< HEAD
-=======
-					try {
-						insertUser();
-						userId = rs2.getInt("id"); // 6
-						useraccId = rs2.getString("acc_id");
-						
-					} catch (Exception e) {
-						// TODO: handle exception
-					}
->>>>>>> c1c3b51f584b1209562fb97ca773d6a36b27c9fe
 					
 					mainFrame = new MainFrame(this);
 
@@ -97,12 +86,11 @@ public class LoginDAO {
 
 	public int getUserId() {
 		return userId;
-<<<<<<< HEAD
-=======
+
 	}
 	public void setUserID(int userId) {
 		this.userId = userId;
->>>>>>> c1c3b51f584b1209562fb97ca773d6a36b27c9fe
+
 	}
 
 	public String getUserAccId() {

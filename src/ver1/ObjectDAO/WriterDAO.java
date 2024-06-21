@@ -3,11 +3,9 @@ package ver1.ObjectDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Map;
 
 import javax.swing.JOptionPane;
 
-import Frame.LoginFrame;
 import Frame.MainFrame;
 import Frame.WriterFrame;
 import lombok.AllArgsConstructor;
@@ -32,6 +30,7 @@ public class WriterDAO {
 	String title;
 	String content;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 	public WriterDAO(WriterDTO dto, WriterFrame mContext, LoginDAO dao) {
@@ -73,6 +72,9 @@ public class WriterDAO {
 >>>>>>> c1c3b51f584b1209562fb97ca773d6a36b27c9fe
 	
     
+=======
+
+>>>>>>> cyj
     private LoginDAO loginDAO;
 
     public WriterDAO(WriterDTO dto, WriterFrame mContext, LoginDAO loginDAO) {

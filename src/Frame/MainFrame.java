@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+<<<<<<< HEAD
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,6 +12,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
+=======
+import java.util.List;
+>>>>>>> cyj
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -18,17 +22,19 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
-import lombok.Getter;
-
-import ver1.DBConnectionManager;
 import ver1.ObjectDAO.LoginDAO;
+<<<<<<< HEAD
 import ver1.models.PatitionDTO;
 
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
+=======
+import ver1.ObjectDAO.SearchDAO;
+import ver1.models.PatitionDTO;
+>>>>>>> cyj
 
 public class MainFrame extends JFrame {
 
@@ -41,6 +47,12 @@ public class MainFrame extends JFrame {
 	private JButton facilityButton;
 	private JButton teacherButton;
 	private JButton articleButton;
+<<<<<<< HEAD
+=======
+	private SearchDAO searchDAO;
+	private JTextField searchField; // 검색 필드 추가
+	private JButton searchButton;
+>>>>>>> cyj
 
 	AllArticle article;
 	JScrollPane scroll;
@@ -54,10 +66,12 @@ public class MainFrame extends JFrame {
 	private LoginDAO mcontext;
 
 	public MainFrame(LoginDAO mcontext) {
+		searchDAO = new SearchDAO(); // SearchDAO 초기화
 		this.mcontext = mcontext;
 		initData();
 		setInitLayout();
 		addAction();
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 		body();
@@ -124,6 +138,8 @@ public class MainFrame extends JFrame {
 		}
 
 >>>>>>> c1c3b51f584b1209562fb97ca773d6a36b27c9fe
+=======
+>>>>>>> cyj
 	}
 
 	
@@ -153,9 +169,30 @@ public class MainFrame extends JFrame {
 		
 		article = new AllArticle();
 		table = article.insertData();
+<<<<<<< HEAD
 		scroll = new JScrollPane(table);
 		scroll.setViewportView(table);
 		scroll.setBounds(270, 150, 780, 600);
+=======
+		table.getTableHeader().setReorderingAllowed(false);
+		table.getTableHeader().setResizingAllowed(false);
+//		table.getColumnModel().setColumnSelectionAllowed(false);
+		table.setRowSelectionAllowed(false);
+		table.getColumn("id").setPreferredWidth(3);
+		
+		
+		scroll = new JScrollPane(table);
+		scroll.setViewportView(table);
+		scroll.setBounds(270, 150, 780, 600);
+
+		searchField = new JTextField(20); // 검색 필드 추가
+        searchField.setBounds(500, 800, 300, 40);
+		
+		searchButton = new JButton("검색"); // 검색 버튼
+		searchButton.setBounds(800, 800, 100, 40);
+		searchButton.setBorderPainted(false);
+		searchButton.setBackground(new Color(255, 255, 255));
+>>>>>>> cyj
 	}
 
 	public void setInitLayout() {
@@ -175,15 +212,26 @@ public class MainFrame extends JFrame {
 		Font bodyfont = new Font("D2CODING", Font.BOLD, 25);
 		check.setFont(bodyfont);
 		check.setBounds(1200, 40, 350, 100);
+<<<<<<< HEAD
 		setVisible(true);
 
 	}
 <<<<<<< HEAD
 =======
 
-	public void addAction() {
+=======
 
+		getContentPane().add(searchField); // 검색 필드 추가
+        getContentPane().add(searchButton); // 검색 버튼 추가 
+		setVisible(true);
+
+	}
+	
+>>>>>>> cyj
+	public void addAction() {
+		
 		facilityButton.addActionListener(new ActionListener() {
+<<<<<<< HEAD
 
 			String a;
 			int num;
@@ -308,9 +356,59 @@ public class MainFrame extends JFrame {
 			String[] header = new String[5];
 			Object[][] petetion = new String[header.length][15];
 			table = new JTable(petetion, header);
+=======
+>>>>>>> cyj
 			
-		}
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO 시설 카테고리의 글들 조회
+				
+			}
+		});
+		
+		teacherButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO 강사 카테고리의 글들 조회
+				
+			}
+		});
+		
+		articleButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("인식");
+				new WriterFrame(mcontext);
+				
+			}
+		});
+
+		searchButton.addActionListener(new ActionListener() {
+//
+			@Override
+			public void actionPerformed(ActionEvent e) {
+                String searchTerm = searchField.getText();
+                List<PatitionDTO> searchResults = searchDAO.titleSearch(searchTerm);
+                DefaultTableModel model = (DefaultTableModel) table.getModel();
+                model.setRowCount(0); // 기존 데이터 초기화
+
+                for (PatitionDTO result : searchResults) {
+                    model.addRow(new Object[]{
+                        result.getId(),
+                        result.getUser_id(),
+                        result.getCategory(),
+                        result.getTitle(),
+                        result.getContent(),
+                        result.getDate()
+                    });
+                }
+            }
+        });
+    }
 	}
+<<<<<<< HEAD
 >>>>>>> c1c3b51f584b1209562fb97ca773d6a36b27c9fe
 	
 	public void addAction() {
@@ -347,4 +445,10 @@ public class MainFrame extends JFrame {
 	
 }
 	
+=======
+
+	
+
+	
+>>>>>>> cyj
 			
