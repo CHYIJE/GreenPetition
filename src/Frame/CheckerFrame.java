@@ -40,15 +40,18 @@ public class CheckerFrame extends JFrame {
 	private JTextField title;
 	private JTextField name;
 	private JTextField date;
+	private JTextField comment;
 	private JTextArea content;
 	private JButton back;
 	private JButton w;
 	private JButton l;
-	private JButton comment;
+	private JButton commentButton;
 	private JPanel contentpane;
 	private JScrollPane sp;
+	private int id;
 
-	public CheckerFrame() {
+	public CheckerFrame(int id) {
+		this.id = id;
 		getInfo();
 		initData();
 		setInitLayout();
@@ -84,6 +87,11 @@ public class CheckerFrame extends JFrame {
 		date.setEditable(false);
 		date.setText(dto.getDate());
 
+		mContext.comment = new JTextField();
+		comment.setBorder(BorderFactory.createEmptyBorder());
+		comment.setBounds(80, 600, 1000, 25);
+		comment.setBackground(new Color(213, 222, 232));
+
 		mContext.content = new JTextArea();
 		content.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 		content.setBounds(80, 100, 1120, 550);
@@ -99,27 +107,28 @@ public class CheckerFrame extends JFrame {
 		sp = new JScrollPane(content, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		sp.setBounds(80, 100, 1120, 350);
-		sp.setBackground(new Color(238,238,238));
+		sp.setBackground(new Color(238, 238, 238));
 
 		w = new JButton(new ImageIcon("img/facilityButton.png"));
 		w.setBounds(80, 700, 220, 80);
 		w.setBorderPainted(false);
-		w.setBackground(new Color(238,238,238));
+		w.setBackground(new Color(238, 238, 238));
 
 		l = new JButton(new ImageIcon("img/teacherButton.png"));
 		l.setBounds(380, 700, 220, 80);
 		l.setBorderPainted(false);
-		l.setBackground(new Color(238,238,238));
+		l.setBackground(new Color(238, 238, 238));
 
-		comment = new JButton(new ImageIcon("img/writeArticleButton.png"));
-		comment.setBounds(680, 700, 220, 80);
-		comment.setBorderPainted(false);
-		comment.setBackground(new Color(238,238,238));
+		commentButton = new JButton();
+		commentButton.setBounds(1080, 600, 120, 25);
+		commentButton.setBorderPainted(false);
+		commentButton.setBackground(new Color(190, 190, 190));
+		commentButton.setText("댓글 달기");
 
 		back = new JButton(new ImageIcon("img/writeArticleButton.png"));
 		back.setBounds(980, 700, 220, 80);
 		back.setBorderPainted(false);
-		back.setBackground(new Color(238,238,238));
+		back.setBackground(new Color(238, 238, 238));
 
 	}
 
@@ -135,6 +144,7 @@ public class CheckerFrame extends JFrame {
 		add(l);
 		add(sp);
 		add(comment);
+		add(commentButton);
 		add(back);
 
 		setVisible(true);
@@ -160,7 +170,7 @@ public class CheckerFrame extends JFrame {
 			}
 
 		});
-		comment.addActionListener(new ActionListener() {
+		commentButton.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -173,7 +183,7 @@ public class CheckerFrame extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new MainFrame(null);
+				dispose();
 			}
 
 		});
@@ -182,7 +192,7 @@ public class CheckerFrame extends JFrame {
 	private void getInfo() {
 		try (Connection conn = DBConnectionManager.getInstance().getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(SELECT)) {
-			pstmt.setInt(1, 7);
+			pstmt.setInt(1, id);
 			ResultSet resultSet = pstmt.executeQuery();
 			while (resultSet.next()) {
 				dto = CheckerDTO.builder().user_id(resultSet.getInt("u.id")).petition_id(resultSet.getInt("p.id"))
@@ -196,7 +206,4 @@ public class CheckerFrame extends JFrame {
 		}
 	}
 
-	public static void main(String[] args) {
-		new CheckerFrame();
-	}
 }
