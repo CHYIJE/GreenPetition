@@ -4,6 +4,11 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.List;
 
 import javax.swing.ImageIcon;
@@ -15,6 +20,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
+import ver1.DBConnectionManager;
 import ver1.ObjectDAO.LoginDAO;
 import ver1.ObjectDAO.SearchDAO;
 import ver1.models.PatitionDTO;
@@ -153,7 +159,7 @@ public class MainFrame extends JFrame {
 
 			}
 		});
-		
+
 		
 		searchButton.addActionListener(new ActionListener() {
 //
@@ -171,8 +177,66 @@ public class MainFrame extends JFrame {
 			}
 		});
 		
-		
+		table.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int row = table.getSelectedRow();
+                if (row == -1) {
+                    return; // No row selected
+                }
+
+                int id = (int) table.getValueAt(row, 0);
+
+                Object additionalData = getValueFromDatabase(id);
+
+                System.out.println("Selected Value from Database: " + additionalData);
+            }
+        });
 	}
+	 private Object getValueFromDatabase(int id) {
+	        String query = "SELECT id FROM petition WHERE id = ?";
+	        Object value = null;
+
+	        try (Connection conn = DBConnectionManager.getInstance().getConnection();) {
+	        	PreparedStatement ptmt = conn.prepareStatement(query);
+	            ptmt.setInt(1, id);
+	            ResultSet rs = ptmt.executeQuery();
+
+	            if (rs.next()) {
+	                value = rs.getInt("id");
+	            }
+
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+
+	        return value;
+	    }
 }
 
 
