@@ -58,6 +58,72 @@ public class MainFrame extends JFrame {
 		initData();
 		setInitLayout();
 		addAction();
+<<<<<<< HEAD
+=======
+		body();
+		checkId();
+
+	}
+
+	public void checkId() {
+
+		check = new JLabel();
+		getContentPane().add(check);
+
+		add(check);
+		check.setText(mcontext.getUserAccId() + " 님 접속중입니다!");
+		Font bodyfont = new Font("D2CODING", Font.BOLD, 25);
+		check.setFont(bodyfont);
+		check.setBounds(900, 40, 350, 100);
+
+	}
+
+	public void body() {
+
+		body = new JTextArea();
+		body.setEditable(false);
+		body.setBounds(250, 110, 1000, 500);
+		body.setBackground(new Color(213, 222, 232));
+
+		getContentPane().add(body);
+
+		body.setText("");
+		// ArrayList<BoardDAO> arr = new ArrayList<BoardDao>();
+		Font bodyfont = new Font("D2CODING", Font.BOLD, 22);
+		body.setFont(bodyfont);
+
+		body.append("\t" + "\t" + "no" + "\t" + "\t" + "\t" + "제목" + "\t" + "\t" + "\t" + "\t" + "\t" + "작성자" + "\t"
+				+ "\n");
+		body.append("-----------------------------------------------------------------------------------------" + "\n");
+		try (Connection conn = DBConnectionManager.getInstance().getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(VIEW_ALL)) {
+
+			pstmt.setInt(1, 1);
+			pstmt.setInt(2, 10);
+			ResultSet resultSet = pstmt.executeQuery();
+			while (resultSet.next()) {
+
+				log = resultSet.getInt("id");
+				checker1 = Integer.toString(log);
+				checker2 = resultSet.getString("title");
+				checker3 = resultSet.getString("acc_id");
+
+				if (checker2.length() <= 10) {
+					body.append("\t" + "\t" + checker1 + "\t" + "\t" + "\t" + checker2 + "\t" + "\t" + "\t" + "\s"
+							+ "\s" + "\s" + "\s" + "\s" + "\s" + "\s" + "\t" + "\t" + checker3 + "\t" + "\t" + "\t"
+							+ "\n");
+				} else {
+					body.append("\t" + "\t" + checker1 + "\t" + "\t" + " " + " " + checker2 + "\t" + "\t" + "\t" + "\t"
+							+ checker3 + "\t" + "\t" + "\t" + "\n");
+				}
+
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+>>>>>>> c1c3b51f584b1209562fb97ca773d6a36b27c9fe
 	}
 
 	
@@ -112,6 +178,140 @@ public class MainFrame extends JFrame {
 		setVisible(true);
 
 	}
+<<<<<<< HEAD
+=======
+
+	public void addAction() {
+
+		facilityButton.addActionListener(new ActionListener() {
+
+			String a;
+			int num;
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				body.setText("");
+
+				body.append("\t" + "\t" + "no" + "\t" + "\t" + "\t" + "제목" + "\t" + "\t" + "\t" + "\t" + "\t" + "작성자"
+						+ "\t" + "\n");
+				body.append("-----------------------------------------------------------------------------------------"
+						+ "\n");
+				if (num == 0) {
+					a = VIEW_FACILITY;
+					num = 1;
+				} else {
+					a = VIEW_ALL;
+					num = 0;
+				}
+
+				try (Connection conn = DBConnectionManager.getInstance().getConnection();
+						PreparedStatement pstmt = conn.prepareStatement(a)) {
+					ResultSet resultSet = pstmt.executeQuery();
+					while (resultSet.next()) {
+
+						log = resultSet.getInt("id");
+						checker1 = Integer.toString(log);
+						checker2 = resultSet.getString("title");
+						checker3 = resultSet.getString("acc_id");
+						if (checker2.length() <= 10) {
+							body.append("\t" + "\t" + checker1 + "\t" + "\t" + "\t" + checker2 + "\t" + "\t" + "\t"
+									+ "\s" + "\s" + "\s" + "\s" + "\s" + "\s" + "\s" + "\t" + "\t" + checker3 + "\t"
+									+ "\t" + "\t" + "\n");
+						} else {
+							body.append("\t" + "\t" + checker1 + "\t" + "\t" + " " + " " + checker2 + "\t" + "\t" + "\t"
+									+ "\t" + checker3 + "\t" + "\t" + "\t" + "\n");
+						}
+					}
+
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+
+			}
+		});
+
+		teacherButton.addActionListener(new ActionListener() {
+
+			String a;
+			int num;
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				body.setText("");
+
+				body.append("\t" + "\t" + "no" + "\t" + "\t" + "\t" + "제목" + "\t" + "\t" + "\t" + "\t" + "\t" + "작성자"
+						+ "\t" + "\n");
+				body.append("-----------------------------------------------------------------------------------------"
+						+ "\n");
+				if (num == 0) {
+					a = VIEW_TEACHER;
+					num = 1;
+				} else {
+					a = VIEW_ALL;
+					num = 0;
+				}
+
+				try (Connection conn = DBConnectionManager.getInstance().getConnection();
+						PreparedStatement pstmt = conn.prepareStatement(a)) {
+					ResultSet resultSet = pstmt.executeQuery();
+					while (resultSet.next()) {
+
+						log = resultSet.getInt("id");
+						checker1 = Integer.toString(log);
+						checker2 = resultSet.getString("title");
+						checker3 = resultSet.getString("acc_id");
+						if (checker2.length() <= 10) {
+							body.append("\t" + "\t" + checker1 + "\t" + "\t" + "\t" + checker2 + "\t" + "\t" + "\t"
+									+ "\s" + "\s" + "\s" + "\s" + "\s" + "\s" + "\s" + "\t" + "\t" + checker3 + "\t"
+									+ "\t" + "\t" + "\n");
+						} else {
+							body.append("\t" + "\t" + checker1 + "\t" + "\t" + " " + " " + checker2 + "\t" + "\t" + "\t"
+									+ "\t" + checker3 + "\t" + "\t" + "\t" + "\n");
+						}
+
+						if (log % 10 == 0 && log != 0) {
+							max++;
+						}
+
+					}
+
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+
+			}
+		});
+		articleButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("글 작성 버튼");
+				new WriterFrame(mcontext);
+			}
+
+		});
+		
+	}
+	class PetitionTable {
+		JTable table;
+		Vector data = new Vector<>();
+		Vector<String> colName = new Vector<>();
+		
+		public void setData(){
+			colName.add("id");
+			colName.add("acc_id");
+			colName.add("acc_pw");
+		}
+		public void setTable() {
+			String[] header = new String[5];
+			Object[][] petetion = new String[header.length][15];
+			table = new JTable(petetion, header);
+			
+		}
+	}
+>>>>>>> c1c3b51f584b1209562fb97ca773d6a36b27c9fe
 	
 	public void addAction() {
 		
