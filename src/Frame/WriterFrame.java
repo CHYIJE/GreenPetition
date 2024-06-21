@@ -14,6 +14,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import lombok.Getter;
+import ver1.ObjectDAO.LoginDAO;
 import ver1.ObjectDAO.WriterDAO;
 import ver1.models.WriterDTO;
 

@@ -15,5 +15,7 @@ public class PatitionDTO {
 	private int id;
 	private int user_id;
 	private Category category;
+	private int agree;
+	private int disagree;
 	
 }
