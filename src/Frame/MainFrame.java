@@ -101,10 +101,6 @@ public class MainFrame extends JFrame {
         table.getColumn("category").setPreferredWidth(30);
         table.getColumn("date").setPreferredWidth(15);
 
-		scroll = new JScrollPane(table);
-		scroll.setViewportView(table);
-		scroll.setBounds(270, 150, 780, 600);
-
 		searchField = new JTextField(20); // 검색 필드 추가
 		searchField.setBounds(500, 800, 300, 40);
 

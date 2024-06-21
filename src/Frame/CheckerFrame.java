@@ -12,6 +12,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
@@ -41,6 +43,9 @@ public class CheckerFrame extends JFrame {
 	private JButton w;
 	private JButton l;
 	private JButton comment;
+	private JTable replyTable;
+	private Reply reply;
+	private JScrollPane replyScroll;
 
 	public CheckerFrame() {
 		getInfo();
@@ -85,6 +90,22 @@ public class CheckerFrame extends JFrame {
 		content.setEditable(false);
 		content.setLineWrap(true);
 		content.setText(dto.getContent());
+		
+		reply = new Reply();
+		replyTable = reply.insertReply();
+		
+		replyScroll = new JScrollPane(replyTable);
+		replyScroll.setViewportView(replyTable);
+		replyScroll.setBounds(270, 800, 780, 100);
+		
+		replyTable.getTableHeader().setReorderingAllowed(false);
+		replyTable.getTableHeader().setResizingAllowed(false);
+		replyTable.setRowSelectionAllowed(false);
+		replyTable.getColumn("id").setPreferredWidth(3);
+		replyTable.getColumn("content").setPreferredWidth(780);
+		replyTable.setShowVerticalLines(false);
+		replyTable.setShowHorizontalLines(false);
+		
 
 		w = new JButton(new ImageIcon("img/facilityButton.png"));
 		w.setBounds(80, 700, 220, 80);
