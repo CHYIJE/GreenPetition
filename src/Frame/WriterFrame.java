@@ -25,6 +25,7 @@ public class WriterFrame extends JFrame {
 	WriterDTO dto;
 	LoginDAO loginDAO;
 	WriterFrame mContext = this;
+	LoginDAO logindao;
 
 	private JLabel frame;
 	private JTextField titleField;
@@ -37,11 +38,19 @@ public class WriterFrame extends JFrame {
 	private LocalDate date = LocalDate.now();
 
 	public WriterFrame(LoginDAO loginDAO) {
+<<<<<<< HEAD
         this.loginDAO = loginDAO; // LoginDAO 객체를 초기화
         initData();
         setInitLayout();
         addAction();
     }
+=======
+		this.logindao = loginDAO;
+		initData();
+		setInitLayout();
+		addAction();
+	}
+>>>>>>> c1c3b51f584b1209562fb97ca773d6a36b27c9fe
 
 	public void initData() {
 
@@ -125,7 +134,12 @@ public class WriterFrame extends JFrame {
                             .content(contentField.getText())
                             .build();
 					try {
+<<<<<<< HEAD
 						writerDAO = new WriterDAO(dto, mContext,loginDAO);
+=======
+						writerDAO = new WriterDAO(dto, mContext, logindao);
+						new MainFrame(null);
+>>>>>>> c1c3b51f584b1209562fb97ca773d6a36b27c9fe
 					} catch (Exception e1) {
 						e1.printStackTrace();
 					}
@@ -140,7 +154,10 @@ public class WriterFrame extends JFrame {
 
 	}
 
+<<<<<<< HEAD
 //	public static void main(String[] args) {
 //		new WriterFrame();
 //	}
+=======
+>>>>>>> c1c3b51f584b1209562fb97ca773d6a36b27c9fe
 }
