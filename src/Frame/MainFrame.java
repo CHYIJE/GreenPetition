@@ -21,8 +21,10 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import ver1.DBConnectionManager;
+import ver1.ObjectDAO.FacilityDAO;
 import ver1.ObjectDAO.LoginDAO;
 import ver1.ObjectDAO.SearchDAO;
+import ver1.ObjectDAO.TeacherDAO;
 import ver1.models.PatitionDTO;
 
 public class MainFrame extends JFrame {
@@ -141,8 +143,18 @@ public class MainFrame extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO 강사 카테고리의 글들 조회
-
+				TeacherDAO teacherDAO = new TeacherDAO();
+                table.setModel(teacherDAO.insertData().getModel());
+            }
+        });
+		
+		facilityButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				FacilityDAO facilityDAO = new FacilityDAO();
+				table.setModel(facilityDAO.insertData().getModel());
+				
 			}
 		});
 
