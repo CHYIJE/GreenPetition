@@ -12,7 +12,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JTextArea;
+import javax.swing.JScrollBar;
 import javax.swing.JTextField;
 
 import ver1.DBConnectionManager;
@@ -36,7 +36,8 @@ public class CheckerFrame extends JFrame {
 	private JTextField title;
 	private JTextField name;
 	private JTextField date;
-	private JTextArea content;
+	private int content;
+	private JScrollBar contentScroll;
 	private JButton back;
 	private JButton w;
 	private JButton l;
@@ -78,13 +79,9 @@ public class CheckerFrame extends JFrame {
 		date.setEditable(false);
 		date.setText(dto.getDate());
 
-		mContext.content = new JTextArea();
-		content.setBorder(BorderFactory.createEmptyBorder());
-		content.setBounds(80, 100, 1120, 550);
-		content.setBackground(new Color(213, 222, 232));
-		content.setEditable(false);
-		content.setLineWrap(true);
-		content.setText(dto.getContent());
+		mContext.contentScroll = new JScrollBar(content);
+		contentScroll.setBorder(BorderFactory.createEmptyBorder());
+		contentScroll.setBounds(80, 100, 1120, 500);
 
 		w = new JButton(new ImageIcon("img/facilityButton.png"));
 		w.setBounds(80, 700, 220, 80);
@@ -116,7 +113,7 @@ public class CheckerFrame extends JFrame {
 		add(title);
 		add(name);
 		add(date);
-		add(content);
+		add(contentScroll);
 		add(w);
 		add(l);
 		add(comment);
