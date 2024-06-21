@@ -95,16 +95,12 @@ public class LoginFrame extends JFrame {
 					try {
 						new LoginDAO(dto, mContext);
 						dispose();
-//						frame.setVisible(false);
-//						new MainFrame(lgContext);
 					} catch (Exception e2) {
 
 					}
 				} else {
 					JOptionPane.showMessageDialog(null, "ID/PW를 입력해주세요.");
 
-					System.out.println(text_id.getText());
-					
 				}
 			}
 		});

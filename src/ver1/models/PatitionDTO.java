@@ -19,4 +19,6 @@ public class PatitionDTO {
 	private int agree;
 	private int disagree;
 	
+	
+	
 }

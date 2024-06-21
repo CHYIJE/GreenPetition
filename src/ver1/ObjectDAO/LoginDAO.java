@@ -57,10 +57,6 @@ public class LoginDAO {
 
 				if (rs2.next()) {
 					JOptionPane.showMessageDialog(null, "로그인 성공");
-
-					
-					dao.userId = rs2.getInt("id");
-					userName = rs2.getString("acc_id");
 					
 					mainFrame = new MainFrame(this);
 					System.out.println(userId);
@@ -77,7 +73,7 @@ public class LoginDAO {
 	}
 
 	public int getUserId() {
-		return dao.userId;
+		return userId;
 	}
 
 	public String getUserName() {
