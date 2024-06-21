@@ -22,7 +22,7 @@ import ver1.models.Vote;
 
 public class CheckerFrame extends JFrame {
 
-	private static final String SELECT = "select p.id, p.title, p.content, p.date, p.agree, p.disagree, u.name from petition as p join user as u on p.user_id = u.id where p.id = ?";
+	private static final String SELECT = "select u.id, p.id, p.title, p.content, p.date, p.agree, p.disagree, u.name from petition as p join user as u on p.user_id = u.id where p.id = ?";
 //	private static final String UPVOTE = ""
 //	private static final String DOWNVOTE =S
 
@@ -100,7 +100,7 @@ public class CheckerFrame extends JFrame {
 		comment.setBounds(680, 700, 220, 80);
 		comment.setBorderPainted(false);
 		comment.setBackground(new Color(255, 255, 255));
-		
+
 		back = new JButton(new ImageIcon("img/writeArticleButton.png"));
 		back.setBounds(980, 700, 220, 80);
 		back.setBorderPainted(false);
@@ -131,6 +131,7 @@ public class CheckerFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO 찬성수 올라가게
+				vote.upvote(dto.getPetition_id(), dto.getUser_id(), dto.getAgree());
 
 			}
 
@@ -140,7 +141,7 @@ public class CheckerFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO 반대수 올라가게
-				vote.upvote();
+				vote.downvote(dto.getPetition_id(), dto.getUser_id(), dto.getDisagree());
 			}
 
 		});
@@ -152,27 +153,27 @@ public class CheckerFrame extends JFrame {
 			}
 
 		});
-		
+
 		back.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new MainFrame(null);
 			}
-			
+
 		});
 	}
 
 	private void getInfo() {
 		try (Connection conn = DBConnectionManager.getInstance().getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(SELECT)) {
-			pstmt.setInt(1, /* TODO 메인 > 글 id 가져와야함 */4);
+			pstmt.setInt(1, 7);
 			ResultSet resultSet = pstmt.executeQuery();
 			while (resultSet.next()) {
-				dto = CheckerDTO.builder().petition_id(resultSet.getInt("id")).name(resultSet.getString("name"))
-						.date(resultSet.getString("date")).title(resultSet.getString("title"))
-						.content(resultSet.getString("content")).agree(resultSet.getInt("agree"))
-						.disagree(resultSet.getInt("disagree")).build();
+				dto = CheckerDTO.builder().user_id(resultSet.getInt("u.id")).petition_id(resultSet.getInt("p.id"))
+						.name(resultSet.getString("name")).date(resultSet.getString("date"))
+						.title(resultSet.getString("title")).content(resultSet.getString("content"))
+						.agree(resultSet.getInt("agree")).disagree(resultSet.getInt("disagree")).build();
 				vote = Vote.builder().build();
 			}
 		} catch (Exception e) {
