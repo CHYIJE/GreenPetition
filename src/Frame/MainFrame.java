@@ -153,7 +153,8 @@ public class MainFrame extends JFrame {
 
 			}
 		});
-
+		
+		
 		searchButton.addActionListener(new ActionListener() {
 //
 			@Override
@@ -169,6 +170,8 @@ public class MainFrame extends JFrame {
 				}
 			}
 		});
+		
+		
 	}
 }
 
