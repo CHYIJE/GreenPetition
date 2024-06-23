@@ -23,5 +23,7 @@ public class CheckerDTO {
     private String date;
     private int agree;
     private int disagree;
+    
+
 	
 }

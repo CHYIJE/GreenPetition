@@ -17,9 +17,9 @@ public class DBConnectionManager {
 	// 생성자를 <---- 외부에서 생성자를 호출 못 하게 막아야 한다.
 	private DBConnectionManager() {
 		HikariConfig config = new HikariConfig();
-		config.setJdbcUrl("jdbc:mysql://192.168.0.116:3306/Green?serverTimezone=Asia/Seoul");
-		config.setUsername("tenco1");
-		config.setPassword("asd123");
+		config.setJdbcUrl("jdbc:mysql://localhost:3306/Green?serverTimezone=Asia/Seoul");
+		config.setUsername("");
+		config.setPassword("");
 		config.setMaximumPoolSize(10);
 		dataSource = new HikariDataSource(config);
 	}

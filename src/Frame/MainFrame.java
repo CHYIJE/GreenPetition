@@ -29,11 +29,6 @@ import ver1.models.PatitionDTO;
 
 public class MainFrame extends JFrame {
 
-	private static final String VIEW_ALL = " select petition.id, petition.title, user.acc_id from petition join user on petition.user_id = user.id where petition.id >= ? and petition.id <= ? order by petition.id ASC ";
-	private static final String VIEW_SELECT = " select petition.id, petition.title, user.acc_id from petition join user on petition.user_id = user.id where petition.id > ? and petition.id <= ? order by petition.id ASC";
-	private static final String VIEW_FACILITY = " select petition.id, petition.title, user.acc_id from petition join user on petition.user_id = user.id where petition.category = 'facility' ";
-	private static final String VIEW_TEACHER = " select petition.id, petition.title, user.acc_id from petition join user on petition.user_id = user.id where petition.category = 'teacher' ";
-
 	private JLabel frame;
 	private JButton facilityButton;
 	private JButton teacherButton;
@@ -102,6 +97,7 @@ public class MainFrame extends JFrame {
         table.getColumn("acc_id").setPreferredWidth(60);
         table.getColumn("category").setPreferredWidth(30);
         table.getColumn("date").setPreferredWidth(15);
+        
 
 		searchField = new JTextField(20); // 검색 필드 추가
 		searchField.setBounds(500, 800, 300, 40);
@@ -124,7 +120,7 @@ public class MainFrame extends JFrame {
 
 		add(check);
 		getContentPane().add(check);
-		check.setText(mcontext.getUserId() + " 님");
+		check.setText(mcontext.getUserName() + " 님");
 
 		Font bodyfont = new Font("D2CODING", Font.BOLD, 25);
 		check.setFont(bodyfont);
@@ -214,8 +210,9 @@ public class MainFrame extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				int row = table.getSelectedRow();
+				
                 if (row == -1) {
-                    return; // No row selected
+                    return;
                 }
 
                 int id = (int) table.getValueAt(row, 0);
@@ -226,7 +223,7 @@ public class MainFrame extends JFrame {
             }
         });
 	}
-	 private Object getValueFromDatabase(int id) {
+	 public Object getValueFromDatabase(int id) {
 	        String query = "SELECT id FROM petition WHERE id = ?";
 	        Object value = null;
 
@@ -245,6 +242,7 @@ public class MainFrame extends JFrame {
 
 	        return value;
 	    }
+	 
 }
 
 
