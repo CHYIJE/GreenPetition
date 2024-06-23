@@ -18,13 +18,10 @@ public class DBConnectionManager {
 	private DBConnectionManager() {
 		HikariConfig config = new HikariConfig();
 		config.setJdbcUrl("jdbc:mysql://localhost:3306/Green?serverTimezone=Asia/Seoul");
-<<<<<<< HEAD
+
 		config.setUsername("root");
 		config.setPassword("asd123");
-=======
-		config.setUsername("");
-		config.setPassword("");
->>>>>>> 0676d63ed50aba6459cdaf99066aba625be9d35d
+
 		config.setMaximumPoolSize(10);
 		dataSource = new HikariDataSource(config);
 	}
