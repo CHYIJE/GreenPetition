@@ -127,8 +127,8 @@ public class CheckerFrame extends JFrame {
 		replyTable.getTableHeader().setReorderingAllowed(false);
 		replyTable.getTableHeader().setResizingAllowed(false);
 		replyTable.setRowSelectionAllowed(false);
-		replyTable.getColumn("id").setPreferredWidth(3);
-		replyTable.getColumn("content").setPreferredWidth(780);
+		replyTable.getColumn("user_id").setPreferredWidth(3);
+		replyTable.getColumn("comment").setPreferredWidth(780);
 		replyTable.setShowVerticalLines(false);
 		replyTable.setShowHorizontalLines(false);
 		
@@ -152,20 +152,12 @@ public class CheckerFrame extends JFrame {
 		l.setBorderPainted(false);
 		l.setBackground(new Color(238, 238, 238));
 
-//		reply = new Reply();
-//		replyTable = reply.insertReply();
-//
-//		replyScroll = new JScrollPane(replyTable);
-//		replyScroll.setViewportView(replyTable);
-//		replyScroll.setBounds(270, 800, 780, 100);
-//
-//		replyTable.getTableHeader().setReorderingAllowed(false);
-//		replyTable.getTableHeader().setResizingAllowed(false);
-//		replyTable.setRowSelectionAllowed(false);
-//		replyTable.getColumn("id").setPreferredWidth(3);
-//		replyTable.getColumn("content").setPreferredWidth(780);
-//		replyTable.setShowVerticalLines(false);
-//		replyTable.setShowHorizontalLines(false);
+		reply = new Reply();
+		replyTable = reply.insertReply();
+
+		replyScroll = new JScrollPane(replyTable);
+		replyScroll.setViewportView(replyTable);
+		replyScroll.setBounds(270, 800, 780, 100);
 
 		commentButton = new JButton();
 		commentButton.setBounds(1080, 600, 120, 25);
