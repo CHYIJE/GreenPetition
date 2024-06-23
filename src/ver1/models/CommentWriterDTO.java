@@ -13,19 +13,9 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class CheckerDTO {
+public class CommentWriterDTO {
 
-	private int petition_id; // 글 ID
-	private int user_id;
-	private String name;
-	private String title;
+	private int user_id; // 사용자 ID
+	private int petition_id;
 	private String content;
-    private String category; // 카테고리
-    private String date;
-    private int agree;
-    private int disagree;
-    
-
-	
 }
-

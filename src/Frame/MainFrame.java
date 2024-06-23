@@ -83,7 +83,7 @@ public class MainFrame extends JFrame {
 
 		article = new AllArticle();
 		table = article.insertData();
-		
+
 		scroll = new JScrollPane(table);
 		scroll.setViewportView(table);
 		scroll.setBounds(270, 150, 780, 600);
@@ -94,10 +94,14 @@ public class MainFrame extends JFrame {
 		table.setRowSelectionAllowed(false);
 		table.getColumn("id").setPreferredWidth(3);
 		table.getColumn("title").setPreferredWidth(300);
-        table.getColumn("acc_id").setPreferredWidth(60);
-        table.getColumn("category").setPreferredWidth(30);
-        table.getColumn("date").setPreferredWidth(15);
-        
+
+		table.getColumn("acc_id").setPreferredWidth(60);
+		table.getColumn("category").setPreferredWidth(30);
+		table.getColumn("date").setPreferredWidth(15);
+
+		scroll = new JScrollPane(table);
+		scroll.setViewportView(table);
+		scroll.setBounds(270, 150, 780, 600);
 
 		searchField = new JTextField(20); // 검색 필드 추가
 		searchField.setBounds(500, 800, 300, 40);
@@ -140,17 +144,18 @@ public class MainFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				TeacherDAO teacherDAO = new TeacherDAO();
-                table.setModel(teacherDAO.insertData().getModel());
-            }
-        });
-		
+				table.setModel(teacherDAO.insertData().getModel());
+
+			}
+		});
+
 		facilityButton.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				FacilityDAO facilityDAO = new FacilityDAO();
 				table.setModel(facilityDAO.insertData().getModel());
-				
+
 			}
 		});
 
@@ -164,7 +169,6 @@ public class MainFrame extends JFrame {
 			}
 		});
 
-		
 		searchButton.addActionListener(new ActionListener() {
 //
 			@Override
@@ -175,74 +179,74 @@ public class MainFrame extends JFrame {
 				model.setRowCount(0); // 기존 데이터 초기화
 
 				for (PatitionDTO result : searchResults) {
-					model.addRow(new Object[] { result.getId(), result.getTitle(), result.getAcc_id(), 
+					model.addRow(new Object[] { result.getId(), result.getTitle(), result.getUser_id(),
 							result.getCategory(), result.getDate() });
 				}
 			}
 		});
-		
+
 		table.addMouseListener(new MouseListener() {
-			
+
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void mouseExited(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				int row = table.getSelectedRow();
-				
-                if (row == -1) {
-                    return;
-                }
 
-                int id = (int) table.getValueAt(row, 0);
+				if (row == -1) {
+					return;
+				}
 
-                Object additionalData = getValueFromDatabase(id);
+				int id = (int) table.getValueAt(row, 0);
 
-                System.out.println("Selected Value from Database: " + additionalData);
-            }
-        });
+				Object additionalData = getValueFromDatabase(id);
+
+				new CheckerFrame(id);
+
+			}
+		});
 	}
-	 public Object getValueFromDatabase(int id) {
-	        String query = "SELECT id FROM petition WHERE id = ?";
-	        Object value = null;
 
-	        try (Connection conn = DBConnectionManager.getInstance().getConnection();) {
-	        	PreparedStatement ptmt = conn.prepareStatement(query);
-	            ptmt.setInt(1, id);
-	            ResultSet rs = ptmt.executeQuery();
+	private Object getValueFromDatabase(int id) {
+		String query = "SELECT id FROM petition WHERE id = ?";
+		Object value = null;
 
-	            if (rs.next()) {
-	                value = rs.getInt("id");
-	            }
+		try (Connection conn = DBConnectionManager.getInstance().getConnection();) {
+			PreparedStatement ptmt = conn.prepareStatement(query);
+			ptmt.setInt(1, id);
+			ResultSet rs = ptmt.executeQuery();
 
-	        } catch (Exception e) {
-	            e.printStackTrace();
-	        }
+			if (rs.next()) {
+				value = rs.getInt("id");
+			}
 
-	        return value;
-	    }
-	 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return value;
+	}
+
 }
-
-

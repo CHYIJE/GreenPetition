@@ -44,7 +44,6 @@ public class WriterFrame extends JFrame {
 		addAction();
 	}
 
-
 	public void initData() {
 
 		setTitle("New Petition");
