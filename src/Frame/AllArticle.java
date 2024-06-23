@@ -19,6 +19,9 @@ public class AllArticle {
 	public JTable insertData() {
 
 		JTable articleTable = new JTable();
+		CellEditor editor = new CellEditor();
+		articleTable.setDefaultRenderer(Object.class, editor);
+		
 		String query = "select p.id, p.title, u.acc_id, p.category, p.date from petition as p left join user as u on u.id = p.user_id order by id desc";
 
 		try (Connection conn = DBConnectionManager.getInstance().getConnection();
