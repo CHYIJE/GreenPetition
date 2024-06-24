@@ -126,8 +126,7 @@ public class WriterFrame extends JFrame {
 					try {
 
 						writerDAO = new WriterDAO(dto, mContext, loginDAO);
-						new MainFrame(loginDAO);
-						return;
+						dispose();
 
 					} catch (Exception e1) {
 						e1.printStackTrace();

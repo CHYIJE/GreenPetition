@@ -22,9 +22,11 @@ public class CellEditor extends DefaultTableCellRenderer{
         //  table 이 선택되지 않았을 때의 기본값 (isRowSelected)
         if (!table.isRowSelected(row)) {	
         	// 이런 느낌 어때요			
-            if(agree > disagree && agree + disagree > 15) { // 
+            //if(agree > disagree && agree + disagree > 15) { // 
+            if(agree > disagree) { // 
                 c.setBackground(Color.BLUE);
-            }else if (disagree > agree && agree + disagree > 15){
+            //}else if (disagree > agree && agree + disagree > 15){
+            }else if (disagree > agree){
                 c.setBackground(Color.RED);
             } else {
             	c.setBackground(Color.white);
