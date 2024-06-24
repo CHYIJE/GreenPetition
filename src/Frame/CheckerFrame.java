@@ -13,23 +13,19 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-
 import javax.swing.JPanel;
-
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import lombok.Data;
 import ver1.DBConnectionManager;
 import ver1.ObjectDAO.CheckerDAO;
 import ver1.ObjectDAO.CommentWriterDAO;
 import ver1.ObjectDAO.LoginDAO;
 import ver1.models.CheckerDTO;
 import ver1.models.Vote;
-
 
 public class CheckerFrame extends JFrame {
 
@@ -64,17 +60,17 @@ public class CheckerFrame extends JFrame {
 	private JScrollPane rp;
 	private int userId;
 	private int petitionId;
+	private int currentUser;
 	private String comment1;
 //	private JTable replyTable;
 //	private Reply reply;
 //	private JScrollPane replyScroll;
-	
+
 	private String titleBar;
 	private String contentBar;
-	
-	
 
-	public CheckerFrame(int id,LoginDAO login) {
+	public CheckerFrame(int currentUser, int id, LoginDAO login) {
+		this.currentUser = currentUser;
 		this.petitionId = id;
 		this.login = login;
 		getInfo();
@@ -86,7 +82,6 @@ public class CheckerFrame extends JFrame {
 	public int getPetitionId() {
 		return petitionId;
 	}
-
 
 	public static String getSelect() {
 		return SELECT;
@@ -183,6 +178,7 @@ public class CheckerFrame extends JFrame {
 	public String getTitleBar() {
 		return titleBar;
 	}
+
 	public String getContentBar() {
 		return contentBar;
 	}
@@ -251,7 +247,7 @@ public class CheckerFrame extends JFrame {
 		replyTable.getColumn("comment").setPreferredWidth(750);
 //		replyTable.setShowVerticalLines(false);
 //		replyTable.setShowHorizontalLines(false);
-		
+
 		rp = new JScrollPane(replyTable, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		rp.setBounds(80, 450, 1120, 150);
@@ -277,7 +273,7 @@ public class CheckerFrame extends JFrame {
 		back.setBounds(980, 700, 220, 80);
 		back.setBorderPainted(false);
 		back.setBackground(new Color(238, 238, 238));
-		
+
 		fix = new JButton(new ImageIcon("img/editButton.png"));
 		fix.setBounds(700, 700, 220, 80);
 		fix.setBorderPainted(false);
@@ -311,7 +307,7 @@ public class CheckerFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO 찬성수 올라가게
-				vote.upvote(dto.getPetition_id(), dto.getUser_id(), dto.getAgree());
+				vote.upvote(dto.getPetition_id(), currentUser, dto.getAgree());
 
 			}
 
@@ -321,7 +317,7 @@ public class CheckerFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO 반대수 올라가게
-				vote.downvote(dto.getPetition_id(), dto.getUser_id(), dto.getDisagree());
+				vote.downvote(dto.getPetition_id(), currentUser, dto.getDisagree());
 			}
 
 		});
@@ -330,7 +326,7 @@ public class CheckerFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				comment1 = comment.getText();
-				commentDao = new CommentWriterDAO(userId, petitionId, comment1);
+				commentDao = new CommentWriterDAO(currentUser, petitionId, comment1);
 			}
 
 		});
@@ -343,14 +339,14 @@ public class CheckerFrame extends JFrame {
 			}
 
 		});
-		
+
 		fix.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new WriterFrame(login,petitionId,mContext);
+				new WriterFrame(login, petitionId, mContext);
 				dispose();
-				
+
 			}
 		});
 	}

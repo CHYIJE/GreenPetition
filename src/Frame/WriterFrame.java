@@ -36,7 +36,7 @@ public class WriterFrame extends JFrame {
 	private JButton facility;
 	private JButton teacher;
 	private JButton sumbit;
-	
+
 	private int id;
 
 	private String category = "-1";
@@ -48,8 +48,8 @@ public class WriterFrame extends JFrame {
 		setInitLayout();
 		addAction();
 	}
-	
-	public WriterFrame(LoginDAO loginDAO, int id,CheckerFrame check) {
+
+	public WriterFrame(LoginDAO loginDAO, int id, CheckerFrame check) {
 		this.loginDAO = loginDAO;
 		this.id = id;
 		this.check = check;
@@ -93,6 +93,7 @@ public class WriterFrame extends JFrame {
 		sumbit.setBackground(new Color(255, 255, 255));
 
 	}
+
 	public void initData2() {
 
 		setTitle("New Petition");
@@ -192,6 +193,7 @@ public class WriterFrame extends JFrame {
 		});
 
 	}
+
 	public void addAction2() {
 		facility.addActionListener(new ActionListener() {
 
@@ -219,12 +221,11 @@ public class WriterFrame extends JFrame {
 				if (!mContext.category.equals("-1") && !mContext.titleField.getText().equals("")
 						&& !mContext.contentField.getText().equals("")) {
 					// WriterDTO 객체를 생성하고 데이터를 설정합니다.
-					dto = WriterDTO.builder().title(titleField.getText())
-							.content(contentField.getText()).category(category).build();
+					dto = WriterDTO.builder().title(titleField.getText()).content(contentField.getText())
+							.category(category).build();
 					try {
 
 						writerDAO2 = new WriterDAO2(dto, mContext, loginDAO, check);
-						new CheckerFrame(check.getPetitionId(),loginDAO);
 						dispose();
 
 					} catch (Exception e1) {
@@ -240,6 +241,5 @@ public class WriterFrame extends JFrame {
 		});
 
 	}
-	
 
 }
