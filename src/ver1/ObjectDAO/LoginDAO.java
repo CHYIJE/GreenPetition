@@ -64,6 +64,7 @@ public class LoginDAO {
 
 					mainFrame = new MainFrame(this);
 					System.out.println(userId);
+					mContext.dispose();
 
 				} else if (rs2.next() == false) {
 				} else {

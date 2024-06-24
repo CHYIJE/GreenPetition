@@ -3,6 +3,9 @@ package Frame;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -93,7 +96,7 @@ public class LoginFrame extends JFrame {
 				if(!text_id.getText().equals("") && !text_pw.getText().equals("")) {
 					try {
 						new LoginDAO(dto, mContext);
-						dispose();
+				
 					} catch (Exception e2) {
 
 					}
@@ -101,6 +104,40 @@ public class LoginFrame extends JFrame {
 					JOptionPane.showMessageDialog(null, "ID/PW를 입력해주세요.");
 
 				}
+			}
+		});
+		
+		text_pw.addKeyListener(new KeyListener() {
+			
+			@Override
+			public void keyTyped(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+					if(!text_id.getText().equals("") && !text_pw.getText().equals("")) {
+						try {
+							new LoginDAO(dto, mContext);
+							
+						} catch (Exception e2) {
+							e2.printStackTrace();
+						}
+					} else {
+						JOptionPane.showMessageDialog(null, "ID/PW를 입력해주세요.");
+
+					}
+				
+				}
+				
 			}
 		});
 

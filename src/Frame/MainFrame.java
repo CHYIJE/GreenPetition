@@ -47,7 +47,7 @@ public class MainFrame extends JFrame {
 	private JLabel check;
 
 	private LoginDAO mcontext;
-	
+
 	private boolean teacher;
 	private boolean facility;
 
@@ -95,7 +95,7 @@ public class MainFrame extends JFrame {
 		table.getTableHeader().setReorderingAllowed(false);
 		table.getTableHeader().setResizingAllowed(false);
 //		table.getColumnModel().setColumnSelectionAllowed(false);
-		table.setRowSelectionAllowed(false);
+		table.setRowSelectionAllowed(true);
 		table.getColumn("id").setPreferredWidth(3);
 		table.getColumn("title").setPreferredWidth(300);
 
@@ -227,7 +227,7 @@ public class MainFrame extends JFrame {
 
 				Object additionalData = getValueFromDatabase(id);
 
-				new CheckerFrame(id,mcontext);
+				new CheckerFrame(id, mcontext);
 
 			}
 		});
@@ -245,17 +245,19 @@ public class MainFrame extends JFrame {
 			if (rs.next()) {
 				value = rs.getInt("id");
 			}
+			rs.close();
+			ptmt.close();
+			conn.close();
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+		
 		return value;
+		
 	}
-	
 
-
-public void autoRefresh() {
+	public void autoRefresh() {
 		new Thread() {
 			@Override
 			public void run() {
@@ -263,7 +265,7 @@ public void autoRefresh() {
 				FacilityDAO facilityDAO = new FacilityDAO();
 				DefaultTableModel model = (DefaultTableModel) table.getModel();
 				while (true) {
-					
+
 					model.setRowCount(0);
 
 					if (teacher == true) {
@@ -277,7 +279,6 @@ public void autoRefresh() {
 						Thread.sleep(10000);
 						System.out.println("새로고침(임시 작동용)");
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 

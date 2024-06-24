@@ -21,16 +21,22 @@ public class AllArticle {
 		JTable articleTable = new JTable();
 		CellEditor editor = new CellEditor();
 		articleTable.setDefaultRenderer(Object.class, editor);
-		editor.getAgree();
-
-		String query = "select p.id, p.title, u.acc_id, p.category, p.date from petition as p left join user as u on u.id = p.user_id order by id desc";
+		
+		int agree;
+		int disagree;
+		
+		String query = "select p.id, p.title, u.acc_id, p.category, p.date, p.agree, p.disagree from petition as p left join user as u on u.id = p.user_id order by id desc";
 
 		try (Connection conn = DBConnectionManager.getInstance().getConnection();
 				PreparedStatement ptmt = conn.prepareStatement(query);
 				ResultSet rs = ptmt.executeQuery();) {
-
+		
+			
+			
 			ResultSetMetaData metaData = rs.getMetaData();
+			
 			int columncount = metaData.getColumnCount();
+			
 			DefaultTableModel model = new DefaultTableModel() {
 				@Override
 				public boolean isCellEditable(int row, int column) {
@@ -48,8 +54,12 @@ public class AllArticle {
 					rowData[i - 1] = rs.getObject(i);
 				}
 				model.addRow(rowData);
+				agree = rs.getInt("agree");
+				disagree = rs.getInt("disagree");
+				editor.getAgree(agree,disagree);
 			}
 			articleTable.setModel(model);
+			
 
 		} catch (Exception e) {
 

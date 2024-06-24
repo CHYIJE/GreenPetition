@@ -26,6 +26,7 @@ import lombok.Data;
 import ver1.DBConnectionManager;
 import ver1.ObjectDAO.CheckerDAO;
 import ver1.ObjectDAO.CommentWriterDAO;
+import ver1.ObjectDAO.DeleteDAO;
 import ver1.ObjectDAO.LoginDAO;
 import ver1.models.CheckerDTO;
 import ver1.models.Vote;
@@ -53,6 +54,7 @@ public class CheckerFrame extends JFrame {
 	private JButton w;
 	private JButton l;
 	private JButton fix;
+	private JButton delete;
 
 	private JTable replyTable;
 	private Reply reply;
@@ -275,15 +277,20 @@ public class CheckerFrame extends JFrame {
 		commentButton.setBackground(new Color(190, 190, 190));
 		commentButton.setText("댓글 달기");
 
-		back = new JButton(new ImageIcon("img/exitButton.png"));
-		back.setBounds(980, 700, 220, 80);
+		back = new JButton(new ImageIcon("img/exit.png"));
+		back.setBounds(10, 20, 64, 64);
 		back.setBorderPainted(false);
 		back.setBackground(new Color(238, 238, 238));
 		
 		fix = new JButton(new ImageIcon("img/editButton.png"));
-		fix.setBounds(700, 700, 220, 80);
+		fix.setBounds(930, 670, 100, 64);
 		fix.setBorderPainted(false);
 		fix.setBackground(new Color(238, 238, 238));
+		
+		delete = new JButton(new ImageIcon("img/deleteButton.png"));
+		delete.setBounds(1040, 670, 100, 64);
+		delete.setBorderPainted(false);
+		delete.setBackground(new Color(238, 238, 238));
 
 	}
 
@@ -303,6 +310,7 @@ public class CheckerFrame extends JFrame {
 		add(commentButton);
 		add(back);
 		add(fix);
+		add(delete);
 
 		setVisible(true);
 	}
@@ -360,6 +368,28 @@ public class CheckerFrame extends JFrame {
 				
 				
 			}
+		});
+		
+		delete.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(userId == formID) {
+					int result = JOptionPane.showConfirmDialog(null,"정말로 삭제하시겠습니까?", "Confirm",JOptionPane.YES_NO_OPTION);
+					if(result == JOptionPane.CLOSED_OPTION) {
+						JOptionPane.showMessageDialog(null, "삭제 취소하였습니다!");
+					}else if(result == JOptionPane.YES_OPTION) {
+						new DeleteDAO(dto, mContext);
+					}else {
+						JOptionPane.showMessageDialog(null, "삭제 취소하였습니다!");
+					}
+
+				}else {
+					JOptionPane.showMessageDialog(null, "작성자가 아닙니다!");
+				}
+				
+			}
+			
 		});
 	}
 
