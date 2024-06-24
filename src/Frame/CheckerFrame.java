@@ -243,9 +243,9 @@ public class CheckerFrame extends JFrame {
 //		replyTable.getTableHeader().setReorderingAllowed(false);
 //		replyTable.getTableHeader().setResizingAllowed(false);
 		replyTable.setRowSelectionAllowed(false);
-		replyTable.getColumn("name").setPreferredWidth(20);
+		replyTable.getColumn("name").setPreferredWidth(50);
 		replyTable.getColumn("comment").setPreferredWidth(850);
-		replyTable.getColumn("timestamp").setPreferredWidth(250);
+		replyTable.getColumn("date").setPreferredWidth(150);
 //		replyTable.setShowVerticalLines(false);
 //		replyTable.setShowHorizontalLines(false);
 
