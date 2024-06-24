@@ -13,7 +13,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import javax.swing.JScrollPane;
@@ -71,12 +71,14 @@ public class CheckerFrame extends JFrame {
 	
 	private String titleBar;
 	private String contentBar;
+	private int formID;
 	
 	
 
 	public CheckerFrame(int id,LoginDAO login) {
 		this.petitionId = id;
 		this.login = login;
+		formID = login.getUserId();
 		getInfo();
 		initData();
 		setInitLayout();
@@ -348,8 +350,14 @@ public class CheckerFrame extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new WriterFrame(login,petitionId,mContext);
-				dispose();
+				if(userId == formID) {
+					new WriterFrame(login,petitionId,mContext);
+					dispose();
+				}else {
+					JOptionPane.showMessageDialog(null, "작성자가 아닙니다!");
+				}
+				
+				
 				
 			}
 		});
