@@ -128,7 +128,7 @@ public class MainFrame extends JFrame {
 
 		Font bodyfont = new Font("D2CODING", Font.BOLD, 25);
 		check.setFont(bodyfont);
-		check.setBounds(1200, 40, 350, 100);
+		check.setBounds(1000, 40, 350, 100);
 
 		getContentPane().add(searchField); // 검색 필드 추가
 		getContentPane().add(searchButton); // 검색 버튼 추가
