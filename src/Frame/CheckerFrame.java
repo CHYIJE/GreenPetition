@@ -23,6 +23,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import lombok.Getter;
 import ver1.DBConnectionManager;
 import ver1.ObjectDAO.CheckerDAO;
 import ver1.ObjectDAO.CommentWriterDAO;
@@ -30,7 +31,6 @@ import ver1.ObjectDAO.DeleteDAO;
 import ver1.ObjectDAO.LoginDAO;
 import ver1.models.CheckerDTO;
 import ver1.models.Vote;
-
 public class CheckerFrame extends JFrame {
 
 	private static final String SELECT = "select u.id, p.id, p.title, p.content, p.date, p.agree, p.disagree, u.name from petition as p join user as u on p.user_id = u.id where p.id = ?";
@@ -67,17 +67,11 @@ public class CheckerFrame extends JFrame {
 	private int petitionId;
 	private int currentUser;
 	private String comment1;
-//	private JTable replyTable;
-//	private Reply reply;
-//	private JScrollPane replyScroll;
 
 	private String titleBar;
 	private String contentBar;
-//<<<<<<< HEAD
 	private int formID;
 
-//=======
-//>>>>>>> zq
 
 	public CheckerFrame(int currentUser, int id, LoginDAO login) {
 		this.currentUser = currentUser;
@@ -90,109 +84,7 @@ public class CheckerFrame extends JFrame {
 		addAction();
 	}
 
-	public int getPetitionId() {
-		return petitionId;
-	}
-
-	public static String getSelect() {
-		return SELECT;
-	}
-
-	public CheckerDAO getCheckerDAO() {
-		return checkerDAO;
-	}
-
-	public CheckerDTO getDto() {
-		return dto;
-	}
-
-	public CheckerFrame getmContext() {
-		return mContext;
-	}
-
-	public MainFrame getMain() {
-		return main;
-	}
-
-	public Vote getVote() {
-		return vote;
-	}
-
-	public CommentWriterDAO getCommentDao() {
-		return commentDao;
-	}
-
-	public JLabel getFrame() {
-		return frame;
-	}
-
-	public JTextField getDate() {
-		return date;
-	}
-
-	public JTextField getComment() {
-		return comment;
-	}
-
-	public JTextArea getContent() {
-		return content;
-	}
-
-	public JButton getBack() {
-		return back;
-	}
-
-	public JButton getW() {
-		return w;
-	}
-
-	public JButton getL() {
-		return l;
-	}
-
-	public JTable getReplyTable() {
-		return replyTable;
-	}
-
-	public Reply getReply() {
-		return reply;
-	}
-
-	public JScrollPane getReplyScroll() {
-		return replyScroll;
-	}
-
-	public JButton getCommentButton() {
-		return commentButton;
-	}
-
-	public JPanel getContentpane() {
-		return contentpane;
-	}
-
-	public JScrollPane getSp() {
-		return sp;
-	}
-
-	public JScrollPane getRp() {
-		return rp;
-	}
-
-	public int getUserId() {
-		return userId;
-	}
-
-	public String getComment1() {
-		return comment1;
-	}
-
-	public String getTitleBar() {
-		return titleBar;
-	}
-
-	public String getContentBar() {
-		return contentBar;
-	}
+	
 
 	public void initData() {
 
@@ -250,15 +142,10 @@ public class CheckerFrame extends JFrame {
 
 		reply = new Reply();
 		replyTable = reply.insertReply(petitionId);
-//
-//		replyTable.getTableHeader().setReorderingAllowed(false);
-//		replyTable.getTableHeader().setResizingAllowed(false);
 		replyTable.setRowSelectionAllowed(false);
 		replyTable.getColumn("name").setPreferredWidth(50);
 		replyTable.getColumn("comment").setPreferredWidth(850);
 		replyTable.getColumn("date").setPreferredWidth(150);
-//		replyTable.setShowVerticalLines(false);
-//		replyTable.setShowHorizontalLines(false);
 
 		rp = new JScrollPane(replyTable, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -411,6 +298,109 @@ public class CheckerFrame extends JFrame {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	public int getPetitionId() {
+		return petitionId;
+	}
+
+	public static String getSelect() {
+		return SELECT;
+	}
+
+	public CheckerDAO getCheckerDAO() {
+		return checkerDAO;
+	}
+
+	public CheckerDTO getDto() {
+		return dto;
+	}
+
+	public CheckerFrame getmContext() {
+		return mContext;
+	}
+
+	public MainFrame getMain() {
+		return main;
+	}
+
+	public Vote getVote() {
+		return vote;
+	}
+
+	public CommentWriterDAO getCommentDao() {
+		return commentDao;
+	}
+
+	public JLabel getFrame() {
+		return frame;
+	}
+
+	public JTextField getDate() {
+		return date;
+	}
+
+	public JTextField getComment() {
+		return comment;
+	}
+
+	public JTextArea getContent() {
+		return content;
+	}
+
+	public JButton getBack() {
+		return back;
+	}
+
+	public JButton getW() {
+		return w;
+	}
+
+	public JButton getL() {
+		return l;
+	}
+
+	public JTable getReplyTable() {
+		return replyTable;
+	}
+
+	public Reply getReply() {
+		return reply;
+	}
+
+	public JScrollPane getReplyScroll() {
+		return replyScroll;
+	}
+
+	public JButton getCommentButton() {
+		return commentButton;
+	}
+
+	public JPanel getContentpane() {
+		return contentpane;
+	}
+
+	public JScrollPane getSp() {
+		return sp;
+	}
+
+	public JScrollPane getRp() {
+		return rp;
+	}
+
+	public int getUserId() {
+		return userId;
+	}
+
+	public String getComment1() {
+		return comment1;
+	}
+
+	public String getTitleBar() {
+		return titleBar;
+	}
+
+	public String getContentBar() {
+		return contentBar;
 	}
 
 }

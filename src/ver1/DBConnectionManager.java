@@ -18,7 +18,6 @@ public class DBConnectionManager {
 	private DBConnectionManager() {
 		HikariConfig config = new HikariConfig();
 		config.setJdbcUrl("jdbc:mysql://localhost:3306/green?serverTimezone=Asia/Seoul");
-
 		config.setUsername("root");
 		config.setPassword("asd123");
 

@@ -36,6 +36,7 @@ public class WriterFrame extends JFrame {
 	private JButton facility;
 	private JButton teacher;
 	private JButton sumbit;
+	private JButton back;
 
 	private int id;
 
@@ -92,6 +93,11 @@ public class WriterFrame extends JFrame {
 		sumbit.setBorderPainted(false);
 		sumbit.setBackground(new Color(255, 255, 255));
 
+		back = new JButton(new ImageIcon("img/exitButton.png"));
+		back.setBounds(0, 750, 210, 80);
+		back.setBorderPainted(false);
+		back.setBackground(Color.WHITE);
+
 	}
 
 	public void initData2() {
@@ -130,6 +136,10 @@ public class WriterFrame extends JFrame {
 		sumbit.setBorderPainted(false);
 		sumbit.setBackground(new Color(255, 255, 255));
 
+		back = new JButton(new ImageIcon("img/exitButton.png"));
+		back.setBounds(0, 750, 210, 80);
+		back.setBorderPainted(false);
+		back.setBackground(Color.WHITE);
 	}
 
 	public void setInitLayout() {
@@ -142,6 +152,7 @@ public class WriterFrame extends JFrame {
 		add(facility);
 		add(teacher);
 		add(sumbit);
+		add(back);
 
 		setVisible(true);
 	}
@@ -191,6 +202,13 @@ public class WriterFrame extends JFrame {
 
 			}
 		});
+		back.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
 
 	}
 
@@ -237,6 +255,13 @@ public class WriterFrame extends JFrame {
 					JOptionPane.showMessageDialog(null, "제목/내용을 입력해주세요.");
 				}
 
+			}
+		});
+		back.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dispose();
 			}
 		});
 

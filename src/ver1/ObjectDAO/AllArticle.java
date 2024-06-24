@@ -1,4 +1,4 @@
-package Frame;
+package ver1.ObjectDAO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,13 +19,11 @@ public class AllArticle {
 	public JTable insertData() {
 
 		JTable articleTable = new JTable();
-		CellEditor editor = new CellEditor();
-		articleTable.setDefaultRenderer(Object.class, editor);
 		
 		int agree;
 		int disagree;
 		
-		String query = "select p.id, p.title, u.acc_id, p.category, p.date, p.agree, p.disagree from petition as p left join user as u on u.id = p.user_id order by id desc";
+		String query = "select p.id, p.title, u.acc_id, p.category, p.agree, p.disagree, p.date from petition as p left join user as u on u.id = p.user_id order by id desc";
 
 		try (Connection conn = DBConnectionManager.getInstance().getConnection();
 				PreparedStatement ptmt = conn.prepareStatement(query);
@@ -56,7 +54,6 @@ public class AllArticle {
 				model.addRow(rowData);
 				agree = rs.getInt("agree");
 				disagree = rs.getInt("disagree");
-				editor.getAgree(agree,disagree);
 			}
 			articleTable.setModel(model);
 			
