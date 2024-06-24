@@ -13,16 +13,16 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 
+import javax.swing.JOptionPane;
+
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import lombok.Data;
 import ver1.DBConnectionManager;
 import ver1.ObjectDAO.CheckerDAO;
 import ver1.ObjectDAO.CommentWriterDAO;
@@ -30,7 +30,6 @@ import ver1.ObjectDAO.DeleteDAO;
 import ver1.ObjectDAO.LoginDAO;
 import ver1.models.CheckerDTO;
 import ver1.models.Vote;
-
 
 public class CheckerFrame extends JFrame {
 
@@ -66,18 +65,22 @@ public class CheckerFrame extends JFrame {
 	private JScrollPane rp;
 	private int userId;
 	private int petitionId;
+	private int currentUser;
 	private String comment1;
 //	private JTable replyTable;
 //	private Reply reply;
 //	private JScrollPane replyScroll;
-	
+
 	private String titleBar;
 	private String contentBar;
+//<<<<<<< HEAD
 	private int formID;
-	
-	
 
-	public CheckerFrame(int id,LoginDAO login) {
+//=======
+//>>>>>>> zq
+
+	public CheckerFrame(int currentUser, int id, LoginDAO login) {
+		this.currentUser = currentUser;
 		this.petitionId = id;
 		this.login = login;
 		formID = login.getUserId();
@@ -90,7 +93,6 @@ public class CheckerFrame extends JFrame {
 	public int getPetitionId() {
 		return petitionId;
 	}
-
 
 	public static String getSelect() {
 		return SELECT;
@@ -187,6 +189,7 @@ public class CheckerFrame extends JFrame {
 	public String getTitleBar() {
 		return titleBar;
 	}
+
 	public String getContentBar() {
 		return contentBar;
 	}
@@ -251,11 +254,12 @@ public class CheckerFrame extends JFrame {
 //		replyTable.getTableHeader().setReorderingAllowed(false);
 //		replyTable.getTableHeader().setResizingAllowed(false);
 		replyTable.setRowSelectionAllowed(false);
-		replyTable.getColumn("name").setPreferredWidth(20);
-		replyTable.getColumn("comment").setPreferredWidth(750);
+		replyTable.getColumn("name").setPreferredWidth(50);
+		replyTable.getColumn("comment").setPreferredWidth(850);
+		replyTable.getColumn("date").setPreferredWidth(150);
 //		replyTable.setShowVerticalLines(false);
 //		replyTable.setShowHorizontalLines(false);
-		
+
 		rp = new JScrollPane(replyTable, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		rp.setBounds(80, 450, 1120, 150);
@@ -281,7 +285,7 @@ public class CheckerFrame extends JFrame {
 		back.setBounds(10, 20, 64, 64);
 		back.setBorderPainted(false);
 		back.setBackground(new Color(238, 238, 238));
-		
+
 		fix = new JButton(new ImageIcon("img/editButton.png"));
 		fix.setBounds(930, 670, 100, 64);
 		fix.setBorderPainted(false);
@@ -321,7 +325,7 @@ public class CheckerFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO 찬성수 올라가게
-				vote.upvote(dto.getPetition_id(), dto.getUser_id(), dto.getAgree());
+				vote.upvote(dto.getPetition_id(), currentUser, dto.getAgree());
 
 			}
 
@@ -331,7 +335,7 @@ public class CheckerFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO 반대수 올라가게
-				vote.downvote(dto.getPetition_id(), dto.getUser_id(), dto.getDisagree());
+				vote.downvote(dto.getPetition_id(), currentUser, dto.getDisagree());
 			}
 
 		});
@@ -340,7 +344,7 @@ public class CheckerFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				comment1 = comment.getText();
-				commentDao = new CommentWriterDAO(userId, petitionId, comment1);
+				commentDao = new CommentWriterDAO(currentUser, petitionId, comment1);
 			}
 
 		});
@@ -353,20 +357,18 @@ public class CheckerFrame extends JFrame {
 			}
 
 		});
-		
+
 		fix.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(userId == formID) {
-					new WriterFrame(login,petitionId,mContext);
+				if (userId == formID) {
+					new WriterFrame(login, petitionId, mContext);
 					dispose();
-				}else {
+				} else {
 					JOptionPane.showMessageDialog(null, "작성자가 아닙니다!");
 				}
-				
-				
-				
+
 			}
 		});
 		

@@ -27,7 +27,7 @@ public class Vote {
 	private static final String INSERTQUERY = "INSERT INTO vote(petition_id, user_id) values(?, ?)";
 	private static final String CHECKQUERY = "SELECT * FROM vote where petition_id = ? and user_id = ?";
 	private static final String UPVOTE = "UPDATE petition SET agree = ? where id = ?";
-	private static final String DOWNVOTE = "UPDATE petition SET agree = ? where id = ?";
+	private static final String DOWNVOTE = "UPDATE petition SET disagree = ? where id = ?";
 
 	UserDTO userDto;
 	PatitionDTO paDto;
@@ -46,7 +46,6 @@ public class Vote {
 		this.mContext = mContext;
 
 		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
-			conn.setAutoCommit(false);
 			PreparedStatement ptmt = conn.prepareStatement(CHECKQUERY);
 			ptmt.setInt(1, petitionId);
 			ptmt.setInt(2, userId);
@@ -100,14 +99,18 @@ public class Vote {
 
 	private void up() {
 		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
+			conn.setAutoCommit(false);
 			PreparedStatement ptmt = conn.prepareStatement(INSERTQUERY);
 			ptmt.setInt(1, petitionId);
 			ptmt.setInt(2, userId);
 			ptmt.executeUpdate();
 
 			PreparedStatement pstmt = conn.prepareStatement(UPVOTE);
-			pstmt.setInt(1, agree);
+			pstmt.setInt(1, agree + 1);
 			pstmt.setInt(2, petitionId);
+			pstmt.executeUpdate();
+
+			conn.commit();
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -116,14 +119,18 @@ public class Vote {
 
 	private void down() {
 		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
+			conn.setAutoCommit(false);
 			PreparedStatement ptmt = conn.prepareStatement(INSERTQUERY);
 			ptmt.setInt(1, petitionId);
 			ptmt.setInt(2, userId);
 			ptmt.executeUpdate();
 
 			PreparedStatement pstmt = conn.prepareStatement(DOWNVOTE);
-			pstmt.setInt(1, disagree);
+			pstmt.setInt(1, disagree + 1);
 			pstmt.setInt(2, petitionId);
+			pstmt.executeUpdate();
+
+			conn.commit();
 
 		} catch (Exception e) {
 			e.printStackTrace();

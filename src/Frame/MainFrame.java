@@ -50,10 +50,12 @@ public class MainFrame extends JFrame {
 
 	private boolean teacher;
 	private boolean facility;
+	private int currentUser;
 
 	public MainFrame(LoginDAO mcontext) {
 		searchDAO = new SearchDAO(); // SearchDAO 초기화
 		this.mcontext = mcontext;
+		currentUser = mcontext.getUserId();
 		initData();
 		setInitLayout();
 		addAction();
@@ -227,7 +229,8 @@ public class MainFrame extends JFrame {
 
 				Object additionalData = getValueFromDatabase(id);
 
-				new CheckerFrame(id, mcontext);
+				new CheckerFrame(currentUser, id, mcontext);
+
 
 			}
 		});
@@ -277,7 +280,7 @@ public class MainFrame extends JFrame {
 					}
 					try {
 						Thread.sleep(10000);
-						System.out.println("새로고침(임시 작동용)");
+//						System.out.println("새로고침(임시 작동용)");
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
