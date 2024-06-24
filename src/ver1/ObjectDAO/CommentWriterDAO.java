@@ -38,7 +38,7 @@ public class CommentWriterDAO {
 	}
 
 	private void writer(CommentWriterDTO dto) throws SQLException {
-		String insertQuery = "INSERT INTO comment(user_id, petition_id, comment)" + " VALUES (?,?,?)";
+		String insertQuery = "INSERT INTO comment(user_id, petition_id, comment, date)" + " VALUES (?,?,?,current_timestamp())";
 		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
 			conn.setAutoCommit(false);
 			PreparedStatement psmt = conn.prepareStatement(insertQuery);
