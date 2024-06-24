@@ -15,7 +15,7 @@ public class Reply {
 	public JTable insertReply(int petitionid) {
 
 		JTable replyTable = new JTable();
-		String query = "select u.name, c.comment from comment as c join user as u on u.id = c.user_id where c.petition_id = ? ";
+		String query = "select u.name, c.comment, c.timestamp from comment as c join user as u on u.id = c.user_id where c.petition_id = ? ";
 //		String query = "select user_id, comment from comment ";
 
 		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {

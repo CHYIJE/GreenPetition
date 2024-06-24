@@ -44,8 +44,8 @@ public class WriterDAO {
 	}
 
 	private void writer(WriterDTO dto) throws SQLException {
-		String insertQuery = "INSERT INTO petition(user_id, category, title, content, date)"
-				+ " VALUES (?, ?, ?, ?, current_date())";
+		String insertQuery = "INSERT INTO petition(user_id, category, title, content, timestamp)"
+				+ " VALUES (?, ?, ?, ?, current_timestamp())";
 
 		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
 			conn.setAutoCommit(false);
