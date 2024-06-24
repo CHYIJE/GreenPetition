@@ -51,7 +51,7 @@ public class MainFrame extends JFrame {
 	private boolean teacher;
 	private boolean facility;
 	private int currentUser;
-
+// 충돌나면 지워이건 
 	public MainFrame(LoginDAO mcontext) {
 		searchDAO = new SearchDAO(); // SearchDAO 초기화
 		this.mcontext = mcontext;
