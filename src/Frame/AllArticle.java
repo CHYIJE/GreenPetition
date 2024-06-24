@@ -21,6 +21,7 @@ public class AllArticle {
 		JTable articleTable = new JTable();
 		CellEditor editor = new CellEditor();
 		articleTable.setDefaultRenderer(Object.class, editor);
+		editor.getAgree();
 		
 		String query = "select p.id, p.title, u.acc_id, p.category, p.date from petition as p left join user as u on u.id = p.user_id order by id desc";
 
