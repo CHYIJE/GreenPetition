@@ -12,14 +12,17 @@ import ver1.DBConnectionManager;
 
 public class Reply {
 
-	public JTable insertReply() {
+	public JTable insertReply(int petitionid) {
 
 		JTable replyTable = new JTable();
-		String query = "select user_id, comment from comment ";
+		String query = "select u.name, c.comment from comment as c join user as u on u.id = c.user_id";
+//		String query = "select user_id, comment from comment ";
 
 		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
 			PreparedStatement ptmt = conn.prepareStatement(query);
 			ResultSet rs = ptmt.executeQuery();
+			
+//			ptmt.setInt(1, petitionid);
 
 			ResultSetMetaData metaData = rs.getMetaData();
 			int columnCount = metaData.getColumnCount();

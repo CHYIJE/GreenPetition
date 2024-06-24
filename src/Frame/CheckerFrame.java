@@ -31,8 +31,6 @@ import ver1.models.Vote;
 public class CheckerFrame extends JFrame {
 
 	private static final String SELECT = "select u.id, p.id, p.title, p.content, p.date, p.agree, p.disagree, u.name from petition as p join user as u on p.user_id = u.id where p.id = ?";
-//	private static final String UPVOTE = ""
-//	private static final String DOWNVOTE =S
 
 	CheckerDAO checkerDAO;
 	CheckerDTO dto;
@@ -51,7 +49,6 @@ public class CheckerFrame extends JFrame {
 	private JButton w;
 	private JButton l;
 
-	
 	private JTable replyTable;
 	private Reply reply;
 	private JScrollPane replyScroll;
@@ -59,16 +56,16 @@ public class CheckerFrame extends JFrame {
 	private JButton commentButton;
 	private JPanel contentpane;
 	private JScrollPane sp;
+	private JScrollPane rp;
 	private int userId;
-	private int patitionId;
+	private int petitionId;
 	private String comment1;
 //	private JTable replyTable;
 //	private Reply reply;
 //	private JScrollPane replyScroll;
 
-
 	public CheckerFrame(int id) {
-		this.patitionId = id;
+		this.petitionId = id;
 		getInfo();
 		initData();
 		setInitLayout();
@@ -116,48 +113,42 @@ public class CheckerFrame extends JFrame {
 		content.setEditable(false);
 		content.setLineWrap(true);
 		content.setText(dto.getContent());
-		
-		reply = new Reply();
-		replyTable = reply.insertReply();
-		
-		replyScroll = new JScrollPane(replyTable);
-		replyScroll.setViewportView(replyTable);
-		replyScroll.setBounds(270, 800, 780, 100);
-		
-		replyTable.getTableHeader().setReorderingAllowed(false);
-		replyTable.getTableHeader().setResizingAllowed(false);
-		replyTable.setRowSelectionAllowed(false);
-		replyTable.getColumn("user_id").setPreferredWidth(3);
-		replyTable.getColumn("comment").setPreferredWidth(780);
-		replyTable.setShowVerticalLines(false);
-		replyTable.setShowHorizontalLines(false);
-		
 
 		mContext.contentpane = new JPanel();
 		contentpane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentpane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentpane);
+
 		sp = new JScrollPane(content, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		sp.setBounds(80, 100, 1120, 350);
 		sp.setBackground(new Color(238, 238, 238));
 
-		w = new JButton(new ImageIcon("img/facilityButton.png"));
+		reply = new Reply();
+		replyTable = reply.insertReply(petitionId);
+//
+//		replyTable.getTableHeader().setReorderingAllowed(false);
+//		replyTable.getTableHeader().setResizingAllowed(false);
+		replyTable.setRowSelectionAllowed(false);
+		replyTable.getColumn("name").setPreferredWidth(20);
+		replyTable.getColumn("comment").setPreferredWidth(750);
+//		replyTable.setShowVerticalLines(false);
+//		replyTable.setShowHorizontalLines(false);
+		
+		rp = new JScrollPane(replyTable, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		rp.setBounds(80, 450, 1120, 150);
+		rp.setBackground(new Color(238, 238, 238));
+
+		w = new JButton(new ImageIcon("img/agreeButton.png"));
 		w.setBounds(80, 700, 220, 80);
 		w.setBorderPainted(false);
 		w.setBackground(new Color(238, 238, 238));
 
-		l = new JButton(new ImageIcon("img/teacherButton.png"));
+		l = new JButton(new ImageIcon("img/disagreeButton.png"));
 		l.setBounds(380, 700, 220, 80);
 		l.setBorderPainted(false);
 		l.setBackground(new Color(238, 238, 238));
-
-		reply = new Reply();
-		replyTable = reply.insertReply();
-
-		replyScroll = new JScrollPane(replyTable);
-		replyScroll.setViewportView(replyTable);
-		replyScroll.setBounds(270, 800, 780, 100);
 
 		commentButton = new JButton();
 		commentButton.setBounds(1080, 600, 120, 25);
@@ -165,7 +156,7 @@ public class CheckerFrame extends JFrame {
 		commentButton.setBackground(new Color(190, 190, 190));
 		commentButton.setText("댓글 달기");
 
-		back = new JButton(new ImageIcon("img/writeArticleButton.png"));
+		back = new JButton(new ImageIcon("img/exitButton.png"));
 		back.setBounds(980, 700, 220, 80);
 		back.setBorderPainted(false);
 		back.setBackground(new Color(238, 238, 238));
@@ -183,6 +174,7 @@ public class CheckerFrame extends JFrame {
 		add(w);
 		add(l);
 		add(sp);
+		add(rp);
 		add(comment);
 		add(commentButton);
 		add(back);
@@ -215,7 +207,7 @@ public class CheckerFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				comment1 = comment.getText();
-				commentDao = new CommentWriterDAO(userId, patitionId, comment1);
+				commentDao = new CommentWriterDAO(userId, petitionId, comment1);
 			}
 
 		});
@@ -233,7 +225,7 @@ public class CheckerFrame extends JFrame {
 	private void getInfo() {
 		try (Connection conn = DBConnectionManager.getInstance().getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(SELECT)) {
-			pstmt.setInt(1, patitionId);
+			pstmt.setInt(1, petitionId);
 			ResultSet resultSet = pstmt.executeQuery();
 			while (resultSet.next()) {
 				dto = CheckerDTO.builder().user_id(resultSet.getInt("u.id")).petition_id(resultSet.getInt("p.id"))
