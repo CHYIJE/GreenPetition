@@ -22,11 +22,14 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import lombok.Data;
 import ver1.DBConnectionManager;
 import ver1.ObjectDAO.CheckerDAO;
 import ver1.ObjectDAO.CommentWriterDAO;
+import ver1.ObjectDAO.LoginDAO;
 import ver1.models.CheckerDTO;
 import ver1.models.Vote;
+
 
 public class CheckerFrame extends JFrame {
 
@@ -37,6 +40,7 @@ public class CheckerFrame extends JFrame {
 	CheckerFrame mContext = this;
 	MainFrame main;
 	Vote vote;
+	LoginDAO login;
 
 	private CommentWriterDAO commentDao;
 	private JLabel frame;
@@ -48,6 +52,7 @@ public class CheckerFrame extends JFrame {
 	private JButton back;
 	private JButton w;
 	private JButton l;
+	private JButton fix;
 
 	private JTable replyTable;
 	private Reply reply;
@@ -63,13 +68,123 @@ public class CheckerFrame extends JFrame {
 //	private JTable replyTable;
 //	private Reply reply;
 //	private JScrollPane replyScroll;
+	
+	private String titleBar;
+	private String contentBar;
+	
+	
 
-	public CheckerFrame(int id) {
+	public CheckerFrame(int id,LoginDAO login) {
 		this.petitionId = id;
+		this.login = login;
 		getInfo();
 		initData();
 		setInitLayout();
 		addAction();
+	}
+
+	public int getPetitionId() {
+		return petitionId;
+	}
+
+
+	public static String getSelect() {
+		return SELECT;
+	}
+
+	public CheckerDAO getCheckerDAO() {
+		return checkerDAO;
+	}
+
+	public CheckerDTO getDto() {
+		return dto;
+	}
+
+	public CheckerFrame getmContext() {
+		return mContext;
+	}
+
+	public MainFrame getMain() {
+		return main;
+	}
+
+	public Vote getVote() {
+		return vote;
+	}
+
+	public CommentWriterDAO getCommentDao() {
+		return commentDao;
+	}
+
+	public JLabel getFrame() {
+		return frame;
+	}
+
+	public JTextField getDate() {
+		return date;
+	}
+
+	public JTextField getComment() {
+		return comment;
+	}
+
+	public JTextArea getContent() {
+		return content;
+	}
+
+	public JButton getBack() {
+		return back;
+	}
+
+	public JButton getW() {
+		return w;
+	}
+
+	public JButton getL() {
+		return l;
+	}
+
+	public JTable getReplyTable() {
+		return replyTable;
+	}
+
+	public Reply getReply() {
+		return reply;
+	}
+
+	public JScrollPane getReplyScroll() {
+		return replyScroll;
+	}
+
+	public JButton getCommentButton() {
+		return commentButton;
+	}
+
+	public JPanel getContentpane() {
+		return contentpane;
+	}
+
+	public JScrollPane getSp() {
+		return sp;
+	}
+
+	public JScrollPane getRp() {
+		return rp;
+	}
+
+	public int getUserId() {
+		return userId;
+	}
+
+	public String getComment1() {
+		return comment1;
+	}
+
+	public String getTitleBar() {
+		return titleBar;
+	}
+	public String getContentBar() {
+		return contentBar;
 	}
 
 	public void initData() {
@@ -86,6 +201,7 @@ public class CheckerFrame extends JFrame {
 		title.setBackground(new Color(213, 222, 232));
 		title.setEditable(false);
 		title.setText(dto.getTitle());
+		titleBar = title.getText();
 
 		mContext.name = new JTextField();
 		name.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.BLACK));
@@ -113,6 +229,7 @@ public class CheckerFrame extends JFrame {
 		content.setEditable(false);
 		content.setLineWrap(true);
 		content.setText(dto.getContent());
+		contentBar = content.getText();
 
 		mContext.contentpane = new JPanel();
 		contentpane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -160,6 +277,11 @@ public class CheckerFrame extends JFrame {
 		back.setBounds(980, 700, 220, 80);
 		back.setBorderPainted(false);
 		back.setBackground(new Color(238, 238, 238));
+		
+		fix = new JButton(new ImageIcon("img/editButton.png"));
+		fix.setBounds(700, 700, 220, 80);
+		fix.setBorderPainted(false);
+		fix.setBackground(new Color(238, 238, 238));
 
 	}
 
@@ -178,6 +300,7 @@ public class CheckerFrame extends JFrame {
 		add(comment);
 		add(commentButton);
 		add(back);
+		add(fix);
 
 		setVisible(true);
 	}
@@ -219,6 +342,16 @@ public class CheckerFrame extends JFrame {
 				dispose();
 			}
 
+		});
+		
+		fix.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new WriterFrame(login,petitionId,mContext);
+				dispose();
+				
+			}
 		});
 	}
 

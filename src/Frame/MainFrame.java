@@ -47,6 +47,9 @@ public class MainFrame extends JFrame {
 	private JLabel check;
 
 	private LoginDAO mcontext;
+	
+	private boolean teacher;
+	private boolean facility;
 
 	public MainFrame(LoginDAO mcontext) {
 		searchDAO = new SearchDAO(); // SearchDAO 초기화
@@ -54,6 +57,7 @@ public class MainFrame extends JFrame {
 		initData();
 		setInitLayout();
 		addAction();
+		autoRefresh();
 
 	}
 
@@ -223,7 +227,7 @@ public class MainFrame extends JFrame {
 
 				Object additionalData = getValueFromDatabase(id);
 
-				new CheckerFrame(id);
+				new CheckerFrame(id,mcontext);
 
 			}
 		});
@@ -247,6 +251,39 @@ public class MainFrame extends JFrame {
 		}
 
 		return value;
+	}
+	
+
+
+public void autoRefresh() {
+		new Thread() {
+			@Override
+			public void run() {
+				TeacherDAO teacherDAO = new TeacherDAO();
+				FacilityDAO facilityDAO = new FacilityDAO();
+				DefaultTableModel model = (DefaultTableModel) table.getModel();
+				while (true) {
+					
+					model.setRowCount(0);
+
+					if (teacher == true) {
+						table.setModel(teacherDAO.insertData().getModel());
+					} else if (facility == true) {
+						table.setModel(facilityDAO.insertData().getModel());
+					} else {
+						table.setModel(article.insertData().getModel());
+					}
+					try {
+						Thread.sleep(10000);
+						System.out.println("새로고침(임시 작동용)");
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+				}
+			}
+		}.start();
 	}
 
 }
