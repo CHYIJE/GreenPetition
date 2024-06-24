@@ -11,40 +11,50 @@ import javax.swing.table.DefaultTableModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import ver1.DBConnectionManager;
+
 @Data
 @AllArgsConstructor
 public class AllArticle {
-
+	
 	public JTable insertData() {
 
 		JTable articleTable = new JTable();
-		String query = "SELECT * FROM petition";
-
+		CellEditor editor = new CellEditor();
+//		articleTable.setDefaultRenderer(Object.class, editor);
+		String query = "select p.id, p.title, u.acc_id, p.category, p.agree, p.disagree, p.date from petition as p left join user as u on u.id = p.user_id order by id desc";
+		
 		try (Connection conn = DBConnectionManager.getInstance().getConnection();
 				PreparedStatement ptmt = conn.prepareStatement(query);
 				ResultSet rs = ptmt.executeQuery();) {
 
 			ResultSetMetaData metaData = rs.getMetaData();
 			int columncount = metaData.getColumnCount();
-			DefaultTableModel model = new DefaultTableModel();
-
-			for (int i = 1; i < columncount; i++) {
+			DefaultTableModel model = new DefaultTableModel() {
+				@Override
+				public boolean isCellEditable(int row, int column) {
+					return false;
+				}
+				
+			}; 
+	
+			for (int i = 1; i <= columncount; i++) {
 				model.addColumn(metaData.getColumnName(i));
+				
 			}
 
 			while (rs.next()) {
 				Object[] rowData = new Object[columncount];
-				for (int i = 1; i < columncount; i++) {
+				for (int i = 1; i <= columncount; i++) {
 					rowData[i - 1] = rs.getObject(i);
 				}
 				model.addRow(rowData);
 			}
-		   articleTable.setModel(model);
-		   
+			articleTable.setModel(model);
+
 		} catch (Exception e) {
-			
+
 		}
 		return articleTable;
 	}
-	
+
 }

@@ -88,7 +88,8 @@ public class LoginFrame extends JFrame {
 			}
 		});
 		login_button.addActionListener(new ActionListener() {
-
+//asdf	
+			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(!text_id.getText().equals("") && !text_pw.getText().equals("")) {
