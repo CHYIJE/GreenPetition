@@ -30,7 +30,7 @@ public class SearchDAO {
 				PatitionDTO dto = new PatitionDTO();
 				dto.setId(rs.getInt("id"));
 				dto.setAcc_id(rs.getString("acc_id"));
-				dto.setCategory(rs.getString("category"));
+				dto.setCategory(Category.fromValue(rs.getString("category")));
 				dto.setTitle(rs.getString("title"));
 				dto.setAgree(rs.getInt("agree"));
 				dto.setDisagree(rs.getInt("disagree"));

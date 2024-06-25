@@ -19,7 +19,7 @@ public class FacilityDTO {
 
 	private int id;
 	private int user_id;
-	private String category;
+	private Category category;
 	private String title;
 	private Date date;
 
