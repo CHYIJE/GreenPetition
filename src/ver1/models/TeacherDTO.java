@@ -1,7 +1,6 @@
 package ver1.models;
 
 import java.sql.Date;
-import java.sql.Timestamp;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,14 +15,13 @@ import lombok.ToString;
 @AllArgsConstructor
 @Builder
 @ToString
-public class PatitionDTO {
+public class TeacherDTO {
 
 	private int id;
 	private int user_id;
 	private String category;
 	private String title;
-	private String content;
-	private Timestamp date;
+	private Date date;
 
 	private String acc_id;
 

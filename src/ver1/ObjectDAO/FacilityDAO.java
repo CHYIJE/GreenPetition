@@ -17,7 +17,9 @@ public class FacilityDAO {
 
 	public JTable insertData() {
 		JTable articleTable = new JTable();
-		String query = " select p.id, p.title, u.acc_id, p.category, p.agree, p.disagree, p.date from petition as p left join user as u on u.id = p.user_id WHERE P.category = 'facility' order by id desc ";
+
+//		String query = "select p.id, p.title, u.acc_id, p.category, p.date from petition as p left join user as u on u.id = p.user_id WHERE P.category = 'facility' order by id desc";
+		String query = "select p.id, p.title, u.acc_id, p.category, p.agree, p.disagree, p.date from petition as p left join user as u on u.id = p.user_id WHERE p.category = 'facility' order by id desc";
 
 		try (Connection conn = DBConnectionManager.getInstance().getConnection();
 				PreparedStatement ptmt = conn.prepareStatement(query);

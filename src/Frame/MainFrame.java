@@ -50,6 +50,8 @@ public class MainFrame extends JFrame {
 
 	// Table Setting
 	AllArticle article;
+	TeacherDAO tDao;
+	FacilityDAO fDao;
 	JScrollPane scroll;
 	private JTable table;
 
@@ -190,6 +192,7 @@ public class MainFrame extends JFrame {
 						}
 					} else {
 						table.setModel(teacherDAO.insertData().getModel());
+						tableset();
 					}
 				}
 
@@ -210,10 +213,12 @@ public class MainFrame extends JFrame {
 					} else {
 
 						table.setModel(article.insertData().getModel());
+						tableset();
 					}
 				}
 
 			}
+
 		});
 
 		facilityButton.addActionListener(new ActionListener() {
@@ -243,6 +248,7 @@ public class MainFrame extends JFrame {
 						}
 					} else {
 						table.setModel(facilityDAO.insertData().getModel());
+						tableset();
 					}
 				} else {
 					facility = false;
@@ -261,6 +267,7 @@ public class MainFrame extends JFrame {
 					} else {
 
 						table.setModel(article.insertData().getModel());
+						tableset();
 					}
 				}
 
@@ -324,7 +331,11 @@ public class MainFrame extends JFrame {
 
 					int id = (int) table.getValueAt(row, 0);
 
-					getValueFromDatabase(id);
+//<<<<<<< HEAD
+//					getValueFromDatabase(id);
+//=======
+					Object additionalData = getValueFromDatabase(id);
+//>>>>>>> zq
 
 					new CheckerFrame(currentUser, id, mcontext);
 				}
@@ -337,6 +348,19 @@ public class MainFrame extends JFrame {
 				autoRefresh();
 			}
 		});
+	}
+
+	public void tableset() {
+		table.getTableHeader().setReorderingAllowed(false);
+		table.getTableHeader().setResizingAllowed(false);
+		table.setRowSelectionAllowed(true);
+		table.getColumn("id").setPreferredWidth(3);
+		table.getColumn("title").setPreferredWidth(300);
+		table.getColumn("acc_id").setPreferredWidth(60);
+		table.getColumn("category").setPreferredWidth(30);
+		table.getColumn("agree").setPreferredWidth(50);
+		table.getColumn("disagree").setPreferredWidth(50);
+		table.getColumn("date").setPreferredWidth(100);
 	}
 
 	private Object getValueFromDatabase(int id) {
@@ -367,11 +391,15 @@ public class MainFrame extends JFrame {
 		TeacherDAO teacherDAO = new TeacherDAO();
 		FacilityDAO facilityDAO = new FacilityDAO();
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
+
 		model.setRowCount(0);
 		if (teacher == true) {
-			table.setModel(teacherDAO.insertData().getModel());
+			table.setModel(tDao.insertData().getModel());
+
 		} else if (facility == true) {
+//<<<<<<< HEAD
 			table.setModel(facilityDAO.insertData().getModel());
+			tableset();
 		} else if (search == true) {
 			String searchTerm = searchField.getText();
 			List<PatitionDTO> searchResults = searchDAO.titleSearch(searchTerm);
@@ -384,7 +412,10 @@ public class MainFrame extends JFrame {
 		}
 
 		else {
-			table.setModel(article.insertData().getModel());
+//=======
+			table.setModel(fDao.insertData().getModel());
+			tableset();
+
 		}
 	}
 
