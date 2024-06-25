@@ -23,7 +23,7 @@ public class SearchDAO {
 		try (Connection conn = DBConnectionManager.getInstance().getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(SEARCH_BY_TITLE)) {
 
-			pstmt.setString(1, title + "%");
+			pstmt.setString(1, "%" + title + "%");
 			ResultSet rs = pstmt.executeQuery();
 
 			while (rs.next()) {

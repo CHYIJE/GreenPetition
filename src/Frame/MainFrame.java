@@ -21,6 +21,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
 import lombok.Getter;
 import ver1.DBConnectionManager;
@@ -63,6 +64,9 @@ public class MainFrame extends JFrame {
 	private boolean facility = false;
 	private boolean search = false;
 	private int currentUser;
+
+	DefaultTableCellRenderer cellAlignCenter = new DefaultTableCellRenderer();
+	
 
 	public MainFrame(LoginDAO mcontext) {
 		searchDAO = new SearchDAO(); // SearchDAO 초기화
@@ -117,21 +121,20 @@ public class MainFrame extends JFrame {
 		scroll.setViewportView(table);
 		scroll.setBounds(270, 150, 900, 600);
 
-		DefaultTableCellRenderer cellAlignCenter = new DefaultTableCellRenderer();
-		cellAlignCenter.setHorizontalTextPosition(SwingConstants.CENTER);
-
 		table.getTableHeader().setReorderingAllowed(false);
 		table.getTableHeader().setResizingAllowed(false);
 		table.setRowSelectionAllowed(true);
 		table.setAutoCreateRowSorter(true);
 		table.getColumn("id").setPreferredWidth(3);
-		table.getColumn("id").setCellRenderer(cellAlignCenter);
 		table.getColumn("title").setPreferredWidth(300);
 		table.getColumn("acc_id").setPreferredWidth(60);
 		table.getColumn("category").setPreferredWidth(30);
 		table.getColumn("agree").setPreferredWidth(50);
 		table.getColumn("disagree").setPreferredWidth(50);
 		table.getColumn("date").setPreferredWidth(100);
+
+		tableAlignSet();
+	
 
 		searchField = new JTextField(20); // 검색 필드 추가
 		searchField.setBounds(500, 800, 300, 40);
@@ -186,6 +189,8 @@ public class MainFrame extends JFrame {
 								model.addRow(new Object[] { result.getId(), result.getTitle(), result.getAcc_id(),
 										result.getCategory(), result.getAgree(), result.getDisagree(),
 										result.getDate() });
+								tableAlignSet();
+
 							} else {
 								continue;
 							}
@@ -193,6 +198,7 @@ public class MainFrame extends JFrame {
 					} else {
 						table.setModel(tDao.insertData().getModel());
 						tableset();
+						tableAlignSet();
 					}
 				}
 
@@ -208,12 +214,14 @@ public class MainFrame extends JFrame {
 						for (PatitionDTO result : searchResults) {
 							model.addRow(new Object[] { result.getId(), result.getTitle(), result.getAcc_id(),
 									result.getCategory(), result.getAgree(), result.getDisagree(), result.getDate() });
+							tableAlignSet();
 						}
 
 					} else {
 
 						table.setModel(article.insertData().getModel());
 						tableset();
+						tableAlignSet();
 					}
 				}
 
@@ -242,12 +250,14 @@ public class MainFrame extends JFrame {
 								model.addRow(new Object[] { result.getId(), result.getTitle(), result.getAcc_id(),
 										result.getCategory(), result.getAgree(), result.getDisagree(),
 										result.getDate() });
+								tableAlignSet();
 							} else {
 								continue;
 							}
 						}
 					} else {
 						table.setModel(fDao.insertData().getModel());
+						tableAlignSet();
 						tableset();
 					}
 				} else {
@@ -263,10 +273,12 @@ public class MainFrame extends JFrame {
 							model.addRow(new Object[] { result.getId(), result.getTitle(), result.getAcc_id(),
 									result.getCategory(), result.getAgree(), result.getDisagree(), result.getDate() });
 						}
+						tableAlignSet();
 
 					} else {
 
 						table.setModel(article.insertData().getModel());
+						tableAlignSet();
 						tableset();
 					}
 				}
@@ -289,16 +301,17 @@ public class MainFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 //				if (!searchButton.getText().equals("")) {
-					search = true;
-					String searchTerm = searchField.getText();
-					List<PatitionDTO> searchResults = searchDAO.titleSearch(searchTerm);
-					DefaultTableModel model = (DefaultTableModel) table.getModel();
-					model.setRowCount(0); // 기존 데이터 초기화
+				search = true;
+				String searchTerm = searchField.getText();
+				List<PatitionDTO> searchResults = searchDAO.titleSearch(searchTerm);
+				DefaultTableModel model = (DefaultTableModel) table.getModel();
+				model.setRowCount(0); // 기존 데이터 초기화
 
-					for (PatitionDTO result : searchResults) {
-						model.addRow(new Object[] { result.getId(), result.getTitle(), result.getAcc_id(),
-								result.getCategory(), result.getAgree(), result.getDisagree(), result.getDate() });
-					}
+				for (PatitionDTO result : searchResults) {
+					model.addRow(new Object[] { result.getId(), result.getTitle(), result.getAcc_id(),
+							result.getCategory(), result.getAgree(), result.getDisagree(), result.getDate() });
+				}
+				tableAlignSet();
 //
 //				} else {
 //					System.out.println("1");
@@ -411,6 +424,7 @@ public class MainFrame extends JFrame {
 				table.setModel(tDao.insertData().getModel());
 			}
 			tableset();
+			tableAlignSet();
 		} else if (facility == true) {
 
 			if (search == true) {
@@ -427,10 +441,11 @@ public class MainFrame extends JFrame {
 					}
 				}
 
-			}else {
+			} else {
 				table.setModel(fDao.insertData().getModel());
 			}
 			tableset();
+			tableAlignSet();
 		} else if (search == true) {
 			String searchTerm = searchField.getText();
 			List<PatitionDTO> searchResults = searchDAO.titleSearch(searchTerm);
@@ -445,8 +460,20 @@ public class MainFrame extends JFrame {
 		else {
 			table.setModel(article.insertData().getModel());
 			tableset();
+			tableAlignSet();
 
 		}
+	}
+
+	public void tableAlignSet() {
+		TableColumnModel tcm = table.getColumnModel();
+		cellAlignCenter.setHorizontalAlignment(SwingConstants.CENTER);
+		tcm.getColumn(0).setCellRenderer(cellAlignCenter);
+		tcm.getColumn(2).setCellRenderer(cellAlignCenter);
+		tcm.getColumn(3).setCellRenderer(cellAlignCenter);
+		tcm.getColumn(4).setCellRenderer(cellAlignCenter);
+		tcm.getColumn(5).setCellRenderer(cellAlignCenter);
+		tcm.getColumn(6).setCellRenderer(cellAlignCenter);
 	}
 
 }
