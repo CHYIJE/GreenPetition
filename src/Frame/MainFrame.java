@@ -70,19 +70,19 @@ public class MainFrame extends JFrame {
 	public void initData() {
 		// Frame Setting
 		setTitle("Main-Frame");
-		frame = new JLabel(new ImageIcon("img/mainFrame.png"));
+		frame = new JLabel(new ImageIcon("img/mainFrame1.png"));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setContentPane(frame);
 		setSize(1280, 900);
 
 		// Button Setting
 		facilityButton = new JButton(new ImageIcon("img/facilityText.png"));
-		facilityButton.setBounds(35, 180, 125, 40);
+		facilityButton.setBounds(35, 180, 155, 40);
 		facilityButton.setBorderPainted(false);
 		facilityButton.setBackground(Color.WHITE);
 
 		teacherButton = new JButton(new ImageIcon("img/teacherText.png"));
-		teacherButton.setBounds(34, 290, 125, 40);
+		teacherButton.setBounds(30, 290, 170, 40);
 		teacherButton.setBorderPainted(false);
 		teacherButton.setBackground(Color.WHITE);
 
