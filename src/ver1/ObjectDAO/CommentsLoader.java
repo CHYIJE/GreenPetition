@@ -15,6 +15,7 @@ import ver1.DBConnectionManager;
 @Data
 @AllArgsConstructor
 public class CommentsLoader {
+	
 
 	public JTable insertData() {
 

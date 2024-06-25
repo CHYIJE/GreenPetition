@@ -26,6 +26,7 @@ import javax.swing.border.EmptyBorder;
 
 import ver1.DBConnectionManager;
 import ver1.ObjectDAO.CommentWriterDAO;
+import ver1.ObjectDAO.CommentsLoader;
 import ver1.ObjectDAO.DeleteDAO;
 import ver1.ObjectDAO.LoginDAO;
 import ver1.ObjectDAO.Reply;
@@ -43,6 +44,7 @@ public class CheckerFrame extends JFrame {
 	LoginDAO login;
 
 	private CommentWriterDAO commentDao;
+	private CommentsLoader commentsLoader;
 	private JLabel frame;
 	private JTextField title;
 	private JTextField name;
@@ -228,6 +230,9 @@ public class CheckerFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				comment1 = comment.getText();
 				commentDao = new CommentWriterDAO(currentUser, petitionId, comment1);
+				
+				replyTable.setModel(reply.insertReply(petitionId).getModel());
+				
 			}
 		});
 

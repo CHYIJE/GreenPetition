@@ -50,6 +50,7 @@ public class CommentWriterDAO {
 			if (rowCount > 0) {
 				conn.commit();
 				JOptionPane.showMessageDialog(null, "작성되었습니다.");
+				
 			} else {
 				conn.rollback();
 			}
