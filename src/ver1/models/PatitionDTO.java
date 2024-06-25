@@ -1,6 +1,5 @@
 package ver1.models;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 
 import lombok.AllArgsConstructor;
@@ -20,7 +19,7 @@ public class PatitionDTO {
 
 	private int id;
 	private int user_id;
-	private String category;
+	private Category category;
 	private String title;
 	private String content;
 	private Timestamp date;

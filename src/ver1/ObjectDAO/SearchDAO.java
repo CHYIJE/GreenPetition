@@ -23,14 +23,14 @@ public class SearchDAO {
 		try (Connection conn = DBConnectionManager.getInstance().getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(SEARCH_BY_TITLE)) {
 
-			pstmt.setString(1, title + "%");
+			pstmt.setString(1, "%" + title + "%");
 			ResultSet rs = pstmt.executeQuery();
 
 			while (rs.next()) {
 				PatitionDTO dto = new PatitionDTO();
 				dto.setId(rs.getInt("id"));
 				dto.setAcc_id(rs.getString("acc_id"));
-				dto.setCategory(rs.getString("category"));
+				dto.setCategory(Category.fromValue(rs.getString("Category")));
 				dto.setTitle(rs.getString("title"));
 				dto.setAgree(rs.getInt("agree"));
 				dto.setDisagree(rs.getInt("disagree"));

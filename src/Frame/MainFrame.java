@@ -331,11 +331,9 @@ public class MainFrame extends JFrame {
 
 					int id = (int) table.getValueAt(row, 0);
 
-//<<<<<<< HEAD
-//					getValueFromDatabase(id);
-//=======
-					Object additionalData = getValueFromDatabase(id);
-//>>>>>>> zq
+
+				getValueFromDatabase(id);
+
 
 					new CheckerFrame(currentUser, id, mcontext);
 				}
@@ -388,8 +386,6 @@ public class MainFrame extends JFrame {
 	}
 
 	public void autoRefresh() {
-		TeacherDAO teacherDAO = new TeacherDAO();
-		FacilityDAO facilityDAO = new FacilityDAO();
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
 
 		model.setRowCount(0);
@@ -397,8 +393,7 @@ public class MainFrame extends JFrame {
 			table.setModel(tDao.insertData().getModel());
 
 		} else if (facility == true) {
-//<<<<<<< HEAD
-			table.setModel(facilityDAO.insertData().getModel());
+			table.setModel(fDao.insertData().getModel());
 			tableset();
 		} else if (search == true) {
 			String searchTerm = searchField.getText();
@@ -412,8 +407,8 @@ public class MainFrame extends JFrame {
 		}
 
 		else {
-//=======
-			table.setModel(fDao.insertData().getModel());
+
+			table.setModel(article.insertData().getModel());
 			tableset();
 
 		}
