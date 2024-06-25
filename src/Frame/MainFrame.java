@@ -169,7 +169,7 @@ public class MainFrame extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				TeacherDAO teacherDAO = new TeacherDAO();
+				tDao = new TeacherDAO();
 
 				if (teacher == false) {
 					teacher = true;
@@ -191,7 +191,7 @@ public class MainFrame extends JFrame {
 							}
 						}
 					} else {
-						table.setModel(teacherDAO.insertData().getModel());
+						table.setModel(tDao.insertData().getModel());
 						tableset();
 					}
 				}
@@ -225,7 +225,7 @@ public class MainFrame extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				FacilityDAO facilityDAO = new FacilityDAO();
+				fDao = new FacilityDAO();
 
 				if (facility == false) {
 					facility = true;
@@ -247,7 +247,7 @@ public class MainFrame extends JFrame {
 							}
 						}
 					} else {
-						table.setModel(facilityDAO.insertData().getModel());
+						table.setModel(fDao.insertData().getModel());
 						tableset();
 					}
 				} else {
@@ -391,7 +391,7 @@ public class MainFrame extends JFrame {
 		model.setRowCount(0);
 		if (teacher == true) {
 			table.setModel(tDao.insertData().getModel());
-
+			tableset();
 		} else if (facility == true) {
 
 			table.setModel(fDao.insertData().getModel());
@@ -408,8 +408,7 @@ public class MainFrame extends JFrame {
 		}
 
 		else {
-//=======
-			table.setModel(article.insertData().getModel());
+
 			tableset();
 
 		}
