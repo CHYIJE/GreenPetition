@@ -164,7 +164,7 @@ public class WriterFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				category = "facility";
-				System.out.println(category);
+				JOptionPane.showMessageDialog(null, "Facility");
 			}
 
 		});
@@ -174,7 +174,7 @@ public class WriterFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				category = "teacher";
-				System.out.println(category);
+				JOptionPane.showMessageDialog(null, "Teacher");
 			}
 		});
 

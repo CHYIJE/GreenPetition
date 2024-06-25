@@ -84,12 +84,12 @@ public class MainFrame extends JFrame {
 
 		// Button Setting
 		facilityButton = new JButton(new ImageIcon("img/facilityText.png"));
-		facilityButton.setBounds(35, 180, 125, 40);
+		facilityButton.setBounds(30, 180, 175, 40);
 		facilityButton.setBorderPainted(false);
 		facilityButton.setBackground(Color.WHITE);
 
 		teacherButton = new JButton(new ImageIcon("img/teacherText.png"));
-		teacherButton.setBounds(34, 290, 125, 40);
+		teacherButton.setBounds(30, 290, 175, 40);
 		teacherButton.setBorderPainted(false);
 		teacherButton.setBackground(Color.WHITE);
 
@@ -288,16 +288,21 @@ public class MainFrame extends JFrame {
 //
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				search = true;
-				String searchTerm = searchField.getText();
-				List<PatitionDTO> searchResults = searchDAO.titleSearch(searchTerm);
-				DefaultTableModel model = (DefaultTableModel) table.getModel();
-				model.setRowCount(0); // 기존 데이터 초기화
+//				if (!searchButton.getText().equals("")) {
+					search = true;
+					String searchTerm = searchField.getText();
+					List<PatitionDTO> searchResults = searchDAO.titleSearch(searchTerm);
+					DefaultTableModel model = (DefaultTableModel) table.getModel();
+					model.setRowCount(0); // 기존 데이터 초기화
 
-				for (PatitionDTO result : searchResults) {
-					model.addRow(new Object[] { result.getId(), result.getTitle(), result.getAcc_id(),
-							result.getCategory(), result.getAgree(), result.getDisagree(), result.getDate() });
-				}
+					for (PatitionDTO result : searchResults) {
+						model.addRow(new Object[] { result.getId(), result.getTitle(), result.getAcc_id(),
+								result.getCategory(), result.getAgree(), result.getDisagree(), result.getDate() });
+					}
+//
+//				} else {
+//					System.out.println("1");
+//				}
 			}
 		});
 
@@ -331,9 +336,7 @@ public class MainFrame extends JFrame {
 
 					int id = (int) table.getValueAt(row, 0);
 
-
-				getValueFromDatabase(id);
-
+					getValueFromDatabase(id);
 
 					new CheckerFrame(currentUser, id, mcontext);
 				}
@@ -408,7 +411,7 @@ public class MainFrame extends JFrame {
 		}
 
 		else {
-
+			table.setModel(article.insertData().getModel());
 			tableset();
 
 		}
