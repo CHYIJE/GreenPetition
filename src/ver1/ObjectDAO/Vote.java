@@ -1,4 +1,4 @@
-package ver1.models;
+package ver1.ObjectDAO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,7 +15,9 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import ver1.DBConnectionManager;
-import ver1.ObjectDAO.LoginDAO;
+import ver1.models.CheckerDTO;
+import ver1.models.PatitionDTO;
+import ver1.models.UserDTO;
 
 @Getter
 @Setter

@@ -234,7 +234,7 @@ public class MainFrame extends JFrame {
 
 						for (PatitionDTO result : searchResults) {
 							if (result.getCategory().toString() == "facility") {
-								model.addRow(new Object[] { result.getId(), result.getTitle(), result.getUser_id(),
+								model.addRow(new Object[] { result.getId(), result.getTitle(), result.getAcc_id(),
 										result.getCategory(), result.getAgree(), result.getDisagree(),
 										result.getDate() });
 							} else {
@@ -254,7 +254,7 @@ public class MainFrame extends JFrame {
 						model.setRowCount(0); // 기존 데이터 초기화
 
 						for (PatitionDTO result : searchResults) {
-							model.addRow(new Object[] { result.getId(), result.getTitle(), result.getUser_id(),
+							model.addRow(new Object[] { result.getId(), result.getTitle(), result.getAcc_id(),
 									result.getCategory(), result.getAgree(), result.getDisagree(), result.getDate() });
 						}
 
@@ -340,7 +340,7 @@ public class MainFrame extends JFrame {
 	}
 
 	private Object getValueFromDatabase(int id) {
-		String query = "SELECT id FROM petition WHERE id = ?";
+		String query = " SELECT id FROM petition WHERE id = ? ";
 		Object value = null;
 
 		try (Connection conn = DBConnectionManager.getInstance().getConnection();) {

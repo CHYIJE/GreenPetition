@@ -25,12 +25,12 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import ver1.DBConnectionManager;
-import ver1.ObjectDAO.CheckerDAO;
 import ver1.ObjectDAO.CommentWriterDAO;
 import ver1.ObjectDAO.DeleteDAO;
 import ver1.ObjectDAO.LoginDAO;
+import ver1.ObjectDAO.Reply;
+import ver1.ObjectDAO.Vote;
 import ver1.models.CheckerDTO;
-import ver1.models.Vote;
 
 public class CheckerFrame extends JFrame {
 

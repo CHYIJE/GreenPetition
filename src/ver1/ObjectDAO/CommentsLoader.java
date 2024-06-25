@@ -1,4 +1,4 @@
-package Frame;
+package ver1.ObjectDAO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
