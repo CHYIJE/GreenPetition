@@ -16,18 +16,17 @@ import lombok.ToString;
 @Builder
 @ToString
 public class PatitionDTO {
-	
+
 	private int id;
 	private int user_id;
 	private Category category;
 	private String title;
 	private String content;
 	private Date date;
-	
+
 	private String acc_id;
-	
+
 	private int agree;
 	private int disagree;
 
-	
 }

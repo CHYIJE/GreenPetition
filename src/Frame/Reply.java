@@ -22,7 +22,7 @@ public class Reply {
 			PreparedStatement ptmt = conn.prepareStatement(query);
 			ptmt.setInt(1, petitionid);
 			ResultSet rs = ptmt.executeQuery();
-			
+
 //			ptmt.setInt(1, petitionid);
 
 			ResultSetMetaData metaData = rs.getMetaData();
@@ -48,7 +48,7 @@ public class Reply {
 			replyTable.setModel(model);
 
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		}
 		return replyTable;
 	}

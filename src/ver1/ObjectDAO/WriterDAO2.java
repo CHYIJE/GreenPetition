@@ -24,14 +24,19 @@ import ver1.models.WriterDTO;
 public class WriterDAO2 {
 	WriterFrame mContext;
 	WriterDTO dto;
+
 	LoginDAO dao;
+
 	UserDTO userdto;
+
 	private int test = 0;
+
 	MainFrame mainFrame;
+
 	String title;
 	String content;
+
 	CheckerFrame checkerFrame;
-	
 
 	private LoginDAO loginDAO;
 
@@ -48,7 +53,7 @@ public class WriterDAO2 {
 	}
 
 	private void writer(WriterDTO dto) throws SQLException {
-		String insertQuery = " update petition set title = ?, content = ?, category = ? where id = ?" ;
+		String insertQuery = " update petition set title = ?, content = ?, category = ? where id = ?";
 
 		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
 			conn.setAutoCommit(false);

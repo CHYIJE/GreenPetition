@@ -14,7 +14,7 @@ public class TeacherDAO {
 	public JTable insertData() {
 
 		JTable articleTable = new JTable();
-		String query = "select p.id, p.title, u.acc_id, p.category, p.date from petition as p left join user as u on u.id = p.user_id WHERE P.category = 'teacher' order by id desc";
+		String query = " select p.id, p.title, u.acc_id, p.category,p.agree,p.disagree, p.date from petition as p left join user as u on u.id = p.user_id WHERE P.category = 'teacher' order by id desc ";
 
 		try (Connection conn = DBConnectionManager.getInstance().getConnection();
 				PreparedStatement ptmt = conn.prepareStatement(query);
@@ -23,11 +23,11 @@ public class TeacherDAO {
 			ResultSetMetaData metaData = rs.getMetaData();
 			int columncount = metaData.getColumnCount();
 			DefaultTableModel model = new DefaultTableModel() {
-                @Override
-                public boolean isCellEditable(int row, int column) {
-                    return false;
-                }
-            };
+				@Override
+				public boolean isCellEditable(int row, int column) {
+					return false;
+				}
+			};
 
 			for (int i = 1; i <= columncount; i++) {
 				model.addColumn(metaData.getColumnName(i));
@@ -40,13 +40,12 @@ public class TeacherDAO {
 				}
 				model.addRow(rowData);
 			}
-		   articleTable.setModel(model);
-		   
+			articleTable.setModel(model);
+
 		} catch (Exception e) {
-			
+
 		}
 		return articleTable;
 	}
-	
-}
 
+}

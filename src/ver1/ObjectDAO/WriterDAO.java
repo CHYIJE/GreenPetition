@@ -23,10 +23,15 @@ import ver1.models.WriterDTO;
 public class WriterDAO {
 	WriterFrame mContext;
 	WriterDTO dto;
+
 	LoginDAO dao;
+
 	UserDTO userdto;
+
 	private int test = 0;
+
 	MainFrame mainFrame;
+
 	String title;
 	String content;
 
@@ -44,8 +49,8 @@ public class WriterDAO {
 	}
 
 	private void writer(WriterDTO dto) throws SQLException {
-		String insertQuery = "INSERT INTO petition(user_id, category, title, content, date)"
-				+ " VALUES (?, ?, ?, ?, current_timestamp())";
+		String insertQuery = " INSERT INTO petition(user_id, category, title, content, date)"
+				+ " VALUES (?, ?, ?, ?, current_timestamp()) ";
 
 		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
 			conn.setAutoCommit(false);

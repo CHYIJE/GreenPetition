@@ -36,7 +36,6 @@ public class LoginDAO {
 		this.mContext = mContext;
 		String idQuery = " SELECT * FROM user where acc_id = ? ";
 		String passwordQuery = " SELECT * FROM user where acc_id = ? AND acc_pw = ? ";
-		String loginQuery = " SELECT name FROM user where acc_id = ? and acc_pw = ? ";
 
 		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
 			conn.setAutoCommit(false);

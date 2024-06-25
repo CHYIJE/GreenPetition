@@ -29,34 +29,33 @@ public class JoinDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	// 회원가입
 
-	 public void joinUser(UserDTO dto, SigninFrame mContext) throws SQLException {
+	public void joinUser(UserDTO dto, SigninFrame mContext) throws SQLException {
 
-	        this.mContext = mContext;
+		this.mContext = mContext;
 
-	        String insertQuery = "INSERT INTO user(name, acc_id, acc_pw) values (? ,?, ?) ";
+		String insertQuery = " INSERT INTO user(name, acc_id, acc_pw) values (? ,?, ?) ";
 
-	        try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
+		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
 
-	            conn.setAutoCommit(false);
+			conn.setAutoCommit(false);
 
-	            PreparedStatement insertptmt = conn.prepareStatement(insertQuery);
-	            insertptmt.setString(1, mContext.getNameField().getText());
-	            insertptmt.setString(2, mContext.getIdField().getText());
-	            insertptmt.setString(3, mContext.getPwField().getText());
+			PreparedStatement insertptmt = conn.prepareStatement(insertQuery);
+			insertptmt.setString(1, mContext.getNameField().getText());
+			insertptmt.setString(2, mContext.getIdField().getText());
+			insertptmt.setString(3, mContext.getPwField().getText());
 
-	            int rowCount = insertptmt.executeUpdate();
+			int rowCount = insertptmt.executeUpdate();
 
-	            if(rowCount > 0) {
-	                conn.commit();
-	                JOptionPane.showMessageDialog(null, "회원가입이 완료되었습니다.");
-	            } else {
-	                conn.rollback();
-	            }
-	        }
-	    }
+			if (rowCount > 0) {
+				conn.commit();
+				JOptionPane.showMessageDialog(null, "회원가입이 완료되었습니다.");
+			} else {
+				conn.rollback();
+			}
+		}
 	}
+}
