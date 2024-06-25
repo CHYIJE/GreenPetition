@@ -13,7 +13,7 @@ import ver1.models.PatitionDTO;
 
 public class SearchDAO {
 	//제목 기준 검색
-	private static final String SEARCH_BY_TITLE = "select p.id, p.title, u.acc_id, p.category, p.date from petition as p left join user as u on u.id = p.user_id WHERE p.title LIKE ? order by id desc";
+	private static final String SEARCH_BY_TITLE = "select p.id, p.title, u.acc_id, p.category,p.agree,p.disagree ,p.date from petition as p left join user as u on u.id = p.user_id WHERE p.title LIKE ? order by id desc";
 //			+ "SELECT petition.id, petition.title, user.acc_id FROM petition JOIN user ON petition.user_id = user.id WHERE petition.title LIKE ?";
 
     public List<PatitionDTO> titleSearch(String title) {
@@ -30,6 +30,8 @@ public class SearchDAO {
                 dto.setAcc_id(rs.getString("acc_id")); 
                 dto.setCategory(Category.fromValue(rs.getString("category")));
                 dto.setTitle(rs.getString("title"));
+                dto.setAgree(rs.getInt("agree"));
+                dto.setDisagree(rs.getInt("disagree"));
 //                dto.setContent(rs.getString("content"));
                 dto.setDate(rs.getDate("date"));
                 results.add(dto);

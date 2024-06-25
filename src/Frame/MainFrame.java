@@ -29,7 +29,7 @@ import ver1.ObjectDAO.TeacherDAO;
 import ver1.models.PatitionDTO;
 
 public class MainFrame extends JFrame {
-	
+
 	// Information
 	LoginFrame mContext;
 	private JLabel frame;
@@ -42,18 +42,19 @@ public class MainFrame extends JFrame {
 	private JButton searchButton;
 	private JButton refreshButton;
 	private JButton backButton;
-	
+
 	// Table Setting
 	AllArticle article;
 	JScrollPane scroll;
 	private JTable table;
-	
+
 	String getUserName;
 	private JLabel check;
 	private JTextField searchField;
 	// Var Setting
-	private boolean teacher;
-	private boolean facility;
+	private boolean teacher = false;
+	private boolean facility = false;
+	private boolean search = false;
 	private int currentUser;
 
 	public MainFrame(LoginDAO mcontext) {
@@ -73,7 +74,7 @@ public class MainFrame extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setContentPane(frame);
 		setSize(1280, 900);
-		
+
 		// Button Setting
 		facilityButton = new JButton(new ImageIcon("img/facilityText.png"));
 		facilityButton.setBounds(35, 180, 125, 40);
@@ -100,7 +101,7 @@ public class MainFrame extends JFrame {
 		Font bodyfont = new Font("D2CODING", Font.BOLD, 25);
 		check.setFont(bodyfont);
 		check.setBounds(1000, 40, 350, 100);
-		
+
 		// Table Setting
 		article = new AllArticle();
 		table = article.insertData();
@@ -119,7 +120,6 @@ public class MainFrame extends JFrame {
 		table.getColumn("agree").setPreferredWidth(50);
 		table.getColumn("disagree").setPreferredWidth(50);
 		table.getColumn("date").setPreferredWidth(100);
-		
 
 		searchField = new JTextField(20); // 검색 필드 추가
 		searchField.setBounds(500, 800, 300, 40);
@@ -144,7 +144,6 @@ public class MainFrame extends JFrame {
 		add(check);
 		getContentPane().add(check);
 
-
 		getContentPane().add(searchField); // 검색 필드 추가
 		getContentPane().add(searchButton); // 검색 버튼 추가
 
@@ -159,7 +158,50 @@ public class MainFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				TeacherDAO teacherDAO = new TeacherDAO();
-				table.setModel(teacherDAO.insertData().getModel());
+
+				if (teacher == false) {
+					teacher = true;
+					facility = false;
+
+					if (search == true) {
+						String searchTerm = searchField.getText();
+						List<PatitionDTO> searchResults = searchDAO.titleSearch(searchTerm);
+						DefaultTableModel model = (DefaultTableModel) table.getModel();
+						model.setRowCount(0); // 기존 데이터 초기화
+
+						for (PatitionDTO result : searchResults) {
+							if (result.getCategory().toString() == "teacher") {
+								model.addRow(new Object[] { result.getId(), result.getTitle(), result.getAcc_id(),
+										result.getCategory(), result.getAgree(), result.getDisagree(),
+										result.getDate() });
+							} else {
+								continue;
+							}
+						}
+					} else {
+						table.setModel(teacherDAO.insertData().getModel());
+					}
+				}
+
+				else {
+					teacher = false;
+					if (search == true) {
+
+						String searchTerm = searchField.getText();
+						List<PatitionDTO> searchResults = searchDAO.titleSearch(searchTerm);
+						DefaultTableModel model = (DefaultTableModel) table.getModel();
+						model.setRowCount(0); // 기존 데이터 초기화
+
+						for (PatitionDTO result : searchResults) {
+							model.addRow(new Object[] { result.getId(), result.getTitle(), result.getAcc_id(),
+									result.getCategory(), result.getAgree(), result.getDisagree(), result.getDate() });
+						}
+
+					} else {
+
+						table.setModel(article.insertData().getModel());
+					}
+				}
 
 			}
 		});
@@ -169,7 +211,48 @@ public class MainFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				FacilityDAO facilityDAO = new FacilityDAO();
-				table.setModel(facilityDAO.insertData().getModel());
+
+				if (facility == false) {
+					facility = true;
+					teacher = false;
+
+					if (search == true) {
+						String searchTerm = searchField.getText();
+						List<PatitionDTO> searchResults = searchDAO.titleSearch(searchTerm);
+						DefaultTableModel model = (DefaultTableModel) table.getModel();
+						model.setRowCount(0); // 기존 데이터 초기화
+
+						for (PatitionDTO result : searchResults) {
+							if (result.getCategory().toString() == "facility") {
+								model.addRow(new Object[] { result.getId(), result.getTitle(), result.getUser_id(),
+										result.getCategory(), result.getAgree(), result.getDisagree(),
+										result.getDate() });
+							} else {
+								continue;
+							}
+						}
+					} else {
+						table.setModel(facilityDAO.insertData().getModel());
+					}
+				} else {
+					facility = false;
+					if (search == true) {
+
+						String searchTerm = searchField.getText();
+						List<PatitionDTO> searchResults = searchDAO.titleSearch(searchTerm);
+						DefaultTableModel model = (DefaultTableModel) table.getModel();
+						model.setRowCount(0); // 기존 데이터 초기화
+
+						for (PatitionDTO result : searchResults) {
+							model.addRow(new Object[] { result.getId(), result.getTitle(), result.getUser_id(),
+									result.getCategory(), result.getAgree(), result.getDisagree(), result.getDate() });
+						}
+
+					} else {
+
+						table.setModel(article.insertData().getModel());
+					}
+				}
 
 			}
 		});
@@ -188,14 +271,15 @@ public class MainFrame extends JFrame {
 //
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				search = true;
 				String searchTerm = searchField.getText();
 				List<PatitionDTO> searchResults = searchDAO.titleSearch(searchTerm);
 				DefaultTableModel model = (DefaultTableModel) table.getModel();
 				model.setRowCount(0); // 기존 데이터 초기화
 
 				for (PatitionDTO result : searchResults) {
-					model.addRow(new Object[] { result.getId(), result.getTitle(), result.getUser_id(),
-							result.getCategory(), result.getDate() });
+					model.addRow(new Object[] { result.getId(), result.getTitle(), result.getAcc_id(),
+							result.getCategory(), result.getAgree(), result.getDisagree(), result.getDate() });
 				}
 			}
 		});
@@ -228,18 +312,18 @@ public class MainFrame extends JFrame {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if(e.getClickCount() == 2) {
-					
+				if (e.getClickCount() == 2) {
+
 					int row = table.getSelectedRow();
-					
+
 					if (row == -1) {
 						return;
 					}
-					
+
 					int id = (int) table.getValueAt(row, 0);
-					
+
 					Object additionalData = getValueFromDatabase(id);
-					
+
 					new CheckerFrame(currentUser, id, mcontext);
 				}
 			}
@@ -286,7 +370,18 @@ public class MainFrame extends JFrame {
 			table.setModel(teacherDAO.insertData().getModel());
 		} else if (facility == true) {
 			table.setModel(facilityDAO.insertData().getModel());
-		} else {
+		} else if (search == true) {
+			String searchTerm = searchField.getText();
+			List<PatitionDTO> searchResults = searchDAO.titleSearch(searchTerm);
+			model.setRowCount(0); // 기존 데이터 초기화
+
+			for (PatitionDTO result : searchResults) {
+				model.addRow(new Object[] { result.getId(), result.getTitle(), result.getAcc_id(), result.getCategory(),
+						result.getAgree(), result.getDisagree(), result.getDate() });
+			}
+		}
+
+		else {
 			table.setModel(article.insertData().getModel());
 		}
 	}

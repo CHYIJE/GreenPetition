@@ -1,8 +1,8 @@
 package ver1.models;
 
 public enum Category {
-	FACILITY("facility"),
-    TEACHER("teacher");
+	facility("facility"),
+    teacher("teacher");
 
     private final String value;
 
