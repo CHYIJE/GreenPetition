@@ -19,22 +19,17 @@ public class AllArticle {
 	public JTable insertData() {
 
 		JTable articleTable = new JTable();
-		
-		int agree;
-		int disagree;
-		
+
 		String query = "select p.id, p.title, u.acc_id, p.category, p.agree, p.disagree, p.date from petition as p left join user as u on u.id = p.user_id order by id desc";
 
 		try (Connection conn = DBConnectionManager.getInstance().getConnection();
 				PreparedStatement ptmt = conn.prepareStatement(query);
 				ResultSet rs = ptmt.executeQuery();) {
-		
-			
-			
+
 			ResultSetMetaData metaData = rs.getMetaData();
-			
+
 			int columncount = metaData.getColumnCount();
-			
+
 			DefaultTableModel model = new DefaultTableModel() {
 				@Override
 				public boolean isCellEditable(int row, int column) {
@@ -52,11 +47,9 @@ public class AllArticle {
 					rowData[i - 1] = rs.getObject(i);
 				}
 				model.addRow(rowData);
-				agree = rs.getInt("agree");
-				disagree = rs.getInt("disagree");
+
 			}
 			articleTable.setModel(model);
-			
 
 		} catch (Exception e) {
 
