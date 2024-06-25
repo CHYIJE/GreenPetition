@@ -8,12 +8,18 @@ import java.sql.ResultSetMetaData;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import Frame.MainFrame;
 import ver1.DBConnectionManager;
 
 public class FacilityDAO {
+
+	MainFrame stage;
+
 	public JTable insertData() {
 		JTable articleTable = new JTable();
-		String query = "select p.id, p.title, u.acc_id, p.category, p.date from petition as p left join user as u on u.id = p.user_id WHERE P.category = 'facility' order by id desc";
+
+//		String query = "select p.id, p.title, u.acc_id, p.category, p.date from petition as p left join user as u on u.id = p.user_id WHERE P.category = 'facility' order by id desc";
+		String query = "select p.id, p.title, u.acc_id, p.category, p.agree, p.disagree, p.date from petition as p left join user as u on u.id = p.user_id WHERE p.category = 'facility' order by id desc";
 
 		try (Connection conn = DBConnectionManager.getInstance().getConnection();
 				PreparedStatement ptmt = conn.prepareStatement(query);
@@ -42,7 +48,7 @@ public class FacilityDAO {
 			articleTable.setModel(model);
 
 		} catch (Exception e) {
-
+			e.printStackTrace();
 		}
 		return articleTable;
 	}

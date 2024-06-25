@@ -23,12 +23,13 @@ import ver1.models.WriterDTO;
 public class WriterFrame extends JFrame {
 
 	WriterDAO writerDAO;
-	WriterDTO dto;
-	LoginDAO loginDAO;
-	WriterFrame mContext = this;
-	LoginDAO logindao;
-	CheckerFrame check;
 	WriterDAO2 writerDAO2;
+	WriterDTO dto;
+	WriterFrame mContext = this;
+
+	LoginDAO loginDAO;
+
+	CheckerFrame check;
 
 	private JLabel frame;
 	private JTextField titleField;

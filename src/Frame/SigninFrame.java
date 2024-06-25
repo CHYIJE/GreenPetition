@@ -67,7 +67,7 @@ public class SigninFrame extends JFrame {
 		duplication.setBounds(780, 250, 280, 80);
 		duplication.setBorderPainted(false);
 		duplication.setBackground(new Color(255, 255, 255));
-		
+
 		mContext.getSignIn().setEnabled(false);
 	}
 
@@ -113,7 +113,7 @@ public class SigninFrame extends JFrame {
 					try {
 						duplicationdao = new DuplicationDAO(dto, mContext);
 					} catch (Exception e2) {
-						// TODO: handle exception
+						e2.printStackTrace();
 					}
 				} else {
 					JOptionPane.showMessageDialog(null, "ID 입력해주세요.");

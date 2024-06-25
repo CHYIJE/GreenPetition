@@ -18,8 +18,11 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
+import lombok.Getter;
 import ver1.DBConnectionManager;
 import ver1.ObjectDAO.AllArticle;
 import ver1.ObjectDAO.FacilityDAO;
@@ -28,6 +31,7 @@ import ver1.ObjectDAO.SearchDAO;
 import ver1.ObjectDAO.TeacherDAO;
 import ver1.models.PatitionDTO;
 
+@Getter
 public class MainFrame extends JFrame {
 
 	// Information
@@ -35,6 +39,7 @@ public class MainFrame extends JFrame {
 	private JLabel frame;
 	private LoginDAO mcontext;
 	private SearchDAO searchDAO;
+
 	// Button
 	private JButton facilityButton;
 	private JButton teacherButton;
@@ -45,6 +50,8 @@ public class MainFrame extends JFrame {
 
 	// Table Setting
 	AllArticle article;
+	TeacherDAO tDao;
+	FacilityDAO fDao;
 	JScrollPane scroll;
 	private JTable table;
 
@@ -110,10 +117,15 @@ public class MainFrame extends JFrame {
 		scroll.setViewportView(table);
 		scroll.setBounds(270, 150, 900, 600);
 
+		DefaultTableCellRenderer cellAlignCenter = new DefaultTableCellRenderer();
+		cellAlignCenter.setHorizontalTextPosition(SwingConstants.CENTER);
+
 		table.getTableHeader().setReorderingAllowed(false);
 		table.getTableHeader().setResizingAllowed(false);
 		table.setRowSelectionAllowed(true);
+		table.setAutoCreateRowSorter(true);
 		table.getColumn("id").setPreferredWidth(3);
+		table.getColumn("id").setCellRenderer(cellAlignCenter);
 		table.getColumn("title").setPreferredWidth(300);
 		table.getColumn("acc_id").setPreferredWidth(60);
 		table.getColumn("category").setPreferredWidth(30);
@@ -180,6 +192,7 @@ public class MainFrame extends JFrame {
 						}
 					} else {
 						table.setModel(teacherDAO.insertData().getModel());
+						tableset();
 					}
 				}
 
@@ -200,10 +213,12 @@ public class MainFrame extends JFrame {
 					} else {
 
 						table.setModel(article.insertData().getModel());
+						tableset();
 					}
 				}
 
 			}
+
 		});
 
 		facilityButton.addActionListener(new ActionListener() {
@@ -224,7 +239,7 @@ public class MainFrame extends JFrame {
 
 						for (PatitionDTO result : searchResults) {
 							if (result.getCategory().toString() == "facility") {
-								model.addRow(new Object[] { result.getId(), result.getTitle(), result.getUser_id(),
+								model.addRow(new Object[] { result.getId(), result.getTitle(), result.getAcc_id(),
 										result.getCategory(), result.getAgree(), result.getDisagree(),
 										result.getDate() });
 							} else {
@@ -233,6 +248,7 @@ public class MainFrame extends JFrame {
 						}
 					} else {
 						table.setModel(facilityDAO.insertData().getModel());
+						tableset();
 					}
 				} else {
 					facility = false;
@@ -244,13 +260,14 @@ public class MainFrame extends JFrame {
 						model.setRowCount(0); // 기존 데이터 초기화
 
 						for (PatitionDTO result : searchResults) {
-							model.addRow(new Object[] { result.getId(), result.getTitle(), result.getUser_id(),
+							model.addRow(new Object[] { result.getId(), result.getTitle(), result.getAcc_id(),
 									result.getCategory(), result.getAgree(), result.getDisagree(), result.getDate() });
 						}
 
 					} else {
 
 						table.setModel(article.insertData().getModel());
+						tableset();
 					}
 				}
 
@@ -288,26 +305,18 @@ public class MainFrame extends JFrame {
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-
 			}
 
 			@Override
 			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-
 			}
 
 			@Override
@@ -322,7 +331,9 @@ public class MainFrame extends JFrame {
 
 					int id = (int) table.getValueAt(row, 0);
 
-					Object additionalData = getValueFromDatabase(id);
+
+				getValueFromDatabase(id);
+
 
 					new CheckerFrame(currentUser, id, mcontext);
 				}
@@ -337,8 +348,21 @@ public class MainFrame extends JFrame {
 		});
 	}
 
+	public void tableset() {
+		table.getTableHeader().setReorderingAllowed(false);
+		table.getTableHeader().setResizingAllowed(false);
+		table.setRowSelectionAllowed(true);
+		table.getColumn("id").setPreferredWidth(3);
+		table.getColumn("title").setPreferredWidth(300);
+		table.getColumn("acc_id").setPreferredWidth(60);
+		table.getColumn("category").setPreferredWidth(30);
+		table.getColumn("agree").setPreferredWidth(50);
+		table.getColumn("disagree").setPreferredWidth(50);
+		table.getColumn("date").setPreferredWidth(100);
+	}
+
 	private Object getValueFromDatabase(int id) {
-		String query = "SELECT id FROM petition WHERE id = ?";
+		String query = " SELECT id FROM petition WHERE id = ? ";
 		Object value = null;
 
 		try (Connection conn = DBConnectionManager.getInstance().getConnection();) {
@@ -362,14 +386,15 @@ public class MainFrame extends JFrame {
 	}
 
 	public void autoRefresh() {
-		TeacherDAO teacherDAO = new TeacherDAO();
-		FacilityDAO facilityDAO = new FacilityDAO();
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
+
 		model.setRowCount(0);
 		if (teacher == true) {
-			table.setModel(teacherDAO.insertData().getModel());
+			table.setModel(tDao.insertData().getModel());
+
 		} else if (facility == true) {
-			table.setModel(facilityDAO.insertData().getModel());
+			table.setModel(fDao.insertData().getModel());
+			tableset();
 		} else if (search == true) {
 			String searchTerm = searchField.getText();
 			List<PatitionDTO> searchResults = searchDAO.titleSearch(searchTerm);
@@ -382,7 +407,10 @@ public class MainFrame extends JFrame {
 		}
 
 		else {
+
 			table.setModel(article.insertData().getModel());
+			tableset();
+
 		}
 	}
 

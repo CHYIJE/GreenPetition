@@ -19,5 +19,5 @@ public class WriterDTO {
 	private int uid;
 	private String title;
 	private String content;
-    private String category; // 카테고리
+	private String category; // 카테고리
 }

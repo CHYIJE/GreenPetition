@@ -3,7 +3,6 @@ package Frame;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -17,6 +16,7 @@ import javax.swing.JTextField;
 
 import ver1.ObjectDAO.LoginDAO;
 import ver1.models.UserDTO;
+
 public class LoginFrame extends JFrame {
 
 	LoginDAO lgContext;
@@ -30,7 +30,6 @@ public class LoginFrame extends JFrame {
 	private JButton login_button;
 	private JButton join_button;
 
-	
 	public LoginFrame() {
 		initData();
 		setInitLayout();
@@ -73,10 +72,8 @@ public class LoginFrame extends JFrame {
 		add(login_button);
 		add(join_button);
 
-
 		setVisible(true);
 	}
-	
 
 	public void addAction() {
 
@@ -93,12 +90,12 @@ public class LoginFrame extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(!text_id.getText().equals("") && !text_pw.getText().equals("")) {
+				if (!text_id.getText().equals("") && !text_pw.equals(null)) {
 					try {
 						new LoginDAO(dto, mContext);
-				
-					} catch (Exception e2) {
 
+					} catch (Exception e2) {
+						e2.printStackTrace();
 					}
 				} else {
 					JOptionPane.showMessageDialog(null, "ID/PW를 입력해주세요.");
@@ -106,47 +103,39 @@ public class LoginFrame extends JFrame {
 				}
 			}
 		});
-		
+
 		text_pw.addKeyListener(new KeyListener() {
-			
+
 			@Override
 			public void keyTyped(KeyEvent e) {
-				// TODO Auto-generated method stub
-				
 			}
-			
+
 			@Override
 			public void keyReleased(KeyEvent e) {
-				// TODO Auto-generated method stub
-				
 			}
-			
+
 			@Override
 			public void keyPressed(KeyEvent e) {
-				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
-					if(!text_id.getText().equals("") && !text_pw.getText().equals("")) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					if (!text_id.getText().equals("") && !text_pw.equals(null)) {
 						try {
 							new LoginDAO(dto, mContext);
-							
+
 						} catch (Exception e2) {
 							e2.printStackTrace();
 						}
 					} else {
 						JOptionPane.showMessageDialog(null, "ID/PW를 입력해주세요.");
-
 					}
-				
 				}
-				
 			}
 		});
-
-
-
 	}
+
 	public JTextField getTextId() {
 		return text_id;
 	}
+
 	public JTextField getTextPw() {
 		return text_pw;
 	}

@@ -1,6 +1,7 @@
 package Frame;
 
 import java.awt.BorderLayout;
+
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,19 +24,18 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import lombok.Getter;
 import ver1.DBConnectionManager;
-import ver1.ObjectDAO.CheckerDAO;
 import ver1.ObjectDAO.CommentWriterDAO;
 import ver1.ObjectDAO.DeleteDAO;
 import ver1.ObjectDAO.LoginDAO;
+import ver1.ObjectDAO.Reply;
+import ver1.ObjectDAO.Vote;
 import ver1.models.CheckerDTO;
-import ver1.models.Vote;
+
 public class CheckerFrame extends JFrame {
 
 	private static final String SELECT = "select u.id, p.id, p.title, p.content, p.date, p.agree, p.disagree, u.name from petition as p join user as u on p.user_id = u.id where p.id = ?";
 
-	CheckerDAO checkerDAO;
 	CheckerDTO dto;
 	CheckerFrame mContext = this;
 	MainFrame main;
@@ -72,7 +72,6 @@ public class CheckerFrame extends JFrame {
 	private String contentBar;
 	private int formID;
 
-
 	public CheckerFrame(int currentUser, int id, LoginDAO login) {
 		this.currentUser = currentUser;
 		this.petitionId = id;
@@ -83,8 +82,6 @@ public class CheckerFrame extends JFrame {
 		setInitLayout();
 		addAction();
 	}
-
-	
 
 	public void initData() {
 
@@ -177,7 +174,7 @@ public class CheckerFrame extends JFrame {
 		fix.setBounds(930, 670, 100, 64);
 		fix.setBorderPainted(false);
 		fix.setBackground(new Color(238, 238, 238));
-		
+
 		delete = new JButton(new ImageIcon("img/deleteButton.png"));
 		delete.setBounds(1040, 670, 100, 64);
 		delete.setBorderPainted(false);
@@ -211,9 +208,8 @@ public class CheckerFrame extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO 찬성수 올라가게
+				// 찬성수 올라가게
 				vote.upvote(dto.getPetition_id(), currentUser, dto.getAgree());
-
 			}
 
 		});
@@ -221,7 +217,7 @@ public class CheckerFrame extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO 반대수 올라가게
+				// 반대수 올라가게
 				vote.downvote(dto.getPetition_id(), currentUser, dto.getDisagree());
 			}
 
@@ -233,7 +229,6 @@ public class CheckerFrame extends JFrame {
 				comment1 = comment.getText();
 				commentDao = new CommentWriterDAO(currentUser, petitionId, comment1);
 			}
-
 		});
 
 		back.addActionListener(new ActionListener() {
@@ -242,7 +237,6 @@ public class CheckerFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 			}
-
 		});
 
 		fix.addActionListener(new ActionListener() {
@@ -255,30 +249,27 @@ public class CheckerFrame extends JFrame {
 				} else {
 					JOptionPane.showMessageDialog(null, "작성자가 아닙니다!");
 				}
-
 			}
 		});
-		
-		delete.addActionListener(new ActionListener(){
+
+		delete.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(userId == formID) {
-					int result = JOptionPane.showConfirmDialog(null,"정말로 삭제하시겠습니까?", "Confirm",JOptionPane.YES_NO_OPTION);
-					if(result == JOptionPane.CLOSED_OPTION) {
+				if (userId == formID) {
+					int result = JOptionPane.showConfirmDialog(null, "정말로 삭제하시겠습니까?", "Confirm",
+							JOptionPane.YES_NO_OPTION);
+					if (result == JOptionPane.CLOSED_OPTION) {
 						JOptionPane.showMessageDialog(null, "삭제 취소하였습니다!");
-					}else if(result == JOptionPane.YES_OPTION) {
+					} else if (result == JOptionPane.YES_OPTION) {
 						new DeleteDAO(dto, mContext);
-					}else {
+					} else {
 						JOptionPane.showMessageDialog(null, "삭제 취소하였습니다!");
 					}
-
-				}else {
+				} else {
 					JOptionPane.showMessageDialog(null, "작성자가 아닙니다!");
 				}
-				
 			}
-			
 		});
 	}
 
@@ -299,16 +290,13 @@ public class CheckerFrame extends JFrame {
 			e.printStackTrace();
 		}
 	}
+
 	public int getPetitionId() {
 		return petitionId;
 	}
 
 	public static String getSelect() {
 		return SELECT;
-	}
-
-	public CheckerDAO getCheckerDAO() {
-		return checkerDAO;
 	}
 
 	public CheckerDTO getDto() {

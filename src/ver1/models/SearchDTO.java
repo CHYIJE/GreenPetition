@@ -12,7 +12,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 public class SearchDTO {
- // db  petition의 제목과 내용 선언
+	// db petition의 제목과 내용 선언
 	private int id;
 	private String title;
 	private String content;
