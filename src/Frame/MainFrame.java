@@ -393,11 +393,43 @@ public class MainFrame extends JFrame {
 
 		model.setRowCount(0);
 		if (teacher == true) {
-			table.setModel(tDao.insertData().getModel());
+
+			if (search == true) {
+
+				String searchTerm = searchField.getText();
+				List<PatitionDTO> searchResults = searchDAO.titleSearch(searchTerm);
+				model.setRowCount(0); // 기존 데이터 초기화
+				for (PatitionDTO result : searchResults) {
+					if (result.getCategory().toString() == "teacher") {
+						model.addRow(new Object[] { result.getId(), result.getTitle(), result.getAcc_id(),
+								result.getCategory(), result.getAgree(), result.getDisagree(), result.getDate() });
+					} else {
+						continue;
+					}
+				}
+			} else {
+				table.setModel(tDao.insertData().getModel());
+			}
 			tableset();
 		} else if (facility == true) {
 
-			table.setModel(fDao.insertData().getModel());
+			if (search == true) {
+				String searchTerm = searchField.getText();
+				List<PatitionDTO> searchResults = searchDAO.titleSearch(searchTerm);
+				model.setRowCount(0); // 기존 데이터 초기화
+
+				for (PatitionDTO result : searchResults) {
+					if (result.getCategory().toString() == "facility") {
+						model.addRow(new Object[] { result.getId(), result.getTitle(), result.getAcc_id(),
+								result.getCategory(), result.getAgree(), result.getDisagree(), result.getDate() });
+					} else {
+						continue;
+					}
+				}
+
+			}else {
+				table.setModel(fDao.insertData().getModel());
+			}
 			tableset();
 		} else if (search == true) {
 			String searchTerm = searchField.getText();
