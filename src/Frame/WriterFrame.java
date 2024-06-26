@@ -3,6 +3,8 @@ package Frame;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.time.LocalDate;
 
 import javax.swing.ImageIcon;
@@ -40,6 +42,8 @@ public class WriterFrame extends JFrame {
 	private JButton back;
 
 	private int id;
+	private boolean titleClick = false;
+	private boolean contentClick = false;
 
 	private String category = "-1";
 	private LocalDate date = LocalDate.now();
@@ -68,16 +72,18 @@ public class WriterFrame extends JFrame {
 		setContentPane(frame);
 		setSize(1280, 900);
 
-		mContext.titleField = new JTextField();
+		mContext.titleField = new JTextField("제목을 입력하세요");
 		titleField.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 		titleField.setBounds(300, 75, 900, 30);
 		titleField.setBackground(new Color(213, 222, 232));
+		titleField.setEnabled(false);
 
-		mContext.contentField = new JTextArea();
+		mContext.contentField = new JTextArea("내용을 입력하세요");
 		contentField.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 		contentField.setBounds(300, 125, 900, 600);
 		contentField.setBackground(new Color(213, 222, 232));
 		contentField.setLineWrap(true);
+		contentField.setEnabled(false);
 
 		facility = new JButton(new ImageIcon("img/facilityButton.png"));
 		facility.setBounds(0, 180, 220, 80);
@@ -141,6 +147,9 @@ public class WriterFrame extends JFrame {
 		back.setBounds(0, 750, 210, 80);
 		back.setBorderPainted(false);
 		back.setBackground(Color.WHITE);
+
+		titleClick = true;
+		contentClick = true;
 	}
 
 	public void setInitLayout() {
@@ -211,6 +220,68 @@ public class WriterFrame extends JFrame {
 			}
 		});
 
+		titleField.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+
+				if (titleClick == false) {
+					titleClick = true;
+					titleField.setEnabled(true);
+					titleField.setText("");
+				} else {
+				}
+
+			}
+		});
+
+		contentField.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+
+				if (contentClick == false) {
+					contentClick = true;
+					contentField.setEnabled(true);
+					contentField.setText("");
+				} else {
+				}
+
+			}
+		});
+
 	}
 
 	public void addAction2() {
@@ -263,6 +334,68 @@ public class WriterFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				dispose();
+			}
+		});
+
+		titleField.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+
+				if (titleClick == false) {
+					titleClick = true;
+					titleField.setEnabled(true);
+					titleField.setText("");
+				} else {
+				}
+
+			}
+		});
+
+		contentField.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+
+				if (contentClick == false) {
+					contentClick = true;
+					contentField.setEnabled(true);
+					contentField.setText("");
+				} else {
+				}
+
 			}
 		});
 
