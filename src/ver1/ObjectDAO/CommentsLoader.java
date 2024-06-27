@@ -1,5 +1,5 @@
 package ver1.ObjectDAO;
-
+// 댓글 더미 파일 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

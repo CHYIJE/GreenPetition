@@ -1,5 +1,5 @@
 package ver1.ObjectDAO;
-
+// 글 수정
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
